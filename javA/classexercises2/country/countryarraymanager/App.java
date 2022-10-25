@@ -29,6 +29,8 @@ public class App {
         testSortDecreasingByGdp();
         System.out.println("Filter asias:");
         testFilterAsiaCountry();
+        System.out.println("Filter Africa:");
+        testFilterAfricaCountry();
         System.out.println("Filter most populous: ");
         testFilterMostPopulousCountries();
         System.out.println("Filter least populous:");
