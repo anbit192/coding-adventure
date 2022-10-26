@@ -121,7 +121,7 @@ public class App {
     }
 
     public static void init() {
-        String filePath = "C:\\JavAPractice\\JAVa\\classexercises2\\country\\data\\countries.csv";
+        String filePath = "C:\\Users\\ADMIN\\Desktop\\study\\javA\\classexercises2\\country\\data\\countries.csv";
         readListData(filePath);
     }
 
@@ -203,37 +203,37 @@ public class App {
     }
 
     public static void testFilterMostPopulousCountries() {
-        Country[] countries = countryManager.filterMostPopulousCountries(2);
+        Country[] countries = countryManager.filterMostPopulousCountries(5);
         String codesString = CountryArrayManager.codeOfCountriesToString(countries);
         System.out.print(codesString);
     }
 
     public static void testFilterLeastPopulousCountries() {
-        Country[] countries = countryManager.filterLeastPopulousCountries(2);
+        Country[] countries = countryManager.filterLeastPopulousCountries(5);
         String codesString = CountryArrayManager.codeOfCountriesToString(countries);
         System.out.print(codesString);
     }
 
     public static void testFilterLargestAreaCountries() {
-        Country[] countries = countryManager.filterLargestAreaCountries(2);
+        Country[] countries = countryManager.filterLargestAreaCountries(5);
         String codesString = CountryArrayManager.codeOfCountriesToString(countries);
         System.out.print(codesString);
     }
 
     public static void testFilterSmallestAreaCountries() {
-        Country[] countries = countryManager.filterSmallestAreaCountries(2);
+        Country[] countries = countryManager.filterSmallestAreaCountries(5);
         String codesString = CountryArrayManager.codeOfCountriesToString(countries);
         System.out.print(codesString);
     }
 
     public static void testFilterHighestGdpCountries() {
-        Country[] countries = countryManager.filterHighestGdpCountries(2);
+        Country[] countries = countryManager.filterHighestGdpCountries(5);
         String codesString = CountryArrayManager.codeOfCountriesToString(countries);
         System.out.print(codesString);
     }
 
     public static void testFilterLowestGdpCountries() {
-        Country[] countries = countryManager.filterLowestGdpCountries(2);
+        Country[] countries = countryManager.filterLowestGdpCountries(5);
         String codesString = CountryArrayManager.codeOfCountriesToString(countries);
         System.out.print(codesString);
     }

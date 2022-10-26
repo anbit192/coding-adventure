@@ -98,15 +98,21 @@ public class MyDate {
     }
 
     public MyDate nextMonth() {
+
+        int[] daysMonth = generateDays(this.getYear());
+
         int nextMonth = this.getMonth() + 1;
         int nextYear = this.getYear();
+        int nextDay = this.getDay();
 
         if (this.getMonth() == 11) {
             nextMonth = 0;
             nextYear = this.nextYear().getYear();
+        } else if (this.getDay() == daysMonth[this.getMonth() - 1]) {
+            nextDay = daysMonth[nextMonth - 1];
         }
 
-        return new MyDate(nextYear, nextMonth, this.getDay());
+        return new MyDate(nextYear, nextMonth, nextDay);
     }
 
     public MyDate nextDay() {
@@ -133,15 +139,22 @@ public class MyDate {
     }
 
     public MyDate previousMonth() {
+
+        int[] daysMonth = generateDays(this.getYear());
+
         int prevMonth = this.getMonth() - 1;
         int prevYear = this.getYear();
+        int prevDay = this.getDay();
 
         if (this.getMonth() <= 1) {
             prevMonth = 12;
             prevYear = this.previousYear().getYear();
+        } else if (this.getDay() == daysMonth[this.getMonth() - 1]) {
+            prevDay = daysMonth[prevMonth - 1];
         }
 
-        return new MyDate(prevYear, prevMonth, this.getDay());
+
+        return new MyDate(prevYear, prevMonth, prevDay);
     }
 
     public MyDate previousDay() {
