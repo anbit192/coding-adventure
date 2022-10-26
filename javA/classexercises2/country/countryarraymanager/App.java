@@ -13,7 +13,7 @@ public class App {
     public static void main(String[] args) {
         init();
 
-        /* TODO: write code to test program */
+        /* TODO: write code to basics.test program */
         testOriginalData();
         System.out.println("Increasing population: ");
         testSortIncreasingByPopulation();

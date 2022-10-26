@@ -1,3 +1,5 @@
+package basics;
+
 public class AverageEvens {
 
     public static double getAverage(double n) {

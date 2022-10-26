@@ -1,3 +1,5 @@
+package basics;
+
 public class ComputePI {
 
     public static void main(String[] args) {

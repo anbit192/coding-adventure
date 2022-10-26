@@ -188,7 +188,7 @@ public class BankManagement {
         displayList(accounts);
 
 
-        saveToFile(accounts,"C:\\Users\\minha\\Desktop\\Tai lieu hoc tap\\THJava\\oops\\bank\\test.txt");
+        saveToFile(accounts,"C:\\Users\\minha\\Desktop\\Tai lieu hoc tap\\THJava\\oops\\bank\\basics.test.txt");
 
         System.out.println("Saving accounts list:");
         ArrayList<BankAccount> savingAccounts = savingAccountsList(accounts);
