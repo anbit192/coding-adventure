@@ -2,9 +2,10 @@
 /shelf/
 /workspace.xml
 C:\Users\ADMIN\Desktop\study\javA\out
-C:\Users\ADMIN\Desktop\study\javA\*.idea
+C:\Users\ADMIN\Desktop\study\javA\.idea\
 C:\Users\ADMIN\Desktop\study\javA\study.iml
 /out/
+javA/.idea/
 
 # Compiled class file
 *.class
