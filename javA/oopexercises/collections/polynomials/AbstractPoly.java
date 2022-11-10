@@ -10,10 +10,13 @@ public abstract class AbstractPoly implements Poly {
     }
 
     double[] derive() {
-        double[] derivativeCoeffiecient = new double[coefficients().length-1];
+        double[] derivativeCoeffiecient = new double[coefficients().length - 1];
+        if (this.coefficients().length == 1) {
+            return new double[]{0.0};
+        }
         for (int i = 1; i < this.coefficients().length; i++) {
             double derivedCoeff = i * this.coefficient(i);
-            derivativeCoeffiecient[i] = derivedCoeff;
+            derivativeCoeffiecient[i - 1] = derivedCoeff;
         }
 
         return derivativeCoeffiecient;
@@ -27,11 +30,31 @@ public abstract class AbstractPoly implements Poly {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        for (int i = this.degree(); i >= 0; i--) {
-            str.append(this.coefficients()[i]);
-            str.append("x^");
-            str.append(i);
-            str.append("+ ");
+        for (int i = 0; i <= this.degree(); i++) {
+            if (i == 0) {
+                str.append(this.coefficients()[i]);
+                str.append(" + ");
+            }
+
+            else if (i == 1) {
+                str.append(this.coefficients()[i]);
+                str.append("x");
+                str.append(" + ");
+            }
+
+            else if (i == this.degree()) {
+                str.append(this.coefficients()[i]);
+                str.append("x^");
+                str.append(i);
+            }
+
+            else {
+                str.append(this.coefficients()[i]);
+                str.append("x^");
+                str.append(i);
+                str.append(" + ");
+            }
+
         }
 
         return str.toString();

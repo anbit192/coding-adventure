@@ -34,10 +34,11 @@ public class ListPoly extends AbstractPoly {
     @Override
     public Poly derivative() {
         ArrayList<Double> derivativeCoefficients = new ArrayList<>();
-        for (int i = 0; i < this.coefficients.size(); i++) {
-            double derived_coeff = i * this.coefficients.get(i);
-            derivativeCoefficients.add(derived_coeff);
+
+        for (double item : this.derive()) {
+            derivativeCoefficients.add(item);
         }
+
 
         return new ListPoly(derivativeCoefficients);
     }
