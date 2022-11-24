@@ -163,12 +163,15 @@ public class CountryArrayManager {
             allocateMore();
         }
 
+        Country temp = this.countries[this.length];
+
         for (int i = this.length; i > index; i--) {
             this.countries[i] = this.countries[i - 1];
         }
 
         this.countries[index] = country;
         this.length++;
+        this.countries[this.length] = temp;
         return true;
     }
 
@@ -440,9 +443,7 @@ public class CountryArrayManager {
         Country[] mostPopulous = new Country[howMany];
         Country[] sortPopularity = sortByDecreasingPopulation();
 
-        for (int i = 0; i < howMany; i++) {
-            mostPopulous[i] = sortPopularity[i];
-        }
+        System.arraycopy(sortPopularity, 0, mostPopulous, 0, howMany);
 
         return mostPopulous;
     }

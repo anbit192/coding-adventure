@@ -28,7 +28,7 @@ public class ListPoly extends AbstractPoly {
 
     @Override
     public int degree() {
-        return this.coefficients.size()-1;
+        return this.coefficients.size() - 1;
     }
 
     @Override

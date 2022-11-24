@@ -14,6 +14,7 @@ public class App {
         init();
 
         /* TODO: write code to basics.test program */
+        countryManager.add(new AfricaCountry("abc", "AN",1000,192,192),31);
         testOriginalData();
         System.out.println("Increasing population: ");
         testSortIncreasingByPopulation();
@@ -35,6 +36,8 @@ public class App {
         testFilterMostPopulousCountries();
         System.out.println("Filter least populous:");
         testFilterLeastPopulousCountries();
+
+
     }
 
     public static void readListData(String filePath) {

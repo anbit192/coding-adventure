@@ -20,7 +20,7 @@ public class ArrayPoly extends AbstractPoly {
 
     @Override
     public int degree() {
-        return this.coefficients.length-1;
+        return this.coefficients.length - 1;
     }
 
     @Override

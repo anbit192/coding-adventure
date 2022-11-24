@@ -31,24 +31,18 @@ public abstract class AbstractPoly implements Poly {
     public String toString() {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i <= this.degree(); i++) {
-            if (i == 0) {
+            if (i == 0 && this.degree() != 1) {
                 str.append(this.coefficients()[i]);
                 str.append(" + ");
-            }
-
-            else if (i == 1) {
+            } else if (i == 1) {
                 str.append(this.coefficients()[i]);
                 str.append("x");
                 str.append(" + ");
-            }
-
-            else if (i == this.degree()) {
+            } else if (i == this.degree() || this.degree() == 1) {
                 str.append(this.coefficients()[i]);
                 str.append("x^");
                 str.append(i);
-            }
-
-            else {
+            } else {
                 str.append(this.coefficients()[i]);
                 str.append("x^");
                 str.append(i);
