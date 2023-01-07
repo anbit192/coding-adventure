@@ -1,5 +1,8 @@
 package designpatterns.bridge.remotes;
 
+import designpatterns.bridge.remotes.bridge.AdvancedRemote;
+import designpatterns.bridge.remotes.bridge.Remote;
+
 public class Client {
     public static void main(String[] args) {
         Device tv = new Tv(false, 50, 1);

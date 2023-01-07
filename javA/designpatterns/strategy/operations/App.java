@@ -1,5 +1,9 @@
 package designpatterns.strategy.operations;
 
+import designpatterns.strategy.operations.strategies.ConcreteStrategyAdd;
+import designpatterns.strategy.operations.strategies.ConcreteStrategyMultiply;
+import designpatterns.strategy.operations.strategies.ConcreteStrategySubtract;
+
 import java.util.Scanner;
 
 public class App {

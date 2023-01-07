@@ -1,5 +1,7 @@
 package designpatterns.strategy.operations;
 
+import designpatterns.strategy.operations.strategies.Strategy;
+
 public class Context {
     private Strategy strategy;
 

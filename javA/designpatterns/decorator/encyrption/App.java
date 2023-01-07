@@ -1,5 +1,11 @@
 package designpatterns.decorator.encyrption;
 
+import designpatterns.decorator.encyrption.components.DataSource;
+import designpatterns.decorator.encyrption.components.FileDataSource;
+import designpatterns.decorator.encyrption.decorators.CompressionDecorator;
+import designpatterns.decorator.encyrption.decorators.DataSourceDecorator;
+import designpatterns.decorator.encyrption.decorators.EncryptionDecorator;
+
 public class App {
     public static void main(String[] args) {
         String salaryRecords = "Name,Salary\nJohn Smith,100000\nSteven Jobs,912000";

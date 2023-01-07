@@ -1,5 +1,7 @@
 package designpatterns.observer.numbersystem;
 
+import designpatterns.observer.numbersystem.observers.Observer;
+
 import java.util.LinkedList;
 import java.util.List;
 

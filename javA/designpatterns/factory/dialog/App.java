@@ -1,5 +1,9 @@
 package designpatterns.factory.dialog;
 
+import designpatterns.factory.dialog.factory.Dialog;
+import designpatterns.factory.dialog.factory.WebDialog;
+import designpatterns.factory.dialog.factory.WindowsDialog;
+
 public class App {
     private static Dialog dialog;
 

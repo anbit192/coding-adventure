@@ -1,5 +1,7 @@
 package designpatterns.strategy.skill;
 
+import designpatterns.strategy.skill.strategies.SkillStrategy;
+
 public class Character {
     private String name;
     private double hp;

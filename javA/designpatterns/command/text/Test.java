@@ -1,5 +1,9 @@
 package designpatterns.command.text;
 
+import designpatterns.command.text.caller.Application;
+import designpatterns.command.text.commands.*;
+import designpatterns.command.text.receiver.Editor;
+
 public class Test {
     public static void main(String[] args) {
         Editor editor = new Editor("abcdefgh12345");

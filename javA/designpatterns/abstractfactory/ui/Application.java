@@ -1,5 +1,9 @@
 package designpatterns.abstractfactory.ui;
 
+import designpatterns.abstractfactory.ui.factories.GUIFactory;
+import designpatterns.abstractfactory.ui.products.Button;
+import designpatterns.abstractfactory.ui.products.Checkbox;
+
 public class Application {
     private GUIFactory factory;
     private Button button;

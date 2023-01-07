@@ -1,5 +1,10 @@
 package designpatterns.command.computer;
 
+import designpatterns.command.computer.caller.Switch;
+import designpatterns.command.computer.commands.RestartCommand;
+import designpatterns.command.computer.commands.ShutDownCommand;
+import designpatterns.command.computer.receiver.Computer;
+
 public class TestCommand {
     public static void main(String[] args) {
         Computer computer = new Computer();

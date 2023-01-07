@@ -1,5 +1,9 @@
 package designpatterns.bridge.os;
 
+import designpatterns.bridge.os.bridge.MacOs;
+import designpatterns.bridge.os.bridge.OperatingSystem;
+import designpatterns.bridge.os.bridge.WindowOs;
+
 public class Client {
     public static void main(String[] args) {
         OperatingSystem window = new WindowOs();

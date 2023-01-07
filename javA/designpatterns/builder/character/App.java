@@ -1,5 +1,8 @@
 package designpatterns.builder.character;
 
+import designpatterns.builder.character.builders.CharacterBuilder;
+import designpatterns.builder.character.product.Character;
+
 public class App {
     public static void main(String[] args) {
         CharacterBuilder characterBuilder = (CharacterBuilder) CharacterBuilder.getBuilderInstance();

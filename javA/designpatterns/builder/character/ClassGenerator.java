@@ -1,5 +1,9 @@
 package designpatterns.builder.character;
 
+import designpatterns.builder.character.builders.Builder;
+import designpatterns.builder.character.product.skills.IcyQuills;
+import designpatterns.builder.character.product.skills.Rage;
+
 public class ClassGenerator {
 
     private static ClassGenerator classGenerator;

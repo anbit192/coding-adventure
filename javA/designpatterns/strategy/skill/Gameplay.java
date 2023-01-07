@@ -1,5 +1,8 @@
 package designpatterns.strategy.skill;
 
+import designpatterns.strategy.skill.strategies.PunchSkill;
+import designpatterns.strategy.skill.strategies.ThunderboltSkill;
+
 public class Gameplay {
 
     public static void main(String[] args) {

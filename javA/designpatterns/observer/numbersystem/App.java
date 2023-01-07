@@ -1,5 +1,9 @@
 package designpatterns.observer.numbersystem;
 
+import designpatterns.observer.numbersystem.observers.BinaryObserver;
+import designpatterns.observer.numbersystem.observers.HexaObserver;
+import designpatterns.observer.numbersystem.observers.OctalObserver;
+
 public class App {
     public static void main(String[] args) {
 

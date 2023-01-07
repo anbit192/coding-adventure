@@ -1,33 +1,18 @@
 package basics;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class test {
     public static void main(String[] args) {
 
-        double[] coefficients = {5,10};
+        Map<String, Double> stats = new HashMap<>();
+        stats.put("ATKPercentage", 0.0);
+        stats.put("HPPercentage", 0.0);
 
-        for (double item : coefficients) {
-            System.out.print(item + " ");
-        }
-        System.out.println();
 
-        double[] derivativeCoeffiecient = new double[coefficients.length-1];
 
-        if (coefficients.length == 1) {
-            derivativeCoeffiecient[0] = 0;
 
-        }
-        else {
-            for (int i = 0; i < coefficients.length-1; i++) {
-
-                double derivedCoeff = (i+1) * coefficients[i+1];
-                derivativeCoeffiecient[i] = derivedCoeff;
-            }
-        }
-
-        for (double item : derivativeCoeffiecient) {
-            System.out.print(item + " ");
-        }
-        System.out.println();
 
     }
 }

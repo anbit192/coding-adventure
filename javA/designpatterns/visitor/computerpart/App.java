@@ -1,5 +1,9 @@
 package designpatterns.visitor.computerpart;
 
+import designpatterns.visitor.computerpart.elements.*;
+import designpatterns.visitor.computerpart.visitors.ComputerPartDisplayVisitor;
+import designpatterns.visitor.computerpart.visitors.ComputerPartVisitor;
+
 public class App {
     public static void main(String[] args) {
         ComputerPartVisitor visitor = new ComputerPartDisplayVisitor();

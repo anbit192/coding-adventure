@@ -1,5 +1,11 @@
 package designpatterns.builder.cars;
 
+import designpatterns.builder.cars.builders.CarBuilder;
+import designpatterns.builder.cars.builders.CarManualBuilder;
+import designpatterns.builder.cars.product.Car;
+import designpatterns.builder.cars.product.Director;
+import designpatterns.builder.cars.product.Manual;
+
 public class App {
     public static void main(String[] args) {
         Director director = new Director();

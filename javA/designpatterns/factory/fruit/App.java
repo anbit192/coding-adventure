@@ -1,5 +1,8 @@
 package designpatterns.factory.fruit;
 
+import designpatterns.factory.fruit.factory.FruitFactory;
+import designpatterns.factory.fruit.products.Fruit;
+
 public class App {
 
     public static void main(String[] args) {

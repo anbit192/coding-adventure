@@ -1,5 +1,9 @@
 package designpatterns.strategy.payment;
 
+import designpatterns.strategy.payment.strategies.PayByCreditCard;
+import designpatterns.strategy.payment.strategies.PayByPaypal;
+import designpatterns.strategy.payment.strategies.PayStrategy;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;

@@ -1,5 +1,7 @@
 package designpatterns.bridge.os;
 
+import designpatterns.bridge.os.bridge.OperatingSystem;
+
 public class Laptop extends Computer {
     public Laptop(OperatingSystem os) {
         super(os);
