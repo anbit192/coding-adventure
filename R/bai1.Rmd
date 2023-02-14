@@ -1,0 +1,100 @@
+---
+title: "BaiTap1"
+output: pdf_document
+date: "2023-02-14"
+---
+BTVN: Mô hình đúng: Y = 3 + 2X
+Sinh ra 100 bộ (X, Y) từ phân bố chuẩn theo cách sau:
+   
+Y = 3 + 2*X
+rnorm(n , mean = 0, sd = 1) 
+rnorm là hàm phân bố chuẩn, đưa ra quan sát của biến ngẫu nghiên X thỏa mãn X ~ N(mean, sd^2)
+
+
+```{r}
+# 1. Khởi tạo 100 giá trị của X từ pp chuẩn N(1;1)
+set.seed(1)
+x = rnorm(100, 1, sqrt(1))
+x
+
+# 2. Khởi tạo 100 giá trị sai số e từ phân phối chuẩn N(0; 0.04)
+e = rnorm(100, 0, sqrt(0.04))
+e
+# 3. tìm 100 giá trị của y theo x và e
+y = 3 + 2*x + e
+y
+
+# y = 3 + 2x => biểu diễn y theo x
+lm(y ~ x)
+
+# kết quả sau khi chạy:
+  # + hệ số tự do: 2.993
+  # + hệ số của x: 2
+  # => phương trình thu được: y = 2.993 + 2x gần đúng với mô hình đúng y = 3 + 2x
+
+
+# x = (-3-y)/2 => biểu diễn x theo y
+lm(x ~ y)
+
+summary(lm(y ~ x))
+
+```
+
+
+**********************************************************************************************
+Sử dụng thư viện "MASS" để truy cập đến dataset Boston
+```{r}
+library(MASS)
+lmfit = lm(medv ~ lstat, data = Boston) # tạo ra mô hình tuyến tính 
+lmfit
+```
+
+
+Bài toán: Kiểm định xem sai số có phân theo pp chuẩn với giá trị trung bình bằng 0 hay không?
+
+```{r}
+
+e = residuals(lmfit) #residuals() là một hàm lấy ra các phần dư (sai số) từ mô hình
+e
+shapiro.test(e) 
+# kiểm tra xem một tập mẫu có tuân theo phân phối chuẩn (normal distribution) hay không
+# Giá trị W sẽ được tính dựa trên các giá trị thống kê của tập dữ liệu. 
+# Nếu giá trị W lớn hơn giá trị ngưỡng được xác định trước, thì tập dữ liệu sẽ được coi là tuân theo phân phối chuẩn.
+
+# W = 0.87857
+
+
+
+```
+
+
+
+
+
+
+
+**********************************************************************************************
+KIỂM ĐỊNH HỆ CÁC HỆ SỐ HỒI QUY CÓ KHÁC 0 KHÔNG?
+y = alpha + beta*x
+
+
+
+Bài toán 1:
+H0: alpha = 0 vs H1: alpha != 0
+Do p - value < 0.05 nên bác bỏ H0
+=> KL: Với mức ý nghĩa 5%, có cơ sở để nói alpha != 0
+
+Nếu alpha = 0 thì viết lại mô hình hồi quy tuyến tính y = beta * x
+
+```{r}
+lmfit1 = lm(medv ~ lstat)
+lmfit1
+predict(lmfit, data.frame(lstat = c(5,10,15)), interval = "confidence")
+plot(lstat, medv)
+abline()
+```
+
+
+
+
+
