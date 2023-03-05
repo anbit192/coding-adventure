@@ -2,45 +2,14 @@ package review4.linkedlist;
 
 public class SimpleLinkedList<T> {
 
-    class Node {
-        T data;
-        Node nextNode;
-
-        public Node(T data, Node nextNode) {
-            this.data = data;
-            this.nextNode = nextNode;
-        }
-
-        public Node(T data) {
-            this.data = data;
-        }
-
-        public T getData() {
-            return this.data;
-        }
-
-        public Node getNextNode() {
-            return this.nextNode;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        public void setNextNode(Node nextNode) {
-            this.nextNode = nextNode;
-        }
-    }
-
     private Node headNode;
     private Node bottomNode;
     private int size;
-
     public SimpleLinkedList() {
         this.headNode = null;
         this.bottomNode = null;
         this.size = 0;
-    } 
+    }
 
     public Node get(int index) {
         Node currentNode = headNode;
@@ -183,5 +152,35 @@ public class SimpleLinkedList<T> {
         }
         System.out.println();
     }
-    
+
+    class Node {
+        T data;
+        Node nextNode;
+
+        public Node(T data, Node nextNode) {
+            this.data = data;
+            this.nextNode = nextNode;
+        }
+
+        public Node(T data) {
+            this.data = data;
+        }
+
+        public T getData() {
+            return this.data;
+        }
+
+        public void setData(T data) {
+            this.data = data;
+        }
+
+        public Node getNextNode() {
+            return this.nextNode;
+        }
+
+        public void setNextNode(Node nextNode) {
+            this.nextNode = nextNode;
+        }
+    }
+
 }

@@ -124,6 +124,27 @@ public class SimpleArrayList<T> implements ListInterface<T> {
         return new SimpleIterator();
     }
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[ ");
+
+        for (int i = 0; i < this.size; i++) {
+
+            if (i == size - 1) {
+                sb.append(array[i]).append(" ]");
+
+            } else {
+                sb.append(array[i]).append(", ");
+
+            }
+        }
+
+        sb.append("\nSize = ").append(this.size);
+
+        return sb.toString();
+    }
+
     public class SimpleIterator implements Iterator<T> {
 
         private int currentPos = 0;
@@ -144,27 +165,6 @@ public class SimpleArrayList<T> implements ListInterface<T> {
 
             return null;
         }
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[ ");
-
-        for (int i = 0; i < this.size; i++) {
-
-            if (i == size - 1) {
-                sb.append(array[i]).append(" ]");
-
-            } else {
-                sb.append(array[i]).append(", ");
-
-            }
-        }
-
-        sb.append("\nSize = ").append(this.size);
-
-        return sb.toString();
     }
 
 

@@ -3,7 +3,7 @@ package review4.linkedlist;
 public class TestLinkedList {
     public static void main(String[] args) {
         SimpleLinkedList<Integer> list = new SimpleLinkedList<>();
-        
+
         list.addFirst(19);
         list.addBot(192);
         list.add(123, 1);
@@ -22,5 +22,5 @@ public class TestLinkedList {
         list.print();
 
     }
-    
+
 }
