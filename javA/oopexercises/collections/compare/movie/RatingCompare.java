@@ -1,4 +1,4 @@
-package oopexercises.collections.compare;
+package oopexercises.collections.compare.movie;
 
 import java.util.Comparator;
 

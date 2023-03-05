@@ -1,0 +1,98 @@
+---
+title: "TH Tuan 4"
+output: html_document
+date: "2023-02-28"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+1. chia bộ dữ liệu làm 2 phần: Training data & Test data
+- Chọn ngẫu nhiên một phần của bộ dữ liệu làm training data (Thường theo 1 tỉ lệ cho trước)
+- Phần còn lại làm test data
+2. Trên training data:
+- Phân tích hồi quy tuyến tính y = a0 + a1 * x + epsilon
+- Đưa ra khoảng tin cậy beta cho a0 và a1
+- Đánh giá hệ số của mô hình
+- Đưa ra R và ước lượng của hệ số hồi quy (a0h và a1h : a1 mũ và a2 mũ)
+3. Trên test data:
+- Tính TSS (Total sum of square) = sum( [y - mean(y)]^2 ) # xét trên y
+- Tính RSS = sum( [y - a0h - a1h * x]^2 ) # xét trên phần dư
+- Tính R^2 = 1 - (RSS/TSS) (R: Hệ số tương quan mẫu - dùng để đo mức độ phụ thuộc tuyến tính của y và x)
+
+
+```{r}
+#load iris dataset
+data(iris)
+
+#make this example reproducible
+set.seed(1)
+
+#use 70% of dataset as training set and remaining 30% as testing set
+sample = sample(c(TRUE, FALSE), nrow(iris), replace = TRUE, prob = c(0.7, 0.3))
+sample
+
+#bang tan so
+table(sample)
+
+train = iris[sample, ]
+test = iris[!sample, ]
+
+dim(train)
+dim(test)
+
+```
+
+
+=> Bộ dữ liệu iris gồm 150 quan sát đã được chia thành 2 bộ dữ liệu con: train (106 quan sát) và test (44 quan sát)
+
+2 .Viết mô hình hồi quy tuyến tính của sepal.length theo petal.length
+```{r}
+lmfit1 = lm(train$Sepal.Length ~ train$Petal.Length)
+lmfit1
+
+
+```
+
+=> y = 4.2379 + 0.4286x
+
+- Đưa ra khoảng tin cậy cho a0 và a1
+```{r}
+confint(lmfit1, level = 0.90)
+```
+=> khoảng tin cậy của a0 nằm trong khoảng (4.048066 , 4.4278086)
+                      a1 nằm trong khoảng (0.384049 , 0.4730595)
+                      
+- Đánh giá hệ số mô hình (a0 , a1):
+```{r}
+summary(lmfit1)
+```
+BT: 
+H0: a0 = 0 || H1: a1 != 0
+
+=> vì p-value < 2.2e-16 < 0.05
+=> Có đủ cơ sở để bác bỏ H0
+=> hệ số mô hình là tốt
+
+- Đưa ra R và ước lượng của hệ số hồi quy (a0h và a1h : a1 mũ và a2 mũ):
+```{r}
+
+#R^2 = 1 - (RSS/TSS)
+
+#TSS (Total sum of square) = sum( [y - mean(y)]^2 )
+#RSS = sum( [y - a0h - a1h * x]^2 )
+
+tss = sum((Sepal.Length - mean(Sepal.Length))^2)
+tss
+
+rss = sum((Sepal.Length - 4.2379 - 0.4286 * Petal.Length )^2)
+rss
+
+r = 1 - rss/tss
+sqrt(r)
+
+```
+
+

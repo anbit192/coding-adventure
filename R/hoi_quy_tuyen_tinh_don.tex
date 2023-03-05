@@ -1,0 +1,770 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Hoi\_quy\_tuyen\_tinh\_don},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Hoi\_quy\_tuyen\_tinh\_don}
+\author{}
+\date{\vspace{-2.5em}2023-02-14}
+
+\begin{document}
+\maketitle
+
+\begin{verbatim}
+      BÀI 1
+\end{verbatim}
+
+Đọc dữ liệu từ csv
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"C:}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{Users}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ADMIN}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{Downloads}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{Australian Institute of Sport.csv"}\NormalTok{, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        Sex   Sport  RCC   WCC   Hc   Hg Ferr   BMI   SSF X.Bfat    LBM    Ht
+## 1   female   BBall 3.96  7.50 37.5 12.3   60 20.56 109.1  19.75  63.32 195.9
+## 2   female   BBall 4.41  8.30 38.2 12.7   68 20.67 102.8  21.30  58.55 189.7
+## 3   female   BBall 4.14  5.00 36.4 11.6   21 21.86 104.6  19.88  55.36 177.8
+## 4   female   BBall 4.11  5.30 37.3 12.6   69 21.88 126.4  23.66  57.18 185.0
+## 5   female   BBall 4.45  6.80 41.5 14.0   29 18.96  80.3  17.64  53.20 184.6
+## 6   female   BBall 4.10  4.40 37.4 12.5   42 21.04  75.2  15.58  53.77 174.0
+## 7   female   BBall 4.31  5.30 39.6 12.8   73 21.69  87.2  19.99  60.17 186.2
+## 8   female   BBall 4.42  5.70 39.9 13.2   44 20.62  97.9  22.43  48.33 173.8
+## 9   female   BBall 4.30  8.90 41.1 13.5   41 22.64  75.1  17.95  54.57 171.4
+## 10  female   BBall 4.51  4.40 41.6 12.7   44 19.44  65.1  15.07  53.42 179.9
+## 11  female   BBall 4.71  5.30 41.4 14.0   38 25.75 171.1  28.83  68.53 193.4
+## 12  female   BBall 4.62  7.30 43.8 14.7   26 21.20  76.8  18.08  61.85 188.7
+## 13  female   BBall 4.35  7.80 41.4 14.1   30 22.03 117.8  23.30  48.32 169.1
+## 14  female     Row 4.26  6.20 41.0 13.9   48 25.44  90.2  17.71  66.24 177.9
+## 15  female     Row 4.63  6.00 43.7 14.7   30 22.63  97.2  18.77  57.92 177.5
+## 16  female     Row 4.36  5.80 40.3 13.3   29 21.86  99.9  19.83  56.52 179.6
+## 17  female     Row 3.91  7.30 37.6 12.9   43 22.27 125.9  25.16  54.78 181.3
+## 18  female     Row 4.51  8.30 43.7 14.7   34 21.27  69.9  18.04  56.31 179.7
+## 19  female     Row 4.37  8.10 41.8 14.3   53 23.47  98.0  21.79  62.96 185.2
+## 20  female     Row 4.90  6.90 44.0 14.5   59 23.19  96.8  22.25  56.68 177.3
+## 21  female     Row 4.46  5.70 39.2 13.0   43 23.17  80.3  16.25  62.39 179.3
+## 22  female     Row 3.95  3.30 36.9 12.5   40 24.54  74.9  16.38  63.05 175.3
+## 23  female     Row 4.46  9.50 41.5 14.5   92 22.96  83.0  19.35  56.05 174.0
+## 24  female     Row 5.02  6.40 44.8 15.2   48 19.76  91.0  19.20  53.65 183.3
+## 25  female     Row 4.26  5.80 41.2 14.1   77 23.36  76.2  17.89  65.45 184.7
+## 26  female     Row 4.46  5.60 41.1 14.3   71 22.67  52.6  12.20  64.62 180.2
+## 27  female     Row 4.16  5.80 39.8 13.3   37 24.24 111.1  23.70  60.05 180.2
+## 28  female     Row 4.49  7.60 41.8 14.4   71 24.21 110.7  24.69  56.48 176.0
+## 29  female     Row 4.21  7.50 38.4 13.2   73 20.46  74.7  16.58  41.54 156.0
+## 30  female     Row 4.57  6.60 42.8 14.5   85 20.81 113.5  21.47  52.78 179.7
+## 31  female     Row 4.87  6.40 44.8 15.0   64 20.17  99.8  20.12  52.72 180.9
+## 32  female     Row 4.44 10.10 42.7 14.0   19 23.06  80.3  17.51  61.29 179.5
+## 33  female     Row 4.45  6.60 42.6 14.1   39 24.40 109.5  23.70  59.59 178.9
+## 34  female     Row 4.41  5.90 41.1 13.5   41 23.97 123.6  22.39  61.70 182.1
+## 35  female     Row 4.87  7.30 44.1 14.8   13 22.62  91.2  20.43  62.46 186.3
+## 36  female Netball 4.56 13.30 42.2 13.6   20 19.16  49.0  11.29  53.14 176.8
+## 37  female Netball 4.15  6.00 38.0 12.7   59 21.15 110.2  25.26  47.09 172.6
+## 38  female Netball 4.16  7.60 37.5 12.3   22 21.40  89.0  19.39  53.44 176.0
+## 39  female Netball 4.32  6.40 37.7 12.3   30 21.03  98.3  19.63  48.78 169.9
+## 40  female Netball 4.06  5.80 38.7 12.8   78 21.77 122.1  23.11  56.05 183.0
+## 41  female Netball 4.12  6.10 36.6 11.8   21 21.38  90.4  16.86  56.45 178.2
+## 42  female Netball 4.17  5.00 37.4 12.7  109 21.47 106.9  21.32  53.11 177.3
+## 43  female Netball 3.80  6.60 36.5 12.4  102 24.45 156.6  26.57  54.41 174.1
+## 44  female Netball 3.96  5.50 36.3 12.4   71 22.63 101.1  17.93  55.97 173.6
+## 45  female Netball 4.44  9.70 41.4 14.1   64 22.80 126.4  24.97  51.62 173.7
+## 46  female Netball 4.27 10.60 37.7 12.5   68 23.58 114.0  22.62  58.27 178.7
+## 47  female Netball 3.90  6.30 35.9 12.1   78 20.06  70.0  15.01  57.28 183.3
+## 48  female Netball 4.02  9.10 37.7 12.7  107 23.01  77.0  18.14  57.30 174.4
+## 49  female Netball 4.39  9.60 38.3 12.5   39 24.64 148.9  26.78  54.18 173.3
+## 50  female Netball 4.52  5.10 38.8 13.1   58 18.26  80.1  17.22  42.96 168.6
+## 51  female Netball 4.25 10.70 39.5 13.2  127 24.47 156.6  26.50  54.46 174.0
+## 52  female Netball 4.46 10.90 39.7 13.7  102 23.99 115.9  23.01  57.20 176.0
+## 53  female Netball 4.40  9.30 40.4 13.6   86 26.24 181.7  30.10  54.38 172.2
+## 54  female Netball 4.83  8.40 41.8 13.4   40 20.04  71.6  13.93  57.58 182.7
+## 55  female Netball 4.23  6.90 38.3 12.6   50 25.72 143.5  26.65  61.46 180.5
+## 56  female Netball 4.24  8.40 37.6 12.5   58 25.64 200.8  35.52  53.46 179.8
+## 57  female Netball 3.95  6.60 38.4 12.8   33 19.87  68.9  15.59  54.11 179.6
+## 58  female Netball 4.03  8.50 37.7 13.0   51 23.35 103.6  19.61  55.35 171.7
+## 59  female    Swim 4.36  5.50 41.4 13.8   82 22.42  71.3  14.52  55.39 170.0
+## 60  female    Swim 4.07  5.90 39.5 13.3   25 20.42  54.6  11.47  52.23 170.0
+## 61  female    Swim 4.17  4.90 38.9 12.9   86 22.13  88.2  17.71  59.33 180.5
+## 62  female    Swim 4.23  8.10 38.2 12.7   22 25.17  95.4  18.48  61.63 173.3
+## 63  female    Swim 4.46  8.30 42.2 14.4   30 23.72  47.5  11.22  63.39 173.5
+## 64  female    Swim 4.38  5.80 42.0 14.0   27 21.28  55.6  13.61  60.22 181.0
+## 65  female    Swim 4.31  5.30 41.1 13.9   60 20.87  62.9  12.78  55.73 175.0
+## 66  female    Swim 4.51  5.10 40.9 14.0  115 19.00  52.5  11.85  48.57 170.3
+## 67  female    Swim 4.13  7.00 39.7 13.1  124 22.04  62.6  13.35  51.99 165.0
+## 68  female   Field 4.48  9.50 36.5 13.3   54 20.12  49.9  11.77  51.17 169.8
+## 69  female   T400m 5.31  9.50 47.1 15.9   29 21.35  57.9  11.07  57.54 174.1
+## 70  female   Field 4.58  5.80 42.1 14.7  164 28.57 109.6  21.30  68.86 175.0
+## 71  female   Field 4.81  6.80 42.7 15.3   50 26.95  98.5  20.10  63.04 171.1
+## 72  female   Field 4.51  9.00 39.7 14.3   36 28.13 136.3  24.88  63.03 172.7
+## 73  female   Field 4.77  7.10 40.6 14.6   40 26.85 103.6  19.26  66.85 175.6
+## 74  female   Field 5.33  9.30 47.0 15.0   62 25.27 102.8  19.51  59.89 171.6
+## 75  female   Field 4.75  7.50 43.8 15.2   90 31.93 131.9  23.01  72.98 172.3
+## 76  female   T400m 4.11  7.30 38.7 12.4   12 16.75  33.8   8.07  45.23 171.4
+## 77  female  TSprnt 4.76  7.60 42.9 13.4   36 19.54  43.5  11.05  55.06 178.0
+## 78  female   T400m 4.27  6.90 44.1 14.7   45 20.42  46.2  12.39  46.96 162.0
+## 79  female   T400m 4.44  6.10 42.6 13.9   43 22.76  73.9  15.95  53.54 167.3
+## 80  female   T400m 4.20  6.50 39.1 13.0   51 20.12  36.8   9.91  47.57 162.0
+## 81  female   T400m 4.71  6.90 43.5 13.8   22 22.35  67.0  16.20  54.63 170.8
+## 82  female   T400m 4.09  6.40 40.1 13.2   44 19.16  41.1   9.02  46.31 163.0
+## 83  female   T400m 4.24  6.60 38.2 12.6   26 20.77  59.4  14.26  49.13 166.1
+## 84  female   T400m 3.90  6.00 38.9 13.5   16 19.37  48.4  10.48  53.71 176.0
+## 85  female  TSprnt 4.82  7.60 43.2 14.4   58 22.37  50.0  11.64  53.11 163.9
+## 86  female   T400m 4.32  6.80 40.6 13.7   46 17.54  54.6  12.16  46.12 173.0
+## 87  female   T400m 4.77  7.20 43.3 14.8   43 19.06  42.3  10.53  53.41 177.0
+## 88  female  TSprnt 5.16  8.20 45.3 14.7   34 20.30  46.1  10.15  51.48 168.0
+## 89  female  TSprnt 4.97  7.80 44.7 14.2   41 20.15  46.3  10.74  53.20 172.0
+## 90  female  Tennis 4.00  4.20 36.6 12.0   57 25.36 109.0  20.86  56.58 167.9
+## 91  female  Tennis 4.40  4.00 40.8 13.9   73 22.12  98.1  19.64  56.01 177.5
+## 92  female  Tennis 4.38  7.90 39.8 13.5   88 21.25  80.6  17.07  46.52 162.5
+## 93  female  Tennis 4.08  6.60 37.8 12.1  182 20.53  68.3  15.31  51.75 172.5
+## 94  female  Tennis 4.98  6.40 44.8 14.8   80 17.06  47.6  11.07  42.15 166.7
+## 95  female  Tennis 5.16  7.20 44.3 14.5   88 18.29  61.9  12.92  48.76 175.0
+## 96  female  Tennis 4.66  6.40 40.9 13.9  109 18.37  38.2   8.45  41.93 157.9
+## 97  female     Gym 4.19  9.00 39.0 13.4   69 18.93  43.5  10.16  42.95 158.9
+## 98  female     Gym 4.53  5.00 40.7 14.0   41 17.79  56.8  12.55  38.30 156.9
+## 99  female     Gym 4.09  4.90 36.0 12.5   66 17.05  41.6   9.10  34.36 148.9
+## 100 female     Gym 4.42  6.40 42.8 14.5   63 20.31  58.9  13.46  39.03 149.0
+## 101   male    Swim 5.13  7.10 46.8 15.9   34 22.46  44.5   8.47  61.00 172.7
+## 102   male    Swim 4.83  7.60 45.2 15.2   97 23.88  41.8   7.68  69.00 176.5
+## 103   male    Swim 5.09  4.70 46.6 15.9   55 23.68  33.7   6.16  74.00 183.0
+## 104   male    Swim 5.17  4.10 44.9 15.0   76 23.15  50.9   8.56  80.00 194.4
+## 105   male    Swim 5.11  6.70 46.1 15.6   93 22.32  40.5   6.86  78.00 193.4
+## 106   male    Swim 5.03  7.10 45.1 15.2   46 24.02  51.2   9.40  71.00 180.2
+## 107   male    Swim 5.32  6.00 47.5 16.3  155 23.29  54.4   9.17  71.00 183.0
+## 108   male    Swim 4.75  8.60 45.5 15.2   99 25.11  52.3   8.54  78.00 184.0
+## 109   male    Swim 5.34  6.60 48.6 16.5   35 22.81  57.0   9.20  77.00 192.7
+## 110   male    Swim 4.87  4.80 44.9 15.4  124 26.25  65.3  11.72  81.00 187.2
+## 111   male    Swim 5.33  5.20 47.8 16.1  176 21.38  52.0   8.44  66.00 183.9
+## 112   male    Swim 4.81  6.20 45.2 15.3  107 22.52  42.7   7.19  77.00 192.0
+## 113   male    Swim 4.32  4.30 41.6 14.0  177 26.73  35.2   6.46  91.00 190.4
+## 114   male     Row 4.87  8.20 43.8 15.0  130 23.57  49.2   9.00  78.00 190.7
+## 115   male     Row 5.04  7.10 44.0 14.8   64 25.84  61.8  12.61  75.00 181.8
+## 116   male     Row 4.40  5.30 42.5 14.5  109 24.06  46.5   9.03  78.00 188.3
+## 117   male     Row 4.95  5.90 45.4 15.5  125 23.85  34.8   6.96  87.00 198.0
+## 118   male     Row 4.78  9.30 43.0 14.7  150 25.09  60.2  10.05  78.00 186.0
+## 119   male     Row 5.21  6.80 44.5 15.4  115 23.84  48.1   9.56  79.00 192.0
+## 120   male     Row 5.22  8.40 47.5 16.2   89 25.31  44.5   9.36  79.00 185.6
+## 121   male     Row 5.18  6.50 45.4 14.9   93 19.69  54.0  10.81  48.00 165.3
+## 122   male     Row 5.40  6.80 49.5 17.3  183 26.07  44.7   8.61  82.00 185.6
+## 123   male     Row 4.92  5.40 46.2 15.8   84 25.50  64.9   9.53  82.00 189.0
+## 124   male     Row 5.24  7.50 46.5 15.5   70 23.69  43.8   7.42  82.00 193.4
+## 125   male     Row 5.09 10.10 44.9 14.8  118 26.79  58.3   9.79  83.00 185.6
+## 126   male     Row 4.83  5.00 43.8 15.1   61 25.61  52.8   8.97  88.00 194.6
+## 127   male     Row 5.22  6.00 46.6 15.7   72 25.06  43.1   7.49  83.00 189.0
+## 128   male     Row 4.71  8.00 45.5 15.6   91 24.93  78.0  11.95  78.00 188.1
+## 129   male   BBall 5.24  7.20 46.6 15.9   58 22.96  40.8   7.35  85.00 200.4
+## 130   male   BBall 4.54  5.90 44.4 15.6   97 20.69  41.5   7.16  73.00 195.3
+## 131   male   BBall 5.13  5.80 46.1 15.9  110 23.97  50.9   8.77  82.00 194.1
+## 132   male   BBall 5.00  6.70 45.3 15.7   72 24.64  49.6   9.56  79.00 187.9
+## 133   male   BBall 5.17  8.00 47.9 16.4   36 25.93  88.9  14.53  97.00 209.4
+## 134   male   BBall 4.89  7.50 41.6 14.4   53 23.69  48.3   8.51  90.00 203.4
+## 135   male   BBall 4.50  9.20 40.7 13.7   72 25.38  61.8  10.64  90.00 198.7
+## 136   male   BBall 4.84  8.30 46.3 15.9   39 22.68  43.0   7.06  74.00 187.1
+## 137   male   BBall 4.13  8.90 40.3 13.5   61 23.36  61.1   8.87  82.00 196.6
+## 138   male   BBall 4.87  7.40 43.5 15.0   49 22.44  43.8   7.88  72.00 186.1
+## 139   male   BBall 4.82  6.40 44.3 14.8   35 22.57  54.2   9.20  76.00 192.8
+## 140   male   BBall 4.73  6.70 42.8 14.9    8 19.81  41.8   7.19  70.00 195.2
+## 141   male   T400m 4.55  5.55 42.6 14.4  106 21.19  34.1   6.06  57.00 169.1
+## 142   male   T400m 4.71  7.20 43.6 14.0   32 20.39  30.5   5.63  67.00 186.6
+## 143   male   T400m 4.93  7.30 46.2 15.1   41 21.12  34.0   6.59  67.00 184.4
+## 144   male   T400m 5.21  7.50 47.5 16.5   20 21.89  46.7   9.50  70.00 187.3
+## 145   male   Field 5.09  8.90 46.3 15.4   44 29.97  71.1  13.97  88.00 185.1
+## 146   male   Field 5.11  9.60 48.2 16.7  103 27.39  65.9  11.66  83.00 185.5
+## 147   male   Field 4.94  6.30 45.7 15.5   50 23.11  34.3   6.43  74.00 184.9
+## 148   male   T400m 4.87  6.30 45.8 16.1   41 21.75  34.6   6.99  62.00 175.0
+## 149   male   T400m 4.41  4.50 44.2 15.0  101 20.89  31.8   6.00  67.00 185.4
+## 150   male   T400m 4.86  3.90 44.9 15.4   73 22.83  34.5   6.56  70.00 181.0
+## 151   male   T400m 4.91  9.00 46.3 15.4   56 22.02  31.0   6.03  64.00 176.0
+## 152   male   T400m 4.93  7.30 45.2 15.8   74 20.07  32.6   6.33  58.00 176.2
+## 153   male   T400m 4.20  4.50 41.2 14.3   58 20.15  31.5   6.82  57.00 174.0
+## 154   male   T400m 5.10  6.10 45.3 14.9   87 21.24  32.6   6.20  73.00 191.0
+## 155   male   T400m 4.50  6.10 42.2 14.7  139 19.63  31.0   5.93  54.00 171.0
+## 156   male  TSprnt 4.89  5.80 45.5 15.6   82 23.58  28.0   5.80  67.00 174.0
+## 157   male  TSprnt 5.13  4.00 44.1 15.2   87 21.65  33.7   6.56  66.00 180.2
+## 158   male  TSprnt 4.88  4.30 45.6 15.5   80 25.17  30.3   6.76  75.00 178.5
+## 159   male   Field 5.00  8.20 46.8 14.7   67 23.25  38.0   7.22  78.00 190.3
+## 160   male   Field 5.48  4.60 49.4 18.0  132 32.52  55.7   8.51 102.00 185.0
+## 161   male   Field 5.93  6.40 49.1 16.1   43 22.59  37.5   7.72  74.00 189.0
+## 162   male   Field 5.01  8.90 46.0 15.9  212 30.18 112.5  19.94  78.00 180.1
+## 163   male   Field 5.48  6.20 48.2 16.3   94 34.42  82.7  13.91 106.00 189.2
+## 164   male  TSprnt 5.16  8.40 44.4 15.5  213 21.86  29.7   6.10  68.00 182.6
+## 165   male  TSprnt 4.64  9.00 42.9 14.9  122 23.99  38.9   7.52  77.00 186.0
+## 166   male  TSprnt 6.72  7.10 59.7 19.2   76 24.81  44.8   9.56  69.00 174.9
+## 167   male   T400m 4.83  6.60 43.8 14.3   53 21.68  30.9   6.06  66.00 180.6
+## 168   male   T400m 5.34  7.60 48.3 16.2   91 21.04  44.0   7.35  62.00 178.6
+## 169   male   T400m 5.13  4.60 45.3 16.8   36 23.12  37.5   6.00  65.00 173.0
+## 170   male   T400m 4.68  4.80 43.0 14.8  101 20.76  37.6   6.92  62.00 179.7
+## 171   male  TSprnt 5.00  5.20 45.1 15.1  184 23.13  31.7   6.33  66.00 174.6
+## 172   male  TSprnt 4.99  7.20 41.4 14.9   44 22.35  36.6   5.90  67.00 178.0
+## 173   male   T400m 5.49  5.90 47.7 15.9   66 22.28  48.0   8.84  65.00 178.5
+## 174   male  TSprnt 5.59  7.90 49.7 17.2  220 23.55  41.9   8.94  63.00 171.3
+## 175   male   T400m 5.03  6.60 44.7 15.9  191 19.85  30.9   6.53  59.00 178.0
+## 176   male  TSprnt 5.50  6.40 48.1 16.5   40 26.51  52.8   9.40  86.00 189.1
+## 177   male   Field 5.11  9.30 45.4 15.8  189 24.78  43.2   8.18  87.00 195.4
+## 178   male   Field 4.96  8.30 45.3 15.7  141 33.73 113.5  17.41  89.00 179.1
+## 179   male   Field 5.01  8.90 46.0 15.9  212 30.18  96.9  18.08  80.00 180.1
+## 180   male   Field 5.11  8.70 46.5 16.3   97 23.31  49.3   9.86  68.00 179.6
+## 181   male  TSprnt 5.69 10.80 50.5 18.5   53 24.51  42.3   7.29  69.00 174.7
+## 182   male   WPolo 4.63  9.10 42.1 14.4  126 25.37  96.3  18.72  77.00 192.7
+## 183   male   WPolo 4.91 10.20 45.0 15.2  234 23.67  56.5  10.12  68.00 179.3
+## 184   male   WPolo 4.95  7.50 44.5 15.0   50 24.28 105.7  19.17  77.00 197.5
+## 185   male   WPolo 5.34 10.00 46.8 16.2   94 25.82 100.7  17.24  71.00 182.7
+## 186   male   WPolo 5.16 12.90 47.6 15.6  156 21.93  56.8   9.89  72.00 190.5
+## 187   male   WPolo 5.29 12.70 48.0 16.2  124 23.38  75.9  13.06  74.00 191.0
+## 188   male   WPolo 5.02  6.10 43.6 14.8   87 23.07  52.8   8.84  68.00 179.6
+## 189   male   WPolo 5.01  9.80 46.5 15.8   97 25.21  47.8   8.87  85.00 192.6
+## 190   male   WPolo 5.03  7.50 43.6 14.4  102 23.25  76.0  14.69  75.00 194.1
+## 191   male   WPolo 5.25  7.40 47.3 15.8   55 22.93  61.2   8.64  78.00 193.0
+## 192   male   WPolo 5.08  8.50 46.3 15.6  117 26.86  75.6  14.98  86.00 193.9
+## 193   male   WPolo 5.04  6.00 45.9 15.0   52 21.26  43.3   7.82  69.00 187.7
+## 194   male   WPolo 4.63 14.30 44.8 15.0  133 25.43  49.5   8.97  79.00 185.3
+## 195   male   WPolo 5.11  7.00 47.7 15.8  214 24.54  70.0  11.63  80.00 191.5
+## 196   male   WPolo 5.34  6.20 49.8 17.2  143 27.79  75.7  13.49  82.00 184.6
+## 197   male   WPolo 4.86  8.90 46.9 15.8   65 23.58  57.7  10.25  68.00 179.9
+## 198   male   WPolo 4.90  7.60 45.6 16.0   90 27.56  67.2  11.79  82.00 183.9
+## 199   male  Tennis 5.66  8.30 50.2 17.7   38 23.76  56.5  10.05  72.00 183.5
+## 200   male  Tennis 5.03  6.40 42.7 14.3  122 22.01  47.6   8.51  68.00 183.1
+## 201   male  Tennis 4.97  8.80 43.0 14.9  233 22.34  60.4  11.50  63.00 178.4
+## 202   male  Tennis 5.38  6.30 46.0 15.7   32 21.07  34.9   6.26  72.00 190.8
+##         Wt
+## 1    78.90
+## 2    74.40
+## 3    69.10
+## 4    74.90
+## 5    64.60
+## 6    63.70
+## 7    75.20
+## 8    62.30
+## 9    66.50
+## 10   62.90
+## 11   96.30
+## 12   75.50
+## 13   63.00
+## 14   80.50
+## 15   71.30
+## 16   70.50
+## 17   73.20
+## 18   68.70
+## 19   80.50
+## 20   72.90
+## 21   74.50
+## 22   75.40
+## 23   69.50
+## 24   66.40
+## 25   79.70
+## 26   73.60
+## 27   78.70
+## 28   75.00
+## 29   49.80
+## 30   67.20
+## 31   66.00
+## 32   74.30
+## 33   78.10
+## 34   79.50
+## 35   78.50
+## 36   59.90
+## 37   63.00
+## 38   66.30
+## 39   60.70
+## 40   72.90
+## 41   67.90
+## 42   67.50
+## 43   74.10
+## 44   68.20
+## 45   68.80
+## 46   75.30
+## 47   67.40
+## 48   70.00
+## 49   74.00
+## 50   51.90
+## 51   74.10
+## 52   74.30
+## 53   77.80
+## 54   66.90
+## 55   83.80
+## 56   82.90
+## 57   64.10
+## 58   68.85
+## 59   64.80
+## 60   59.00
+## 61   72.10
+## 62   75.60
+## 63   71.40
+## 64   69.70
+## 65   63.90
+## 66   55.10
+## 67   60.00
+## 68   58.00
+## 69   64.70
+## 70   87.50
+## 71   78.90
+## 72   83.90
+## 73   82.80
+## 74   74.40
+## 75   94.80
+## 76   49.20
+## 77   61.90
+## 78   53.60
+## 79   63.70
+## 80   52.80
+## 81   65.20
+## 82   50.90
+## 83   57.30
+## 84   60.00
+## 85   60.10
+## 86   52.50
+## 87   59.70
+## 88   57.30
+## 89   59.60
+## 90   71.50
+## 91   69.70
+## 92   56.10
+## 93   61.10
+## 94   47.40
+## 95   56.00
+## 96   45.80
+## 97   47.80
+## 98   43.80
+## 99   37.80
+## 100  45.10
+## 101  67.00
+## 102  74.40
+## 103  79.30
+## 104  87.50
+## 105  83.50
+## 106  78.00
+## 107  78.00
+## 108  85.00
+## 109  84.70
+## 110  92.00
+## 111  72.30
+## 112  83.00
+## 113  96.90
+## 114  85.70
+## 115  85.40
+## 116  85.30
+## 117  93.50
+## 118  86.80
+## 119  87.90
+## 120  87.20
+## 121  53.80
+## 122  89.80
+## 123  91.10
+## 124  88.60
+## 125  92.30
+## 126  97.00
+## 127  89.50
+## 128  88.20
+## 129  92.20
+## 130  78.90
+## 131  90.30
+## 132  87.00
+## 133 113.70
+## 134  98.00
+## 135 100.20
+## 136  79.40
+## 137  90.30
+## 138  77.70
+## 139  83.90
+## 140  75.50
+## 141  60.60
+## 142  71.00
+## 143  71.80
+## 144  76.80
+## 145 102.70
+## 146  94.25
+## 147  79.00
+## 148  66.60
+## 149  71.80
+## 150  74.80
+## 151  68.20
+## 152  62.30
+## 153  61.00
+## 154  77.50
+## 155  57.40
+## 156  71.40
+## 157  70.30
+## 158  80.20
+## 159  84.20
+## 160 111.30
+## 161  80.70
+## 162  97.90
+## 163 123.20
+## 164  72.90
+## 165  83.00
+## 166  75.90
+## 167  70.70
+## 168  67.10
+## 169  69.20
+## 170  67.05
+## 171  70.50
+## 172  70.80
+## 173  71.00
+## 174  69.10
+## 175  62.90
+## 176  94.80
+## 177  94.60
+## 178 108.20
+## 179  97.90
+## 180  75.20
+## 181  74.80
+## 182  94.20
+## 183  76.10
+## 184  94.70
+## 185  86.20
+## 186  79.60
+## 187  85.30
+## 188  74.40
+## 189  93.50
+## 190  87.60
+## 191  85.40
+## 192 101.00
+## 193  74.90
+## 194  87.30
+## 195  90.00
+## 196  94.70
+## 197  76.30
+## 198  93.20
+## 199  80.00
+## 200  73.80
+## 201  71.10
+## 202  76.70
+\end{verbatim}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Viết phương trình đường thẳng hồi quy tuyến tính của BMI theo Wt.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm1 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{BMI }\SpecialCharTok{\textasciitilde{}}\NormalTok{ data}\SpecialCharTok{$}\NormalTok{Wt)}
+\NormalTok{lm1}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = data$BMI ~ data$Wt)
+## 
+## Coefficients:
+## (Intercept)      data$Wt  
+##       9.906        0.174
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#=\textgreater{} BMI = 9.906 + 0.174*Wt}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# LẤY RA TẬP CÁC SAI SỐ (PHẦN DƯ) TỪ MODEL lm1}
+\NormalTok{e }\OtherTok{=} \FunctionTok{residuals}\NormalTok{(lm1)}
+
+\DocumentationTok{\#\# BT1: }
+\CommentTok{\#     H0: e tuân theo pp chuẩn}
+\CommentTok{\#     H1: e ko tuân theo pp chuẩn}
+\CommentTok{\#   Dùng shakiro test để kiểm tra xem tập e có theo pp chuẩn hay không}
+
+\FunctionTok{shapiro.test}\NormalTok{(e)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  e
+## W = 0.98418, p-value = 0.0229
+\end{verbatim}
+
+Mặc định mức ý nghĩa 5\% =\textgreater{} alpha = 0.05 p-value = 0.0229
+\textless{} alpha = 0.05 =\textgreater{} Bác bỏ H0 KL: VỚI MỨC Ý NGHĨA
+5\%, CÓ CỞ SỞ ĐỂ NÓI TẬP e KO TUÂN THEO PP CHUẨN
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\# BT2: nếu e tuân theo pp chuẩn thì kiểm định xem giá trị tb của e có bằng 0 không?}
+\CommentTok{\#     H0: E[e] = 0}
+\CommentTok{\#     H1: E[e] != 0}
+\FunctionTok{t.test}\NormalTok{(e, }\AttributeTok{mu =} \DecValTok{0}\NormalTok{) }\CommentTok{\#mu: mean}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  e
+## t = 1.8378e-16, df = 201, p-value = 1
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -0.2118811  0.2118811
+## sample estimates:
+##    mean of x 
+## 1.974751e-17
+\end{verbatim}
+
+=\textgreater{} p-value = 1 \textgreater{} alpha = 0.05 =\textgreater{}
+chấp thuận H0
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#c. Tìm khoảng tin cậy 90\% cho các hệ số hồi quy.}
+\FunctionTok{confint}\NormalTok{(lm1, }\AttributeTok{level =} \FloatTok{0.9}\NormalTok{) }\CommentTok{\# khoảng tin cay}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                   5 %       95 %
+## (Intercept) 8.9284788 10.8836001
+## data$Wt     0.1611643  0.1867939
+\end{verbatim}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\begin{verbatim}
+  BÀI 2
+  
+\end{verbatim}
+
+Sinh ngẫu nhiên 1000 giá trị của biến X từ phân phối chuẩn N(158; 25) và
+1000 giá trị của biến Y từ phân phối chuẩn N(59; 9). a. Viết phương
+trình đường thẳng hồi quy tuyến tính của X theo Y. b. Phần dư có phân bố
+chuẩn với giá trị trung bình bằng 0 không? c.~Với Y = 57.5, đưa ra dự
+đoán về giá trị của X và khoảng tin cậy 95\% cho giá trị trung bình của
+X. *********************
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\tightlist
+\item
+  Viết phương trình đường thẳng hồi quy tuyến tính của X theo Y.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{x }\OtherTok{=} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\DecValTok{158}\NormalTok{, }\FunctionTok{sqrt}\NormalTok{(}\DecValTok{25}\NormalTok{))}
+\NormalTok{y }\OtherTok{=} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{1000}\NormalTok{, }\DecValTok{59}\NormalTok{, }\FunctionTok{sqrt}\NormalTok{(}\DecValTok{9}\NormalTok{))}
+
+\NormalTok{lm2 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(x }\SpecialCharTok{\textasciitilde{}}\NormalTok{ y)}
+\NormalTok{lm2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = x ~ y)
+## 
+## Coefficients:
+## (Intercept)            y  
+##   157.31589      0.01062
+\end{verbatim}
+
+=\textgreater{} x = 0.01062y + 157.31589
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+\end{enumerate}
+
+\begin{itemize}
+\tightlist
+\item
+  Phần dư có phân bố chuẩn không
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{e }\OtherTok{=} \FunctionTok{residuals}\NormalTok{(lm2)}
+\FunctionTok{shapiro.test}\NormalTok{(e)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  e
+## W = 0.99875, p-value = 0.7213
+\end{verbatim}
+
+p-value = 0.7213 \textgreater{} alpha = 0.05 =\textgreater{} Chấp thuận
+H0 KL: Với mức ý nghĩa 5\%, có cơ sở để nói tập e tuân theo phân bố
+chuẩn
+
++Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(e, }\AttributeTok{mu =} \DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  One Sample t-test
+## 
+## data:  e
+## t = -9.6731e-16, df = 999, p-value = 1
+## alternative hypothesis: true mean is not equal to 0
+## 95 percent confidence interval:
+##  -0.3211003  0.3211003
+## sample estimates:
+##     mean of x 
+## -1.582814e-16
+\end{verbatim}
+
+=\textgreater{} p-value = 1 \textgreater{} alpha = 0.05 =\textgreater{}
+chấp thuận H0
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(x, y)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{hoi_quy_tuyen_tinh_don_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi}.}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Với Y = 57.5, đưa ra dự đoán về giá trị của X và khoảng tin cậy 95\%
+  cho giá trị trung bình của X.
+\end{enumerate}
+
++mô hình lm2: x = 0.01062y + 157.31589 \#hàm predict nhận vào data mới
+(y = 57.5) và trả về giá trị của x khi y = 57.5
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{predict}\NormalTok{(lm2, }\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{y =} \FloatTok{57.5}\NormalTok{), }\AttributeTok{interval =} \StringTok{"confidence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        fit     lwr      upr
+## 1 157.9264 157.572 158.2807
+\end{verbatim}
+
+\end{document}

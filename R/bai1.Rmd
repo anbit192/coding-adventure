@@ -3,28 +3,49 @@ title: "BaiTap1"
 output: pdf_document
 date: "2023-02-14"
 ---
-BTVN: Mô hình đúng: Y = 3 + 2X
-Sinh ra 100 bộ (X, Y) từ phân bố chuẩn theo cách sau:
-   
-Y = 3 + 2*X
-rnorm(n , mean = 0, sd = 1) 
-rnorm là hàm phân bố chuẩn, đưa ra quan sát của biến ngẫu nghiên X thỏa mãn X ~ N(mean, sd^2)
+**********************************************************************************************
+    TÓM TẮT BTVN
 
+Mô hình đúng: Y = 3 + 2X
+Sinh ra 100 bộ (X, Y) từ phân bố chuẩn và kiểm tra mô hình tạo ra từ 100 bộ dữ liệu có đúng với mô hình ban đầu hay không?
+sử dụng hàm rnorm(n , mean, sd), trong đó
+  +n: số lượng dữ liệu cần tạo
+  +mean: kì vọng
+  +sd: độ lệch chuẩn (standard derivation) = sqrt(phương sai (variance) )
+  
+// rnorm là hàm phân bố chuẩn, đưa ra quan sát của biến ngẫu nghiên X thỏa mãn X ~ N(mean, sd^2)
+
+---
+1. Khởi tạo 100 giá trị của X từ pp chuẩn N(1;1) 
+  +n = 100
+  +mean = 1
+  +sd = sqrt(1)
 
 ```{r}
-# 1. Khởi tạo 100 giá trị của X từ pp chuẩn N(1;1)
-set.seed(1)
-x = rnorm(100, 1, sqrt(1))
-x
+set.seed(1) #lưu lại trạng thái hiện tại của mẫu dữ liệu được tạo ra bởi random
+x = rnorm(100, 1, sqrt(1)) 
 
-# 2. Khởi tạo 100 giá trị sai số e từ phân phối chuẩn N(0; 0.04)
+```
+---
+
+2. Khởi tạo 100 giá trị sai số e từ phân phối chuẩn N(0; 0.04)
+```{r}
 e = rnorm(100, 0, sqrt(0.04))
-e
-# 3. tìm 100 giá trị của y theo x và e
-y = 3 + 2*x + e
-y
 
-# y = 3 + 2x => biểu diễn y theo x
+```
+---
+
+3. tìm 100 giá trị của y theo x và e
+```{r}
+y = 3 + 2*x + e
+```
+---
+4. Tìm hệ số hồi quy:
+Sử dụng lm(x ~ y) để tạo ra mô hình biểu diễn x theo y
+        lm(y ~ x) để tạo ra mô hình biểu diễn y theo x
+y = 3 + 2x => biểu diễn y theo x
+```{r}
+# 
 lm(y ~ x)
 
 # kết quả sau khi chạy:
@@ -52,18 +73,19 @@ lmfit
 
 Bài toán: Kiểm định xem sai số có phân theo pp chuẩn với giá trị trung bình bằng 0 hay không?
 
++Lấy ra tập các sai số từ mô hình bằng hàm residuals(model)
++Kiểm tra xem tập dữ liệu có theo phân phối chuẩn không bằng hàm shapiro.test(data)
+
 ```{r}
 
 e = residuals(lmfit) #residuals() là một hàm lấy ra các phần dư (sai số) từ mô hình
-e
 shapiro.test(e) 
 # kiểm tra xem một tập mẫu có tuân theo phân phối chuẩn (normal distribution) hay không
 # Giá trị W sẽ được tính dựa trên các giá trị thống kê của tập dữ liệu. 
 # Nếu giá trị W lớn hơn giá trị ngưỡng được xác định trước, thì tập dữ liệu sẽ được coi là tuân theo phân phối chuẩn.
 
-# W = 0.87857
-
-
+# Vì p-value < 2.2e-16 < 0.05 => Bác bỏ H0 
+# KL: VỚI MỨC Ý NGHÍA 5%, CÓ CƠ SỞ ĐỂ NÓI GIÁ TRỊ TRUNG BÌNH CỦA e KHÁC 0
 
 ```
 
@@ -87,6 +109,7 @@ Do p - value < 0.05 nên bác bỏ H0
 Nếu alpha = 0 thì viết lại mô hình hồi quy tuyến tính y = beta * x
 
 ```{r}
+attach(Boston)
 lmfit1 = lm(medv ~ lstat)
 lmfit1
 predict(lmfit, data.frame(lstat = c(5,10,15)), interval = "confidence")

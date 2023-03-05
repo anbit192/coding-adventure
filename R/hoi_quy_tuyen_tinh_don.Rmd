@@ -2,20 +2,22 @@
 title: "Hoi_quy_tuyen_tinh_don"
 output: pdf_document
 date: "2023-02-14"
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-Đọc dữ liệu từ csv 
+
+          BÀI 1
+
+Đọc dữ liệu từ csv
+
 ```{r}
 data = read.csv("C:\\Users\\ADMIN\\Downloads\\Australian Institute of Sport.csv", header = TRUE)
 data
 
 ```
 
-```{r}
-#c. Tìm khoảng tin cậy 90% cho các hệ số hồi quy.
-confint(lm1, level = 0.9)
-```
-
-a. Viết phương trình đường thẳng hồi quy tuyến tính của BMI theo Wt.
+a.  Viết phương trình đường thẳng hồi quy tuyến tính của BMI theo Wt.
 
 ```{r}
 lm1 = lm(data$BMI ~ data$Wt)
@@ -23,7 +25,7 @@ lm1
 #=> BMI = 9.906 + 0.174*Wt
 ```
 
-b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+b.  Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
 
 ```{r}
 # LẤY RA TẬP CÁC SAI SỐ (PHẦN DƯ) TỪ MODEL lm1
@@ -35,17 +37,86 @@ e = residuals(lm1)
 #   Dùng shakiro test để kiểm tra xem tập e có theo pp chuẩn hay không
 
 shapiro.test(e)
+```
 
-# Mặc định mức ý nghĩa 5% => alpha = 0.05
-# p-value = 0.0229 < alpha = 0.05 
-# => Bác bỏ H0
-# KL: VỚI MỨC Ý NGHĨA 5%, CÓ CỞ SỞ ĐỂ NÓI TẬP e KO TUÂN THEO PP CHUẨN
+Mặc định mức ý nghĩa 5% =\> alpha = 0.05 p-value = 0.0229 \< alpha =
+0.05 =\> Bác bỏ H0 KL: VỚI MỨC Ý NGHĨA 5%, CÓ CỞ SỞ ĐỂ NÓI TẬP e KO TUÂN
+THEO PP CHUẨN
 
+```{r}
 ## BT2: nếu e tuân theo pp chuẩn thì kiểm định xem giá trị tb của e có bằng 0 không?
 #     H0: E[e] = 0
 #     H1: E[e] != 0
 t.test(e, mu = 0) #mu: mean
-#     => p-value = 1 > alpha = 0.05 
-#     => chấp thuận H0
 ```
 
+=\> p-value = 1 \> alpha = 0.05 =\> chấp thuận H0
+
+```{r}
+#c. Tìm khoảng tin cậy 90% cho các hệ số hồi quy.
+confint(lm1, level = 0.9) # khoảng tin cay
+
+```
+
+------------------------------------------------------------------------
+
+      BÀI 2
+      
+
+Sinh ngẫu nhiên 1000 giá trị của biến X từ phân phối chuẩn N(158; 25) và
+1000 giá trị của biến Y từ phân phối chuẩn N(59; 9). a. Viết phương
+trình đường thẳng hồi quy tuyến tính của X theo Y. b. Phần dư có phân bố
+chuẩn với giá trị trung bình bằng 0 không? c. Với Y = 57.5, đưa ra dự
+đoán về giá trị của X và khoảng tin cậy 95% cho giá trị trung bình của
+X. \*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*\*
+
+a.  Viết phương trình đường thẳng hồi quy tuyến tính của X theo Y.
+
+```{r}
+set.seed(1)
+x = rnorm(1000, 158, sqrt(25))
+y = rnorm(1000, 59, sqrt(9))
+
+lm2 = lm(x ~ y)
+lm2
+
+
+```
+
+=\> x = 0.01062y + 157.31589
+
+b.  Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+
+-   Phần dư có phân bố chuẩn không
+
+```{r}
+e = residuals(lm2)
+shapiro.test(e)
+
+
+```
+
+p-value = 0.7213 \> alpha = 0.05 =\> Chấp thuận H0 KL: Với mức ý nghĩa
+5%, có cơ sở để nói tập e tuân theo phân bố chuẩn
+
++Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+
+```{r}
+t.test(e, mu = 0)
+```
+
+=\> p-value = 1 \> alpha = 0.05 =\> chấp thuận H0
+
+```{r}
+plot(x, y)
+```
+
+c.  Với Y = 57.5, đưa ra dự đoán về giá trị của X và khoảng tin cậy 95%
+    cho giá trị trung bình của X.
+
++mô hình lm2: x = 0.01062y + 157.31589 #hàm predict nhận vào data mới (y
+= 57.5) và trả về giá trị của x khi y = 57.5
+
+```{r}
+predict(lm2, data.frame(y = 57.5), interval = "confidence")
+```

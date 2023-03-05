@@ -1,4 +1,4 @@
-package oopexercises.collections.compare;
+package oopexercises.collections.compare.movie;
 
 public class Movie implements Comparable<Movie> {
 
