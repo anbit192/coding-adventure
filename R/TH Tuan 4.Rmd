@@ -90,8 +90,8 @@ tss
 rss = sum((Sepal.Length - 4.2379 - 0.4286 * Petal.Length )^2)
 rss
 
-r = 1 - rss/tss
-sqrt(r)
+r2 = 1 - rss/tss
+
 
 ```
 

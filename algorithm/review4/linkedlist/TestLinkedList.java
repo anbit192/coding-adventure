@@ -6,20 +6,35 @@ public class TestLinkedList {
 
         list.addFirst(19);
         list.addBot(192);
-        list.add(123, 1);
-        list.add(999, 1);
-        list.addFirst(192);
-        list.addFirst(192);
-        list.addFirst(192);
+        list.add(123, 0);
+        list.print();
 
-        list.addBot(69);
 
         list.removeTop();
+        list.removeTop();
         list.removeBot();
-        list.removeIndex(1);
-        list.remove(192);
-
+        System.out.println("asdak");
         list.print();
+
+        list.addFirst(123456);
+        list.print();
+
+        list.addFirst(192);
+        list.print();
+
+        list.addBot(1234);
+        list.print();
+
+        list.removeTop();
+        list.remove(1234);
+        list.removeTop();
+
+        System.out.println("asdasd");
+        list.print();
+
+        list.add(192, 0);
+        list.print();
+
 
     }
 

@@ -128,7 +128,54 @@
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{sample }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{), }\FunctionTok{nrow}\NormalTok{(cars), }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.65}\NormalTok{, }\FloatTok{0.35}\NormalTok{))}
+\CommentTok{\# sample() tạo ra bảng các giá trị dưa vào dữ liệu được đưa vào.}
+\CommentTok{\# sample(x, size, replace = FALSE, prob = NULL)}
+
+
+\CommentTok{\#Áp dụng để chia bộ dữ liệu thành 2 phần}
+
+\CommentTok{\#Tạo ra bảng các giá trị ngẫu nhiên true hoặc false}
+
+\NormalTok{size }\OtherTok{=} \FunctionTok{nrow}\NormalTok{(cars) }
+
+\NormalTok{sample }\OtherTok{=} \FunctionTok{sample}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\ConstantTok{TRUE}\NormalTok{, }\ConstantTok{FALSE}\NormalTok{), size, }\AttributeTok{replace =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{prob =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.65}\NormalTok{, }\FloatTok{0.35}\NormalTok{))}
+\NormalTok{sample}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+## [13]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+## [25] FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+## [37] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+## [49]  TRUE  TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# vector(c(TRUE, FALSE)): các giá trị trong bảng (có thể là bất kì giá trị nào)}
+\CommentTok{\# size : \# số lượng phần tử trong bảng.}
+\CommentTok{\# replace: }
+\CommentTok{\# prob: khoảng phân bố giữa các giá trị}
+\end{Highlighting}
+\end{Shaded}
+
+=\textgreater{} Bảng sample lúc này sẽ bao gồm 50 (vì nrow(cars) = 50)
+giá trị TRUE/FALSE
+
+=\textgreater{} Mỗi giá trị TRUE/FALSE sẽ tương ứng với một hàng trong
+bộ dữ liệu cars
+
+Ví dụ:
+
+\begin{verbatim}
+speed dist 
+\end{verbatim}
+
+1 4 2 TRUE 2 4 10 FALSE \ldots{} \ldots{} \ldots{} \ldots{}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \FunctionTok{table}\NormalTok{(sample)}
 \end{Highlighting}
 \end{Shaded}
@@ -136,7 +183,7 @@
 \begin{verbatim}
 ## sample
 ## FALSE  TRUE 
-##    17    33
+##    15    35
 \end{verbatim}
 
 \begin{Shaded}
@@ -145,8 +192,60 @@
 
 \NormalTok{training }\OtherTok{=}\NormalTok{ cars[sample, ]}
 \NormalTok{testing }\OtherTok{=}\NormalTok{ cars[}\SpecialCharTok{!}\NormalTok{sample, ]}
+\NormalTok{testing}
 \end{Highlighting}
 \end{Shaded}
+
+\begin{verbatim}
+##    speed dist
+## 9     10   34
+## 11    11   28
+## 15    12   28
+## 21    14   36
+## 25    15   26
+## 26    15   54
+## 29    17   32
+## 31    17   50
+## 37    19   46
+## 41    20   52
+## 43    20   64
+## 45    23   54
+## 46    24   70
+## 47    24   92
+## 48    24   93
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(training)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 35  2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(testing)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 15  2
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  training data: chỉ lấy những hàng trong bộ cars có chỉ số index là
+  sample = TRUE. Ví dụ: speed dist 1 4 2 TRUE 2 4 10 FALSE \ldots{}
+  \ldots{} \ldots{} \ldots{}
+\end{itemize}
+
+=\textgreater{} hàng 1 của bộ cars là TRUE
+
++testing data: tương tự với sample = FALSE
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -171,7 +270,34 @@
 ## 
 ## Coefficients:
 ##    (Intercept)  training$speed  
-##         -20.73            4.15
+##        -18.772           4.054
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(lmfit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = training$dist ~ training$speed)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -30.298 -10.004  -4.405   7.157  42.023 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)     -18.772      8.445  -2.223   0.0332 *  
+## training$speed    4.053      0.551   7.357  1.9e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 16.84 on 33 degrees of freedom
+## Multiple R-squared:  0.6212, Adjusted R-squared:  0.6097 
+## F-statistic: 54.12 on 1 and 33 DF,  p-value: 1.901e-08
 \end{verbatim}
 
 y = -16.609 + 3.843*x
@@ -191,39 +317,40 @@ TSS (Total sum of square) = sum( {[}y - mean(y){]}\^{}2 ) RSS = sum(
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{x }\OtherTok{=}\NormalTok{ testing}\SpecialCharTok{$}\NormalTok{speed}
-\NormalTok{y }\OtherTok{=}\NormalTok{ testing}\SpecialCharTok{$}\NormalTok{dist}
-\NormalTok{tss }\OtherTok{=} \FunctionTok{sum}\NormalTok{((y }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(x))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{y\_h }\OtherTok{=}\NormalTok{ lmfit}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{+}\NormalTok{ lmfit}\SpecialCharTok{$}\NormalTok{coefficients[}\DecValTok{2}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ testing}\SpecialCharTok{$}\NormalTok{speed}
+\NormalTok{tss }\OtherTok{=} \FunctionTok{sum}\NormalTok{((testing}\SpecialCharTok{$}\NormalTok{dist }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(testing}\SpecialCharTok{$}\NormalTok{dist))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \NormalTok{tss}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 17056.53
+## [1] 6575.6
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{rss }\OtherTok{=} \FunctionTok{sum}\NormalTok{((y }\SpecialCharTok{+} \FloatTok{16.609}  \SpecialCharTok{{-}} \FloatTok{3.843}\SpecialCharTok{*}\NormalTok{x)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{rss }\OtherTok{=} \FunctionTok{sum}\NormalTok{((testing}\SpecialCharTok{$}\NormalTok{dist }\SpecialCharTok{{-}}\NormalTok{ y\_h)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
 \NormalTok{rss}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 2580.425
+## [1] 2032.862
 \end{verbatim}
 
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{r2 }\OtherTok{=} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ rss}\SpecialCharTok{/}\NormalTok{tss}
-\FunctionTok{sqrt}\NormalTok{(r2)}
+\NormalTok{r2}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 0.9212564
+## [1] 0.6908477
 \end{verbatim}
 
-=\textgreater{} R = 0.8920652
+=\textgreater{} Testing: R2 = 0.5593682 Training: R2 = 0.7237
+=\textgreater{} Bộ data testing là ko tốt vì giá trị R2 bị giảm so với
+bộ training
 
 \end{document}

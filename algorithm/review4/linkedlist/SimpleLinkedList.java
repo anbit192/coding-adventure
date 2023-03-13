@@ -14,7 +14,7 @@ public class SimpleLinkedList<T> {
     public Node get(int index) {
         Node currentNode = headNode;
 
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i <= index - 1 ; i++) {
             currentNode = currentNode.getNextNode();
         }
 
@@ -42,18 +42,23 @@ public class SimpleLinkedList<T> {
         this.bottomNode = get(this.size - 1);
         Node newNode = new Node(data);
         this.bottomNode.setNextNode(newNode);
+        this.bottomNode = newNode;
         this.size++;
     }
 
     public T removeTop() {
 
-        if (this.size < 2) {
-            return null;
-        }
-
         Node removedNode = this.headNode;
 
-        this.headNode = get(1);
+        if (this.size < 1) {
+            this.headNode = null;
+
+            this.size--;
+            return removedNode.getData();
+        }
+
+
+        this.headNode = this.headNode.getNextNode();
 
         this.size--;
 
@@ -62,13 +67,17 @@ public class SimpleLinkedList<T> {
 
     public T removeBot() {
 
-        if (this.size < 2) {
-            return null;
+        Node removedNode = get(this.size - 1);
+
+        if (this.size == 1) {
+
+            this.removeIndex(0);
+            return removedNode.getData();
         }
 
-        Node removedNode = this.bottomNode;
 
         this.bottomNode = get(this.size - 2);
+        this.bottomNode.setNextNode(null);
 
         this.size--;
 
@@ -108,6 +117,7 @@ public class SimpleLinkedList<T> {
 
         if (index == 0) {
             this.removeTop();
+            return;
         }
 
         currentNode.setNextNode(currentNode.getNextNode().getNextNode());
@@ -147,10 +157,11 @@ public class SimpleLinkedList<T> {
     }
 
     public void print() {
+
         for (int i = 0; i < this.size; i++) {
             System.out.print(this.get(i).getData() + " ");
         }
-        System.out.println();
+        System.out.println("size:" + this.size);
     }
 
     class Node {

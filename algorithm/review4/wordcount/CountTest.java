@@ -18,10 +18,10 @@ public class CountTest {
         test.readFile("C:\\Users\\ADMIN\\Desktop\\study\\algorithm\\review4\\wordcount\\text.txt");
 
         test.count();
+        System.out.println(test.list);
 
-        for (WordCount wordCount : test.words) {
-            System.out.println(wordCount);
-        }
+        System.out.println(test.words);
+
 
     }
 
@@ -30,7 +30,10 @@ public class CountTest {
 
         String[] splittedString = line.split("\\s+");
         for (String str : splittedString) {
-            newList.add(str);
+            str = str.replaceAll("[(-+=^.'\"\\s:,)]", "");
+            if (!str.equals("")) {
+                newList.add(str);
+            }
         }
 
         return newList;

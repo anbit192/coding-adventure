@@ -16,19 +16,66 @@ data(cars)
 
 1. Chia bộ dữ liệu cars thành hai bộ dữ liệu con: training (65%) và testing (35%)
 ```{r}
-sample = sample(c(TRUE, FALSE), nrow(cars), replace = TRUE, prob = c(0.65, 0.35))
+# sample() tạo ra bảng các giá trị dưa vào dữ liệu được đưa vào.
+# sample(x, size, replace = FALSE, prob = NULL)
+
+
+#Áp dụng để chia bộ dữ liệu thành 2 phần
+
+#Tạo ra bảng các giá trị ngẫu nhiên true hoặc false
+
+size = nrow(cars) 
+
+sample = sample(c(TRUE, FALSE), size, replace = TRUE, prob = c(0.65, 0.35))
+sample
+
+# vector(c(TRUE, FALSE)): các giá trị trong bảng (có thể là bất kì giá trị nào)
+# size : # số lượng phần tử trong bảng.
+# replace: 
+# prob: khoảng phân bố giữa các giá trị
+```
+
+=> Bảng sample lúc này sẽ bao gồm 50 (vì nrow(cars) = 50) giá trị TRUE/FALSE
+
+=> Mỗi giá trị TRUE/FALSE sẽ tương ứng với một hàng trong bộ dữ liệu cars
+
+Ví dụ: 
+
+    speed dist 
+1      4    2  TRUE
+2      4   10  FALSE
+...   ...  ...  ...
+
+
+```{r}
 table(sample)
 set.seed(1)
 
 training = cars[sample, ]
 testing = cars[!sample, ]
-
+testing
+dim(training)
+dim(testing)
 ```
+
++ training data: chỉ lấy những hàng trong bộ cars có chỉ số index là sample = TRUE.
+Ví dụ: 
+        speed dist 
+1      4    2  TRUE
+2      4   10  FALSE
+...   ...  ...  ...
+
+=> hàng 1 của bộ cars là TRUE
+
++testing data: tương tự với sample = FALSE
+
 2. Phân tích hồi quy tuyến tính của biến dist theo speed trên bộ dữ liệu training.
 
 ```{r}
 lmfit = lm(training$dist ~ training$speed)
 lmfit
+
+summary(lmfit)
 ```
 
 y = -16.609  + 3.843*x
@@ -42,18 +89,20 @@ TSS (Total sum of square) = sum( [y - mean(y)]^2 )
 RSS = sum( [y - a0h - a1h * x]^2 )
 
 ```{r}
-x = testing$speed
-y = testing$dist
-tss = sum((y - mean(y))^2)
+
+y_h = lmfit$coefficients[1] + lmfit$coefficients[2] * testing$speed
+tss = sum((testing$dist - mean(testing$dist))^2)
 tss
 
-rss = sum((y + 16.609  - 3.843*x)^2)
+rss = sum((testing$dist - y_h)^2)
 rss
 
 r2 = 1 - rss/tss
 r2
-sqrt(r2)
+
 
 ```
 
-=> R = 0.7479092
+=> Testing: R2 = 0.5593682 
+   Training: R2 = 0.7237
+=> Bộ data testing là ko tốt vì giá trị R2 bị giảm so với bộ training

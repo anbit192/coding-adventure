@@ -18,7 +18,7 @@ public class SimpleArrayList<T> implements ListInterface<T> {
     }
 
     private void enlarge() {
-        T[] newArray = (T[]) new Object[array.length * 2];
+        T[] newArray = (T[]) new Object[array.length + 20];
 
         for (int i = 0; i < this.array.length; i++) {
             newArray[i] = this.array[i];
@@ -98,18 +98,16 @@ public class SimpleArrayList<T> implements ListInterface<T> {
         this.size--;
 
         this.array = newArray;
-
     }
 
     @Override
     public void set(int index, T data) {
         // TODO Auto-generated method stub
-        if (index >= size) {
+        if (index >= size || index < 0) {
             return;
         }
 
         this.array[index] = data;
-
     }
 
     @Override
@@ -159,13 +157,11 @@ public class SimpleArrayList<T> implements ListInterface<T> {
         public T next() {
             // TODO Auto-generated method stub
 
-            if (currentPos < size) {
+            if (hasNext()) {
                 return array[currentPos++];
             }
 
             return null;
         }
     }
-
-
 }
