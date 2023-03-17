@@ -3,44 +3,42 @@ package spoj;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.Scanner;
+import java.util.Stack;
 
-public class EZQUEUE {
+public class STACKEZ {
     public static void main(String[] args) throws IOException {
-
-        Queue<Integer> queue = new LinkedList<>();
-        query(queue);
-
+        Stack<Integer> stack = new Stack<>();
+        query(stack);
     }
 
-    public static void query(Queue<Integer> queue) throws IOException {
+    public static void query(Stack<Integer> stack) throws IOException {
         Reader scan = new Reader();
-        StringBuilder out = new StringBuilder();
-        int T = scan.nextInt();
+        StringBuilder sb = new StringBuilder();
+        int numberOfQuerries = scan.nextInt();
 
-        for (int i = 0; i < T; i++) {
-
-
-            int n = scan.nextInt();
-            if (n == 1) {
-                Integer x = scan.nextInt();
-                queue.offer(x);
-            } else if (n == 2) {
-                if (!queue.isEmpty()) {
-                    queue.poll();
-                }
-            } else if (n == 3) {
-                Integer number = queue.peek();
-
-                if (queue.isEmpty()) {
-                    out.append("Empty!\n");
-                } else {
-                    out.append(number).append("\n");
-                }
+        for (int i = 0; i < numberOfQuerries; i++) {
+            int query = scan.nextInt();
+            switch (query) {
+                case 1:
+                    stack.push(scan.nextInt());
+                    break;
+                case 2:
+                    if (!stack.isEmpty()) {
+                        stack.pop();
+                    }
+                    break;
+                case 3:
+                    if (stack.isEmpty()) {
+                        sb.append("Empty!\n");
+                    } else {
+                        sb.append(stack.peek()).append("\n");
+                    }
             }
+
         }
-        System.out.println(out);
+
+        System.out.println(sb);
     }
 
     static class Reader {
@@ -155,5 +153,4 @@ public class EZQUEUE {
             din.close();
         }
     }
-
 }
