@@ -1,4 +1,4 @@
-package adtstack.stack;
+package adtstackandqueue.stack;
 
 public class TestListStack {
     public static void main(String[] args) {

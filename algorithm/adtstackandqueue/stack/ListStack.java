@@ -1,4 +1,4 @@
-package adtstack.stack;
+package adtstackandqueue.stack;
 
 import java.util.Iterator;
 
@@ -16,6 +16,8 @@ public class ListStack<E> implements StackInterface<E> {
     public ListStack(int capacity) {
         this.array = (E[]) new Object[capacity];
     }
+
+
 
     @Override
     public void push(E element) {
@@ -94,7 +96,7 @@ public class ListStack<E> implements StackInterface<E> {
         sb.append("[ ");
 
         if (this.size < 1) {
-            sb.append(" ]");
+            sb.append(" ]\n");
 
             return sb.toString();
         }
@@ -102,7 +104,7 @@ public class ListStack<E> implements StackInterface<E> {
         for (int i = 0; i < this.size; i++) {
 
             if (i == size - 1) {
-                sb.append(array[i]).append(" ]");
+                sb.append(array[i]).append(" ]\n");
 
             } else {
                 sb.append(array[i]).append(", ");

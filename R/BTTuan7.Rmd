@@ -1,0 +1,63 @@
+---
+title: "BTTuan7"
+output: html_document
+date: "2023-03-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+(a) Generate a simulated data set as follows:
+```{r}
+set.seed(1)
+x=rnorm(100)
+y=x-2*x^2+rnorm(100)
+
+
+```
+In this data set, what is n and what is p? Write out the model
+used to generate the data in equation form:
+
+=> số quan sát (n): 100 , số biến (p): 2
+=> model: y = x - 2*x^2 + e
+
+(b) Create a scatterplot of X against Y . Comment on what you find.
+
+
+```{r}
+plot(x, y)
+```
+
+(c) Set a random seed, and then compute the LOOCV errors that
+result from fitting the following four models using least squares:
+
+```{r}
+
+set.seed(192)
+cv_errors = rep(0,4)
+df = data.frame(x, y)
+library(boot)
+for (i in 1:4) {
+  glmfit = glm(y~poly(x, i), data = df)
+  cv_err = cv.glm(df, glmfit)$delta[1]
+  cv_errors[i] = cv_err
+  
+  
+}
+
+cv_errors
+```
+
+(e) Which of the models in (c) had the smallest LOOCV error? Is
+this what you expected? Explain your answer.
+=> sai số của mô hình bậc 2 là nhỏ  nhất 
+
+```{r}
+glmfit = glm(y~poly(x,4), data=df)
+summary(glmfit)
+```
+
+
+
+
+

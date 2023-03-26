@@ -1,0 +1,130 @@
+---
+title: "TH tuần 6"
+author: "21000405_Nguyễn Ngọc Anh"
+date: "2023-03-14"
+output: html_document
+---
+
+Mô hình hồi quy tuyến tính bội
+install.packages(datasets) : cài đặt gói lệnh
+
+```{r}
+library(datasets)  #cài dữ liệu
+only = lm(mpg ~ cyl, data = mtcars)
+only
+```
+
+```{r}
+only1 = lm(mpg ~ cyl + 0, data = mtcars)
+summary(only1)
+```
+=> mpg = 2.7897 * cyl
+
+
+```{r}
+only2 = lm(mpg ~ 1, data = mtcars)
+only2
+```
+=> mpg = 20.09
+
+```{r}
+two = lm(mpg ~ cyl + disp, data = mtcars) #theo 2 biến
+two$coefficients
+
+summary(two)
+```
+=> mpg = -1.58727681 * cyl -0..02058363 * disp + 34.66099474
+H0: a1 = 0 vs H1: a1 != 0
+Do p-value -> hệ số tự do và hệ số của cyl != 0, còn hệ số của disp = 0
+
+
+```{r}
+all = lm(mpg ~ ., data = mtcars) #mpg theo tất cả các biến còn lại
+summary(all)
+```
+mpg = a0 + a1 * cyl + a2 * disp + ...
+H0: a1 = 0 vs H1: a1 != 0
+Do p-value = 0.9161 > 0.05 nên chấp nhận H0, tức hệ số = 0
+
+
+```{r}
+two1 = lm(mpg ~ cyl + wt, data = mtcars)
+summary(two1)
+```
+mpg = a0 + a1 * cyl + a2 * wt
+Phần dư e ~ N(0, sigma^2(e))
+
+```{r}
+shapiro.test(two1$residuals) #kiểm tra phân phối chuẩn của phần dư
+```
+H0: phần dư tuân theo phân phối chuẩn, H1: phần dư ko tuân theo phân phối chuẩn
+Do p-value > 0.05 nên chấp nhận H0 => có cơ sở để nói rằng phần dư tuân theo pp chuẩn
+
+Nếu phần dư không tuân theo pp chuẩn, để kiểm định giá trị trung bình của phần dư có bằng 0 ko thì dùng wilcox.test()
+Nếu phần dư tuân theo pp chuẩn, để kiểm định giá trị trung bình của phần dư có bằng 0 ko thì dùng t.test()
+
+```{r}
+t.test(two1$residuals) #kiểm định giá trị trung bình của phần dư có bằng 0 ko khi biết phần dư tuân theo pp chuẩn
+```
+=> phần dư = 0
+
+
+Chỉ số AIC: dùng hàm step để tìm ra mô hình tốt nhất, tương ứng với AIC nhỏ nhất
+install.package("stats")
+
+Forward: mô hình từ Y = a0 + e đến Y = a0 + a1 * x1 + a2 * x2 + ...
+Backward: mô hình từ Y = a0 + a1 * x1 + a2 * x2 + ... đến Y = a0 + e
+
+step(object, scope, direction, trace), trong đó
++ object: hàm lm đơn giản nhất / phức tạp nhất
++ scope: hàm lm phức tạp nhất / đơn giản nhất
++ direction: forward / backward
++ trace: đưa vào giá trị càng lớn thì kết quả càng chi tiết
+
+Hàm lm đơn giản nhất: only2 = lm(mpg ~ 1, data = mtcars)
+Hàm lm phức tạp nhất: all = lm(mpg ~ ., data = mtcars) 
+
+
+```{r}
+forward = step(only2, scope = formula(all), direction = "forward", trace = 0)
+summary(forward)
+
+forward$anova
+```
+1. Tính toán từ mô hình mpg = a0 + e, tính được AIC
+2. Tính toán các mô hình mpg = a0 + a_i  * x_i + e, tính được 10 giá trị AIC tương ứng với 10 biến x_i, chọn ra AIC nhỏ nhất
+
+Sau bước 2, thu được AIC = 73.21736, và mô hình thu được sau bước này là: mpg = a0 + a1 * wt
+
+3. Tính toán các mô hình mpg = a0 + a1 * wt + a2 * x_j + e, tính được 9 giá trị AIC tương ứng với 9 biến x_j còn lại (trừ wt), chọn ra AIC nhỏ nhất
+
+Sau bước 3, thu được AIC = 63.198, và mô hình thu được sau bước này là: mpg = a0 + a1 * wt + a2 * cyl
+
+4. Tính toán các mô hình mpg = a0 + a1 * wt + a2 * cyl + a3 * x_k + e, tính được 8 giá trị AIC tương ứng với 9 biến x_j còn lại (trừ wt và cyl), chọn ra AIC nhỏ nhất
+
+Sau bước 4, thu được AIC = 62.66456, và mô hình thu được sau bước này là: mpg = a0 + a1 * wt + a2 * cyl + a3 * hp
+
+=> Dùng step thu được mô hình tốt nhất: mpg = a0 + a1 * wt + a2 * cyl + a3 * hp
+
+```{r}
+forward$coefficients
+```
+=> mpg = 38.7517874 - 3.1669731 * wt - 0.9416168 * cyl - 0.0180381 * hp
+
+
+```{r}
+summary(forward)
+```
+Do p-value: hệ số tự do và hệ số của wt != 0, còn của cyl và hp = 0
+
+```{r}
+backward = step(all, scope = formula(only2), direction = "backward", trace = 0)
+summary(backward)
+
+backward$anova
+
+backward$coefficients
+```
+=> Mô hình hồi quy tuyến tính thu được: mpg = 9.617781 - 3.916504 * wt + 1.225886 * qsec + 2.935837 * am
+
+

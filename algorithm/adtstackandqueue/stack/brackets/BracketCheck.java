@@ -1,7 +1,7 @@
-package adtstack.stack.brackets;
+package adtstackandqueue.stack.brackets;
 
-import adtstack.stack.ListStack;
-import adtstack.stack.StackInterface;
+import adtstackandqueue.stack.ListStack;
+import adtstackandqueue.stack.StackInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,13 @@ public class BracketCheck {
 
         return stack.isEmpty();
     }
+
+    public static double evaluate(String str) {
+
+        return 0.0;
+    }
+
+
 
     private static ArrayList<String> generate() {
         ArrayList<String> maths = new ArrayList<>();

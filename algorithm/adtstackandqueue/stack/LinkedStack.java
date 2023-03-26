@@ -1,4 +1,4 @@
-package adtstack.stack;
+package adtstackandqueue.stack;
 
 import java.util.Iterator;
 
