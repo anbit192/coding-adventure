@@ -33,6 +33,7 @@ public class TestLinkedList {
         list.print();
 
         list.add(192, 0);
+        list.addBot(1234);
         list.print();
 
 

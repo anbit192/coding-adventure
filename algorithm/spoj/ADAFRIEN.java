@@ -5,8 +5,10 @@ import java.util.*;
 public class ADAFRIEN {
 
     public static void main(String[] args) {
+
         Scanner scan = new Scanner(System.in);
         StringBuilder sb = new StringBuilder();
+
         long numberOfCelebrations = scan.nextLong();
         long k = scan.nextLong();
 
@@ -23,8 +25,6 @@ public class ADAFRIEN {
         }
 
         System.out.println(sb.append(totalExpense).append("\n"));
-
-
     }
 
     public static ArrayList<Map.Entry<String, Long>> input(Scanner scan, long numberOfCelebrations) {
@@ -32,7 +32,7 @@ public class ADAFRIEN {
 
         for (int i = 0; i < numberOfCelebrations; i++) {
             String name = scan.next();
-            int expense = Integer.parseInt(scan.next());
+            long expense = Long.parseLong(scan.next());
 
             map.put(name, map.getOrDefault(name, 0L) + expense);
         }

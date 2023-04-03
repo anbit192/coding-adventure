@@ -39,11 +39,12 @@ public class SimpleLinkedList<T> {
     }
 
     public void addBot(T data) {
-        this.bottomNode = get(this.size - 1);
+        /*this.bottomNode = get(this.size - 1);
         Node newNode = new Node(data);
         this.bottomNode.setNextNode(newNode);
         this.bottomNode = newNode;
-        this.size++;
+        this.size++;*/
+        this.add(data, this.size);
     }
 
     public T removeTop() {

@@ -1,0 +1,475 @@
+---
+title: "REVISION"
+output: html_document
+date: "2023-03-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+=========== BT tuần 2: Hồi quy tuyến tính đơn ================
+
+1. Cho bộ dữ liệu Australian Institute of Sport (file excel đính kèm). Sử dụng
+phần mềm thống kê R/Rstudio, hãy:
+a. Viết phương trình đường thẳng hồi quy tuyến tính của BMI theo Wt.
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+c. Tìm khoảng tin cậy 90% cho các hệ số hồi quy.
+d. Các hệ số hồi quy có thực sự khác 0 không? Nếu tồn tại hệ số hồi quy bằng 0, 
+xác định lại ước lượng của các hệ số trong mô hình hồi quy tuyến tính mới.
+
+
+--------------------------------------------------------------------------------
+```{r}
+
+data_csv = read.csv("C:\\Users\\ADMIN\\Downloads\\Australian Institute of Sport.csv", header = TRUE)
+
+
+```
+
+a.Viết phương trình đường thẳng hồi quy tuyến tính của BMI theo Wt.
+```{r}
+lm1 = lm(BMI ~ Wt, data = data_csv)
+lm1
+```
+
+ => BMI = 0.174 * Wt + 9.906
+
+
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+
+```{r}
+## + Lấy ra phần dư của mô hình lm1:
+epsilon = residuals(lm1)
+```
+
+```{r}
+## + Phần dư có pb chuẩn ko?
+shapiro.test(epsilon)
+
+
+```
+H0: epsilon theo pp chuẩn || H1: epsilon ko theo pp chuẩn
+
+=> Vì p-value thu được = 0.0229 < 0.05 => phần dư của mô hình không theo phân 
+phối chuẩn
+
+```{r}
+# + Giá trị trung bình của phần dư có bằng 0 không?
+
+t.test(epsilon, mu = 0)
+```
+H0: muy epsilon = 0 || muy epsilon != 0
+Vì p-value = 1 > 0.05
+=> Nếu phần dư tuân theo pp chuẩn thì gtri trung bình epsilon sẽ = 0
+
+c. Tìm khoảng tin cậy 90% cho các hệ số hồi quy.
+```{r}
+confint(lm1, level = 0.9)
+
+```
+=> a0 thuộc khoảng (8.92, 10.88)
+   a1 thuộc khoảng (0.16, 0.18)
+
+d. Các hệ số hồi quy có thực sự khác 0 không? Nếu tồn tại hệ số hồi quy bằng 0,
+xác định lại ước lượng của các hệ số trong mô hình hồi quy tuyến tính mới.
+
+```{r}
+summary(lm1)
+```
+Xét 2 bài toán:
+BT1: 
+H0: a0 = 0 | H1: a0 != 0
+vì p-value < 0.05 => Bác bỏ H0 => a0 != 0
+
+BT2:
+H0: a1 = 0 | H1: a1 != 0
+Vì p-value < 0.05 => Bác bỏ H0 => a1 != 0
+
+
+
+
+2. Sinh ngẫu nhiên 1000 giá trị của biến X từ phân phối chuẩn N(158; 25) và 1000
+giá trị của biến Y từ phân phối chuẩn N(59; 9).
+a. Viết phương trình đường thẳng hồi quy tuyến tính của X theo Y.
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+c. Với Y = 57.5, đưa ra dự đoán về giá trị của X và khoảng tin cậy 95% cho
+giá trị trung bình của X.
+--------------------------------------------------------------------------------
+```{r}
+set.seed(1)
+x = rnorm(1000, mean = 158 , sqrt(25))
+y = rnorm(1000, 59, sqrt(9))
+df1 = data.frame(x, y)
+lm2 = lm(x ~ y, data = df1)
+lm2
+
+```
+=> x = 0.01062 * y + 157.31589
+
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+
+```{r}
+epsilon = residuals(lm2)
+
+shapiro.test(epsilon)
+```
+H0: epsilon theo pp chuẩn | H1: epsilon ko theo pp chuẩn
+vì p-value = 0.7213 > 0.05 
+=> epsilon tuân theo pp chuẩn
+
+```{r}
+t.test(epsilon, mu = 0)
+```
+=> vif p-value > 0.05 => epsilon có gtri tb = 0
+
+c. Với Y = 57.5, đưa ra dự đoán về giá trị của X và khoảng tin cậy 95% cho
+giá trị trung bình của X.
+
+```{r}
+predict(lm2, data.frame(y = 57.5), interval = "confidence")
+```
+
+=> Giá trị của x với y = 57.5 ở mô hình lm2 sẽ nằm trong 
+khoảng (157.572, 158. 2807)
+
+
+============Tuần 3: HQTT đơn (tiếp)=============
+
+Thực hiện các yêu cầu với bộ dữ liệu cars gồm 50 quan sát về dist (khoảng cách
+dừng (ft)) và speed (tốc độ (mph)).   trong gói lệnh datasets:
+- Chia bộ dữ liệu cars thành hai bộ dữ liệu con: training (65%) và testing (35%)
+- Phân tích hồi quy tuyến tính của biến dist theo speed  trên bộ dữ liệu 
+training.
+- Đánh giá trên bộ dữ liệu testing.
+
+
+--------------------------------------------------------------------------------
+
+```{r}
+
+```
+
+
+- Chia bộ dữ liệu cars thành hai bộ dữ liệu con: training (65%) và testing (35%)
+
+```{r}
+set.seed(1)
+sample = sample(c(TRUE, FALSE), size = nrow(cars), replace = TRUE, prob = c(0.65, 0.35))
+sample
+
+
+df = data.frame(cars, sample)
+df
+
+training = cars[sample, ]
+test = cars[!sample, ]
+training
+
+```
+
+- Phân tích hồi quy tuyến tính của biến dist theo speed  trên bộ dữ liệu
+training.
+
+```{r}
+lm = lm(dist ~ speed, data = training)
+lm
+
+summary(lm)
+```
+
+=> dist = 3.843 * speed - 16.609
+
+
+- Đánh giá trên bộ dữ liệu testing.
+
+```{r}
+
+y = test$dist
+x = test$speed
+y_h = lm$coefficients[1] + lm$coefficients[2] * x
+lm$coefficients[1]
+lm$coefficients[2]
+
+
+rss = sum((y - y_h)^2)
+tss = sum((y - mean(y))^2)
+
+rss
+tss
+
+r_squared = 1 - rss/tss
+r_squared
+
+```
+
+vì r_squared < 0.8 => bộ dữ liệu test không tốt
+
+
+============THỰC HÀNH HỒI QUY TUYẾN TÍNH ĐA BIẾN================
+
+Sử dụng bộ dữ liệu Boston trong gói lệnh MASS bao gồm 14 biến liên quan đến
+giá trị nhà ở vùng ngoại ô ở Boston và hàm step, phân tích hồi quy bội của biến
+medv (giá nhà trung bình – đơn vị: nghìn $) theo các biến còn lại.
+a) Đưa ra mô hình hồi quy tuyến tính “forward” và “ backward” tốt nhất.
+b) Khi phân tích “forward”, nếu biến medv được biểu diễn theo hai biến thì đó
+là những biến nào?
+c) Khi phân tích “backward”, kiểm định xem các hệ số trong mô hình hồi quy
+tuyến tính thu được có thực sự khác 0 không? Phần dư có tuân theo phân
+phối chuẩn với giá trị trung bình bằng 0 không?
+
+--------------------------------------------------------------------------------
+```{r}
+library(MASS)
+Boston
+```
+
+
+a) Đưa ra mô hình hồi quy tuyến tính “forward” và “ backward” tốt nhất.
+
+```{r}
+lm1 = lm(medv ~ 1, data = Boston)
+lm2 = lm(medv ~ ., data = Boston)
+
+forward = step(lm1, scope = formula(lm2), direction = "forward", trace = 0)
+forward
+
+backward = step(lm2, scope = formula(lm1), direction = "backward", trace = 0)
+backward
+
+
+
+```
+b) Khi phân tích “forward”, nếu biến medv được biểu diễn theo hai biến thì đó
+là những biến nào?
+
+```{r}
+forward$anova
+```
+
+=> 2 biến đó sẽ là lstat và rm
+
+```{r}
+lm3 = lm(medv ~ lstat + rm , data = Boston)
+summary(lm3)
+```
+H0: a0 = 0 | H1: a0 != 0
+vif p-value = 0.669 => chấp thuận H0 => a0 = 0
+
+=> Viết lại phương trình hqtt 
+
+```{r}
+lm3 = lm(medv ~ lstat + rm + 0, data = Boston)
+lm3
+```
+=> medv = -0.65 * lstat + 4.906 * rm
+
+c) Khi phân tích “backward”, kiểm định xem các hệ số trong mô hình hồi quy
+tuyến tính thu được có thực sự khác 0 không? Phần dư có tuân theo phân
+phối chuẩn với giá trị trung bình bằng 0 không?
+
+```{r}
+summary(backward)
+```
+
+H0: Hệ số của mô hình = 0 | H1: Hệ số của mô hình != 0
+=> do p-value của các hệ số đều < 0.05
+=> Bác bỏ H0, chấp thuận H1
+=> Hệ số của mô hình backward != 0
+
+```{r}
+epsilon = residuals(backward)
+
+shapiro.test(epsilon)
+```
+H0: epsilon theo pp chuẩn | H1: epsilon ko theo pp chuẩn
+=> Do p-value < 0.05 => epsilon ko theo pp chuẩn
+
+
+==========TH Tuần 8==================
+
+8.
+(a). Generate a simulated data set as follows:
+
+  > set.seed(1)
+  > y=rnorm(100)
+  > x=rnorm(100)
+  > y=x-2*x^2+rnorm (100)
+
+In this data set, what is n and what is p? Write out the model
+used to generate the data in equation form.
+
+(b). Create a scatterplot of X against Y . Comment on what you find.
+
+(c). Set a random seed, and then compute the LOOCV errors that
+result from fitting the following four models using least squares:
+
+  i. Y = β0 + β1X + epsilon
+  ii. Y = β0 + β1X + β2X^2 + epsilon
+  iii. Y = β0 + β1X + β2X^2 + β3X^3 + epsilon
+  iv. Y = β0 + β1X + β2X^2 + β3X^3 + β4X^4 + epsilon
+
+Note you may find it helpful to use the data.frame() function
+to create a single data set containing both X and Y .
+
+(d). Repeat (c) using another random seed, and report your results.
+Are your results the same as what you got in (c)? Why?
+
+(e). Which of the models in (c) had the smallest LOOCV error? Is
+this what you expected? Explain your answer.
+
+(f). Comment on the statistical significance of the coefficient estimates that 
+results from fitting each of the models in (c) using
+least squares. Do these results agree with the conclusions drawn
+based on the cross-validation results?
+
+
+--------------------------------------------------------------------------------
+
+(a). Generate a simulated data set as follows:
+
+  > set.seed(1)
+  > y=rnorm(100)
+  > x=rnorm(100)
+  > y=x-2*x^2+rnorm (100)
+
+In this data set, what is n and what is p? Write out the model
+used to generate the data in equation form.
+
+```{r}
+set.seed(1)
+x = rnorm(100)
+y = x - 2*x^2 + rnorm(100)
+df = data.frame(x, y)
+df
+```
+
+- n: Số quan sát: 100
+- p: Số biến: 2 (x, y)
+- mô hình: y = x - 2x^2 + e
+
+
+(b). Create a scatterplot of X against Y . Comment on what you find.
+
+```{r}
+plot(x, y)
+```
+
+=> Đồ thị có dạng pt bậc 2: y = ax^2 + bx + c với a < 0
+
+
+(c). Set a random seed, and then compute the LOOCV errors that
+result from fitting the following four models using least squares:
+
+  i. Y = β0 + β1X + epsilon
+  ii. Y = β0 + β1X + β2X^2 + epsilon
+  iii. Y = β0 + β1X + β2X^2 + β3X^3 + epsilon
+  iv. Y = β0 + β1X + β2X^2 + β3X^3 + β4X^4 + epsilon
+
+Note you may find it helpful to use the data.frame() function
+to create a single data set containing both X and Y .
+
+```{r}
+library(boot)
+set.seed(192)
+cv_errors = rep(0, 4)
+for (i in 1:4) {
+  glm1 = glm(y ~ poly(x, i), data = df)
+  error = cv.glm(df, glm1)$delta[1]
+  
+  cv_errors[i] = error
+}
+
+cv_errors
+```
+
+(d). Repeat (c) using another random seed, and report your results.
+Are your results the same as what you got in (c)? Why?
+
+(e). Which of the models in (c) had the smallest LOOCV error? Is
+this what you expected? Explain your answer.
+
+- model mô hình pt bậc 2 có sai số LOOCV nhỏ nhất = 0.9374. Đúng như dự đoán vì
+đồ thị của x và y là một đường cong parabol.
+
+
+9 . We will now consider the Boston housing data set, from the MASS
+library.
+(a) Based on this data set, provide an estimate for the population
+mean of medv. Call this estimate ˆμ.
+(b) Provide an estimate of the standard error of ˆμ. Interpret this
+result.
+Hint: We can compute the standard error of the sample mean by
+dividing the sample standard deviation by the square root of the
+number of observations.
+(c) Now estimate the standard error of ˆμ using the bootstrap. How
+does this compare to your answer from (b)?
+(d) Based on your bootstrap estimate from (c), provide a 95 % confidence interval for the mean of medv. Compare it to the results
+obtained using t.test(Boston$medv).
+Hint: You can approximate a 95 % confidence interval using the
+formula [ˆμ − 2SE(ˆμ), μˆ + 2SE(ˆμ)].
+(e) Based on this data set, provide an estimate, ˆμmed, for the median
+value of medv in the population.
+(f) We now would like to estimate the standard error of ˆμmed. Unfortunately, there is no simple formula for computing the standard
+error of the median. Instead, estimate the standard error of the
+median using the bootstrap. Comment on your findings.
+(g) Based on this data set, provide an estimate for the tenth percentile of medv in Boston suburbs. Call this quantity ˆμ0.1. (You
+can use the quantile() function.)
+(h) Use the bootstrap to estimate the standard error of ˆμ0.1. Comment on your findings.
+
+```{r}
+library(MASS)
+Boston
+```
+
+
+(a) Based on this data set, provide an estimate for the population
+mean of medv. Call this estimate u_h
+```{r}
+mu_h = mean(Boston$medv)
+```
+
+(b) Provide an estimate of the standard error of ˆμ. Interpret this
+result.
+
+Hint: We can compute the standard error of the sample mean by
+dividing the sample standard deviation by the square root of the
+number of observations.
+```{r}
+medv_sd = sd(Boston$medv) #standard deviation = sqrt(var(Boston$medv)) too
+medv_sd
+n = nrow(Boston) #number of observations
+
+se = medv_sd / sqrt(n)
+se
+```
+=> se = 0.4088611
+
+(c) Now estimate the standard error of ˆμ using the bootstrap. How
+does this compare to your answer from (b)?
+
+```{r}
+set.seed(1)
+meanfn = function(data, index) {
+  x = data$medv[index]
+  return (mean(x))
+}
+
+boot(data = Boston, meanfn, R = 1000)
+```
+
+=> std error khi su dung bootstrap = 0.4156
+
+=> xap xi cau b
+
+(d) Based on your bootstrap estimate from (c), provide a 95 % confidence interval for the mean of medv. Compare it to the results
+
+
+```{r}
+t.test(Boston$medv)
+
+```
+=> mean = 22.53281
+khoảng tin cậy của mean(medv) (21.72, 23.33)
+

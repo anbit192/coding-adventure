@@ -166,7 +166,7 @@ public class LinkedBinaryTree<E> implements BinaryTreeInterface<E> {
 
         String str = sb.toString();
         str = str.substring(0, str.length() - 2);
-        str += "]";
+        str += " ]";
 
         return str;
     }
