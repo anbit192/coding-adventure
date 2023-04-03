@@ -59,7 +59,7 @@ public class CLSLDR {
                 student = student.nextNode;
                 count++;
             }
-
+            this.print();
             this.remove(student.getData());
         }
 
@@ -116,10 +116,11 @@ public class CLSLDR {
             return removedNode.getData();
         }
 
+        this.head = this.head.nextNode;
 
+        get(this.size - 1).nextNode = this.head;
 
-
-        this.size--;
+        //this.size--;
 
         return removedNode.getData();
     }
@@ -128,9 +129,10 @@ public class CLSLDR {
         Node currentNode = get(index - 1);
 
         if (index == 0) {
+            System.out.println("Removed Head: " + this.head.data);
             this.removeTop();
-            this.head = this.head.getNextNode();
-            this.get(this.size - 1).setNextNode(this.head);
+            System.out.println("New head: " + this.head.data);
+
             return;
         }
 

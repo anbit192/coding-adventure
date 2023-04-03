@@ -13,6 +13,10 @@ public class BracketCheck {
 
         List<String> maths = generate();
 
+        for (String str : maths) {
+            System.out.println(checkBracket(str));;
+        }
+
         String exp = "(10 - 8) / ( (2 + 5) * 17)";
 
         System.out.println(evaluate(exp));

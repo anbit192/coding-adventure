@@ -15,7 +15,7 @@ public class CountTest {
     public static void main(String[] args) {
 
         CountTest test = new CountTest();
-        test.readFile("C:\\Users\\ADMIN\\Desktop\\study\\algorithm\\review4\\wordcount\\text.txt");
+        test.readFile("adtlist/wordcount/text.txt");
 
         test.count();
         System.out.println(test.list);

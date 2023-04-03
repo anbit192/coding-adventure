@@ -1,147 +1,85 @@
 package adtlist.linkedlist;
 
-public class SimpleLinkedList<T> {
+import java.util.NoSuchElementException;
 
-    private Node headNode;
-    private Node bottomNode;
+public class SimpleLinkedList<E> {
+
+    private Node head;
+    private Node bot;
     private int size;
+
     public SimpleLinkedList() {
-        this.headNode = null;
-        this.bottomNode = null;
+        this.head = null;
+        this.bot = null;
         this.size = 0;
     }
 
-    public Node get(int index) {
-        Node currentNode = headNode;
-
-        for (int i = 0; i <= index - 1 ; i++) {
-            currentNode = currentNode.getNextNode();
+    public void add(E data, int index) {
+        if (index < 0 || index > this.size) {
+            throw new IndexOutOfBoundsException();
         }
 
-        return currentNode;
-    }
-
-    public void add(T data, int index) {
-        if (index == 0) {
-            Node newHeadNode = new Node(data, this.headNode);
-            this.headNode = newHeadNode;
+        if (this.head == null) {
+            this.head = new Node(data, null);
+            this.bot = this.head;
+        } else if (index == 0) {
+            this.head = new Node(data, this.head);
+        } else if (index == this.size) {
+            Node temp = this.getNode(index - 1);
+            temp.next = new Node(data, null);
+            this.bot = temp.next;
         } else {
-            Node currentNode = get(index - 1);
-            Node nextNode = new Node(data, currentNode.getNextNode());
-            currentNode.setNextNode(nextNode);
+            Node currentNode = getNode(index - 1);
+            currentNode.next = new Node(data, currentNode.next.next);
         }
 
         this.size++;
     }
 
-    public void addFirst(T data) {
+    public void addTop(E data) {
         this.add(data, 0);
     }
 
-    public void addBot(T data) {
-        /*this.bottomNode = get(this.size - 1);
-        Node newNode = new Node(data);
-        this.bottomNode.setNextNode(newNode);
-        this.bottomNode = newNode;
-        this.size++;*/
+    public void addBot(E data) {
         this.add(data, this.size);
     }
 
-    public T removeTop() {
-
-        Node removedNode = this.headNode;
-
-        if (this.size < 1) {
-            this.headNode = null;
-
-            this.size--;
-            return removedNode.getData();
-        }
-
-
-        this.headNode = this.headNode.getNextNode();
-
-        this.size--;
-
-        return removedNode.getData();
-    }
-
-    public T removeBot() {
-
-        Node removedNode = get(this.size - 1);
-
-        if (this.size == 1) {
-
-            this.removeIndex(0);
-            return removedNode.getData();
-        }
-
-
-        this.bottomNode = get(this.size - 2);
-        this.bottomNode.setNextNode(null);
-
-        this.size--;
-
-        return removedNode.getData();
-    }
-
-    private int[] findIndexes(T data) {
-
-        if (!isContain(data)) {
-            return null;
-        }
-
-        int count = 0;
-
-        for (int i = 0; i < this.size; i++) {
-            if (this.get(i).getData().equals(data)) {
-                count++;
-            }
-        }
-
-        int[] indexes = new int[count];
-
-        count = 0;
-
-        for (int i = 0; i < this.size; i++) {
-            if (this.get(i).getData().equals(data)) {
-                indexes[count] = i;
-                count++;
-            }
-        }
-
-        return indexes;
-    }
-
     public void removeIndex(int index) {
-        Node currentNode = get(index - 1);
-
-        if (index == 0) {
-            this.removeTop();
-            return;
+        if (!isValidIndex(index)) {
+            throw new IndexOutOfBoundsException();
         }
 
-        currentNode.setNextNode(currentNode.getNextNode().getNextNode());
+        if (this.head == null) {
+            throw new NoSuchElementException();
+        } else if (index == 0) {
+            this.head = this.head.next;
+        } else if (this.size == 1) {
+            this.head = null;
+            this.bot = null;
+        } else if (index == this.size - 1) {
+            Node temp = this.getNode(index - 1);
+            temp.next = null;
+            this.bot = temp;
+        } else {
+            Node temp = this.getNode(index - 1);
+            temp.next = temp.next.next;
+        }
+
         this.size--;
     }
 
-    public void remove(T data) {
-
-        int[] indexes = findIndexes(data);
-
-        for (int i = 0; i < indexes.length; i++) {
-            this.removeIndex(indexes[i]);
-        }
+    public void removeTop() {
+        this.removeIndex(0);
     }
 
-    public void set(T data, int index) {
-        Node currentNode = get(index);
-        currentNode.setData(data);
+    public void removeBot() {
+        this.removeIndex(this.size - 1);
+
     }
 
-    public boolean isContain(T data) {
+    public boolean isContain(E data) {
         for (int i = 0; i < this.size; i++) {
-            if (this.get(i).getData().equals(data)) {
+            if (this.get(i).equals(data)) {
                 return true;
             }
         }
@@ -149,49 +87,69 @@ public class SimpleLinkedList<T> {
         return false;
     }
 
-    public boolean isEmpty() {
-        return this.size == 0;
-    }
-
-    public int size() {
-        return this.size;
-    }
-
-    public void print() {
+    public void remove(E data) {
 
         for (int i = 0; i < this.size; i++) {
-            System.out.print(this.get(i).getData() + " ");
+            if (this.get(i).equals(data)) {
+                if (i == 0) {
+                    this.removeTop();
+                    i--;
+                } else if (i == this.size - 1) {
+                    this.removeBot();
+                } else {
+                    this.removeIndex(i);
+                    i--;
+                }
+            }
         }
-        System.out.println("size:" + this.size);
     }
 
+
+    public void print() {
+        Node temp = this.head;
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+
+        System.out.println("size: " + this.size);
+    }
+
+    public Node getNode(int index) {
+
+        if (!isValidIndex(index)) {
+            throw new NoSuchElementException();
+        }
+
+        Node temp = this.head;
+
+        for (int i = 0; i <= index - 1; i++) {
+            temp = temp.next;
+        }
+
+        return temp;
+    }
+
+    public E get(int index) {
+        if (!isValidIndex(index)) {
+            throw new NoSuchElementException();
+        }
+
+        return this.getNode(index).data;
+    }
+
+    private boolean isValidIndex(int index) {
+        return (index >= 0 && index < this.size);
+    }
+
+
     class Node {
-        T data;
-        Node nextNode;
+        E data;
+        Node next;
 
-        public Node(T data, Node nextNode) {
+        public Node(E data, Node next) {
             this.data = data;
-            this.nextNode = nextNode;
-        }
-
-        public Node(T data) {
-            this.data = data;
-        }
-
-        public T getData() {
-            return this.data;
-        }
-
-        public void setData(T data) {
-            this.data = data;
-        }
-
-        public Node getNextNode() {
-            return this.nextNode;
-        }
-
-        public void setNextNode(Node nextNode) {
-            this.nextNode = nextNode;
+            this.next = next;
         }
     }
 
