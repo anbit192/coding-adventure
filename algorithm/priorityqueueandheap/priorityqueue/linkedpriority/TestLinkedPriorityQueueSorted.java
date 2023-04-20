@@ -12,13 +12,13 @@ public class TestLinkedPriorityQueueSorted {
         queue.insert(1, "B");
         queue.insert(5, "F");
 
+        /*queue.removeMin();
         queue.removeMin();
         queue.removeMin();
         queue.removeMin();
         queue.removeMin();
         queue.removeMin();
-        queue.removeMin();
-
+*/
 
         queue.print();
     }

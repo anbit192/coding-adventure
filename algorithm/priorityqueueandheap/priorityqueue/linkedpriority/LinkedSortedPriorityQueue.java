@@ -40,6 +40,11 @@ public class LinkedSortedPriorityQueue<K extends Comparable<K>, E> implements Pr
                     K temp = indexNode.key;
                     indexNode.key = current.key;
                     current.key = temp;
+
+                    E tempValue = indexNode.value;
+                    indexNode.value = current.value;
+                    current.value = tempValue;
+
                 }
 
                 indexNode = indexNode.next;
