@@ -1,4 +1,6 @@
-package treeadt.binarytree;
+package treeadt.binarytree.arraytree;
+
+import treeadt.binarytree.BinaryTreeInterface;
 
 public class ArrayBinaryTree<E> implements BinaryTreeInterface<E> {
 
@@ -40,12 +42,12 @@ public class ArrayBinaryTree<E> implements BinaryTreeInterface<E> {
 
     @Override
     public int numChildren(E p) {
-        if (this.left(p) == null || this.right(p) == null) {
-            return 1;
-        } else if (!(this.left(p) == null && this.right(p) == null)) {
+        if (this.left(p) == null && this.right(p) == null) {
+            return 0;
+        } else if (this.left(p) != null && this.right(p) != null) {
             return 2;
         } else {
-            return 0;
+            return 1;
         }
     }
 
@@ -118,12 +120,19 @@ public class ArrayBinaryTree<E> implements BinaryTreeInterface<E> {
             return null;
         }
 
-        if (this.getIndex(p) % 2 == 0) { //right children
-            int parentIndex = (this.getIndex(p) - 2) / 2;
-            return this.left(this.array[parentIndex]);
-        } else { //left children
-            int parentIndex = (this.getIndex(p) - 1) / 2;
-            return this.right(this.array[parentIndex]);
+        // if (this.getIndex(p) % 2 == 0) { //right children
+        // int parentIndex = (this.getIndex(p) - 2) / 2;
+        // return this.left(this.array[parentIndex]);
+        // } else { //left children
+        // int parentIndex = (this.getIndex(p) - 1) / 2;
+        // return this.right(this.array[parentIndex]);
+        // }
+
+
+        if (this.getIndex(p) % 2 != 0) {
+            return this.array[this.getIndex(p) + 1];
+        } else {
+            return this.array[this.getIndex(p) - 1];
         }
     }
 
@@ -135,6 +144,15 @@ public class ArrayBinaryTree<E> implements BinaryTreeInterface<E> {
         }
 
         return -1;
+    }
+
+    public void add(E element) {
+        if (this.size >= this.array.length) {
+            this.enlarge();
+        }
+
+        this.array[this.size] = element;
+        this.size++;
     }
 
     private void enlarge() {

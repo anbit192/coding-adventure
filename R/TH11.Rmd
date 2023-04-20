@@ -1,0 +1,92 @@
+---
+title: "TH9"
+output: html_document
+date: "2023-04-18"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+- Chia 2 bộ train và test
+```{r}
+library(ISLR)
+library(caret)
+library(ggplot2)
+library(pROC)
+train = (Smarket$Year < 2004)
+test = Smarket[!train, ]
+```
+
+- Tạo mô hình glmfit
+
+```{r}
+glmfit = glm(Direction ~ . - Year - Today, data = Smarket, family = binomial, subset = train)
+glmfit
+
+```
+
+
+- Tạo 2 biến predict và Direction predict cho bộ test
++ test$pred là các kết quả dự đoán qua mô hình glmfit 
++ test$Dir_pred = "Up" || "Down" phụ thuộc vào biến pred có > ngưỡng c 
+(VD : c = 0.53) hay không
+
+```{r}
+test$pred = predict(glmfit, test, type = "response")
+
+
+
+test$Dir_pred = ifelse(test$pred > 0.53, "Up", "Down")
+names(test)
+
+head(test$pred)
+head(test$Dir_pred)
+
+# chuyển kiểu dữ liệu của dir_pred thành factor (Factors are the data objects 
+# which are used to categorize the data and store it as levels.)
+test$Dir_pred = as.factor(test$Dir_pred)
+head(test$Direction)
+
+```
+
+- Thực hiện hồi quy logistic của biến Direction theo các biến khác, Direcrion có 
+hai cấp độ: Down, Up. Hàm glm luôn quy định cấp độ đầu tiên tương ứng với 0, cấp 
+độ thứ hai tương ứng với 1
+
+- Xác suất sinh từ hàm predict() là P(Y = 1 | X) = P(Direction = "Up" | X)
+```{r}
+confusionMatrix(test$Dir_pred, test$Direction)
+
+```
+
+- Acc = (n(Down - Down) + n(Up - Up)) / n
+
+- Sensitivity = n(Down - Down) / (n(Down - Down) + n(Up - Down)) = a / (a + c)
+=> Độ nhạy: Tỉ lệ số lần dự đoán Down trong tổng số lần Down thực tế
+  VD: sensitivity = 200 / (200 + 23)
+
+- Specificity = n(Up - Up) / (n(Up - Up) + n(Down - Up))
+=> Độ đặc hiệu: Tỉ lệ số lần dự đoán Up trong tổng số lần Up thực tế
+  VD: specificity = 35 / (246 + 35)
+  
+- Độ chính xác thường được thấy tốt nhất ở ngưỡng c = 0.5, tạo một đường cong 
+ROC quét qua tất cả các ngưỡng có thể và vẽ đồ thị gồm độ nhạy và độ đặc hiệu
+
+VD: 
+  Với ngưỡng c = 0.5, Acc = 0.466, Sensitivity = 0.8969, Độ đặc hiệu = 0.1245
+  Với ngưỡng c = 0.6, Acc = 0.442, Sensitivity = 0.991, Độ đặc hiệu = 0.0071
+  
+  
+  
+```{r}
+roc(test$Direction ~ test$pred, plot = TRUE, print.auc = TRUE)
+```
+
+
+
+
+
+
+
+

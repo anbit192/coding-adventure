@@ -1,0 +1,95 @@
+---
+title: "Untitled"
+output: html_document
+date: "2023-04-11"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+library(ISLR)
+Hitters
+names(Hitters)
+
+sum(is.na(Hitters$Salary))
+
+Hitters = na.omit(Hitters)
+sum(is.na(Hitters$Salary))
+
+library(leaps)
+
+reg = regsubsets(Salary ~., data = Hitters, nvmax = 19)
+summary = summary(reg)
+which.max(summary$rsq)
+
+par(mfrow = c(2, 2))
+
+plot(summary$rss, xlab = "Number of variables", ylab = "RSS", type = "l")
+rss_max = which.min(summary$rss)
+rss_max
+points(rss_max, summary$rss[rss_max], col = "red",  cex = 2, pch = 20)
+
+
+plot(summary$rsq, type = "l")
+rsq_min = which.min(summary$rsq)
+rsq_min
+points(rsq_min, summary$rsq[rsq_min],col = "red", cex = 2, pch = 20)
+
+
+plot(summary$bic, type = "l")
+bic_min = which.min(summary$bic)
+bic_min
+points(bic_min, summary$bic[bic_min],col = "red", cex = 2, pch = 20)
+
+plot(summary$adjr2, type = "l")
+adjr2_max = which.max(summary$adjr2)
+points(adjr2_max, summary$adjr2[adjr2_max], col = "red", cex = 2, pch = 20)
+
+
+coef(reg, 19) # mo hinh 6 bien phu hop nhat theo tieu chuan rss
+
+
+```
+
+```{r}
+reg_fwd = regsubsets(Salary~., data = Hitters, nvmax = 19, method = "forward")
+summary(reg_fwd)
+reg_bwd = regsubsets(Salary ~ ., data = Hitters, nvmax = 19, method = "backward")
+summary(reg_bwd)
+```
+```{r}
+coef(reg, 7)
+coef(reg_fwd, 7)
+coef(reg_bwd, 7)
+```
+
+```{r}
+set.seed(1)
+train = sample(c(TRUE, FALSE), nrow(Hitters), rep = TRUE)
+test = (!train)
+
+reg_cv = regsubsets(Salary~., data = Hitters[train,], nvmax = 19)
+summary(reg_cv)
+```
+
+```{r}
+val_errors = rep(1, 19)
+test_matrix = model.matrix(Salary ~ ., data = Hitters[test, ])
+for(i in 1:19) {
+  coefs = coef(reg_cv, id = i)
+  pred = test_matrix[ ,names(coefs)] %*% coefs
+  val_errors[i] = mean((Hitters$Salary[test] - pred)^2) 
+  
+}
+
+which.min(val_errors)
+```
+```{r}
+library(caret)
+library(ggplot2)
+confusionMatrix()
+```
+

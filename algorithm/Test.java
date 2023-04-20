@@ -1,10 +1,57 @@
 public class Test {
-    public static void main(String[] args) {
-         String c = "1";
-        char a = '0';
-
-        String b = c + a;
-        System.out.println(c + a);
+    // Sorts array a[0..n-1] using Bogo sort
+    void bogoSort(int[] a)
+    {
+        // if array is not sorted then shuffle the
+        // array again
+        while (isSorted(a) == false)
+            shuffle(a);
     }
 
+    // To generate permutation of the array
+    void shuffle(int[] a)
+    {
+        // Math.random() returns a double positive
+        // value, greater than or equal to 0.0 and
+        // less than 1.0.
+        for (int i = 0; i < a.length; i++)
+            swap(a, i, (int)(Math.random() * i));
+    }
+
+    // Swapping 2 elements
+    void swap(int[] a, int i, int j)
+    {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+    }
+
+    // To check if array is sorted or not
+    boolean isSorted(int[] a)
+    {
+        for (int i = 1; i < a.length; i++)
+            if (a[i] < a[i - 1])
+                return false;
+        return true;
+    }
+
+    // Prints the array
+    void printArray(int[] arr)
+    {
+        for (int i = 0; i < arr.length; i++)
+            System.out.print(arr[i] + " ");
+        System.out.println();
+    }
+
+    public static void main(String[] args)
+    {
+        // Enter array to be sorted here
+        int[] a = { 3, 5, 1, 6, 19, 23, 0, 0, 1, 1, -2, 3, 123, 65, 7, 4, 2, 22, 85, 192, -23, -994};
+        Test ob = new Test();
+
+        ob.bogoSort(a);
+
+        System.out.print("Sorted array: ");
+        ob.printArray(a);
+    }
 }
