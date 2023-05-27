@@ -1,0 +1,19 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(glmnet)
+library(Matrix)
+x = model.matrix(Salary ~ . , data = Hitters)[-1]
+y = Hitters$Salary
+
+dim(x)
+length(y)
+dim(Hitters)
+
+grid()
+
+```
+

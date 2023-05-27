@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library("datasets")
+
+
+only = lm(Fertility ~ 1, data = swiss)
+all = lm(Fertility ~ ., data = swiss)
+
+swiss
+
+```
+
+```{r}
+forward = step(only, scope = formula(all), direction = "forward", trace = 0)
+summary(forward)
+```
+=> cac he so deu khac 0
+
+```{r}
+train = sample()
+```
+

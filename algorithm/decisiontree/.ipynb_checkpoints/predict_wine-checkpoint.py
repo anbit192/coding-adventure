@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from DecisionTreeClassifier import DecisionTreeClassifier
+from DecisionTreeRegressor import DecisionTreeRegressor
 from sklearn.model_selection import train_test_split
 
 
@@ -10,7 +10,7 @@ def main():
     Y = data.iloc[ : , -1].values.reshape(-1, 1)
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.3, random_state = 192)
     
-    tree = DecisionTreeClassifier(max_depth = 3, min_sample_splits = 10)
+    tree = DecisionTreeRegressor(max_depth = 3, min_sample_splits = 10)
     tree.fit(X_train, Y_train)
     tree.print_preorder_tree()
     

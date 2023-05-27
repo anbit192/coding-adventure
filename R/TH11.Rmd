@@ -15,6 +15,8 @@ library(caret)
 library(ggplot2)
 library(pROC)
 train = (Smarket$Year < 2004)
+Smarket
+
 test = Smarket[!train, ]
 ```
 
