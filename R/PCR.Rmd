@@ -1,5 +1,223 @@
 ---
-title: "R Notebook"
-output: html_notebook
+title: "PCS"
+author: "Nam Anh"
+date: "2023-05-16"
+output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(pls)
+set.seed (2)
+pcr.fit=pcr(Salary~., data=Hitters ,scale=TRUE, validation ="CV")
+dim(Hitters)
+attach(Hitters)
+#MSE = Cv^2
+
+```
+
+```{r}
+Hitters = na.omit(Hitters)
+dim(Hitters)
+```
+
+```{r}
+x=model.matrix(Salary~.,data)[,-1]
+x
+y=data$Salary
+y
+```
+```{r}
+pcr.fit$coefficients[,1,18]
+dim(pcr.fit$coefficients)
+pcr.fit$coefficients[,1,16]
+```
+pthqtt cuar salary theo các biến ban đầu sau khi thực hiện hồi quy thành phần chính là:
+Salary = -287.16 * AtBat ...
+```{r}
+#PC1 = e1^T * X
+#e1 là vecto riêng thứ nhất của ma trận tương quan mẫu của X
+#Các ftri của PC1 là một vecto gồm n phần tử tương ứng vs n quan sát
+#Tại quan sát thứ i: PC1[i] = e11 * X1[i] + e12 * X[2] + .. e1l*Xk[i]
+#e1 = (e11,e12,...,e1k)^T
+#e1 là vecto riêng 1 của ma trận tương quan mẫu của x
+e = eigen(cor(x))$vecto #Các vecto riêng của ma trận tương quan mẫu của x
+e
+PC1 = x %*% e[,1] #Score
+```
+```{r}
+validationplot(pcr.fit ,val.type="MSEP")
+validationplot(pcr.fit ,val.type="R2")
+```
+```{r}
+set.seed(1)
+train=sample(1:nrow(x), nrow(x)/2)
+test=(-train)
+Hitters.train = data[train,]
+Hitters.test = data[test,]
+pcr.fit=pcr(Salary~.,data=Hitters.train,scale=TRUE, validation="CV")
+validationplot(pcr.fit, val.type="MSEP")
+summary(pcr.fit)
+
+pcr.pred = predict(pcr.fit, Hitters.test)
+pcr.pred[20]
+MSE_ = mean((pcr.pred-Hitters.test$Salary)^2)
+MSE_
+
+```
+
+```{r}
+pcr.fit$coefficients[,1,16] #PTHQTT của salary theo các biến ban đầu dựa vào phân tích hq tpc
+# Y = a0 + a1*PC1 + ... + am * PCm
+# Pc1 = e1^t * X
+# e1 là vecto riêng thứ nhất của ma trận tương quan mẫu của X
+e = eigen(cor(x))$vectors # các vecto riêng của ma trận tương quan mẫu của X
+e
+e[,1] # vecto riêng thứ nhất
+PC1 = x %*% e[,1]
+PC1
+PC = matrix(NA, 263, 16)
+for (i in 1:16) {PC[,i] = x%*% e[,i]}
+lmfit = lm(y~PC)
+lmfit$coefficients #hệ số mô hình hq của y theo PCR
+```
+```{r}
+summary(lmfit)
+#H0: he so PC.i =0 (0<i<17)
+#H1: he so PC.i != 0 (0<i<17)
+# PC1          0.40096    
+# PC2          0.37656    
+# PC3          0.38618    
+# PC4          0.23529    
+# PC5          0.00059 ***
+# PC6          0.35365    
+# PC7          0.00875 ** 
+# PC8          0.20080    
+# PC9          0.96516    
+# PC10         0.22488    
+# PC11         0.19636    
+# PC12         0.18638    
+# PC13         0.37890    
+# PC14         0.05049 .  
+# PC15         0.04109 *  
+# PC16         0.07459 . 
+
+#nhan xet chi co PC9 co kha nang =0;
+#con lai cac he so khac !=0
+```
+```{r}
+#H0: phan du =0
+#H1: phan du !=0
+r=lmfit$residuals
+t.test(r)
+#p-value = 1 , co the =0
+var(r)
+#gia tri phuong sai cua phan du la: 
+#[1] 92597.31
+```
+
+```{r}
+BIC(lmfit)
+AIC(lmfit)
+
+# Tính RSS
+rss <- sum(lmfit$residuals^2)
+
+# Tính phương sai của sai số
+sigma2 <- rss / (length(y) - length(lmfit$coefficients))
+
+# Tính Cp
+n <- length(y)
+p <- length(lmfit$coefficients)
+cp <- (rss / sigma2) - n + 2 * p
+cp
+
+```
+```{r}
+library(leaps)
+set.seed(1)
+train=sample(1:nrow(x), nrow(x)/2)
+test=(-train)
+Hitters.train = data[train,]
+Hitters.test = data[test,]
+regfit.full=regsubsets(Salary~.,data=Hitters.train ,nvmax=19)
+reg.summary <- summary(regfit.full)
+reg.summary
+
+par(mfrow = c(2, 2))
+
+plot(reg.summary$cp, xlab = "Number of variables", ylab = "C_p", type = "l")
+points(which.min(reg.summary$cp), reg.summary$cp[which.min(reg.summary$cp)], col = "red", cex = 2, pch = 20)
+plot(reg.summary$bic, xlab = "Number of variables", ylab = "BIC", type = "l")
+points(which.min(reg.summary$bic), reg.summary$bic[which.min(reg.summary$bic)], col = "red", cex = 2, pch = 20)
+plot(reg.summary$adjr2, xlab = "Number of variables", ylab = "Adjusted R^2", type = "l")
+points(which.max(reg.summary$adjr2), reg.summary$adjr2[which.max(reg.summary$adjr2)], col = "red", cex = 2, pch = 20)
+
+
+which.min(reg.summary$cp)#8
+which.min(reg.summary$bic)#5
+which.max(reg.summary$adjr2)#10
+
+coef(regfit.full, which.min(reg.summary$cp))
+# (Intercept)        Walks       CAtBat        CHits       CHmRun      LeagueN    DivisionW 
+# 129.2774801    3.3907281   -0.6015523    2.2888154    3.0695070   79.1359442 -130.0750885 
+# PutOuts      Assists 
+# 0.1673149    0.3493411 
+coef(regfit.full, which.min(reg.summary$bic))
+# (Intercept)        Walks       CAtBat        CHits       CHmRun    DivisionW 
+# 208.9996987    5.1067744   -0.5121849    1.9795607    2.6058598 -137.4401552 
+coef(regfit.full, which.max(reg.summary$adjr2))
+# (Intercept)        AtBat        HmRun        Walks       CAtBat        CHits       CHmRun 
+# 201.4105388   -0.5670067    8.0935818    4.4463014   -0.6551356    2.5516414    2.3104289 
+# LeagueN    DivisionW      PutOuts      Assists 
+# 68.9104952 -133.1495856    0.1864550    0.5802606 
+
+###############################
+#ham cho min Cp
+lm.cp=lm(Salary~.,data=Hitters.train)
+lm.backward.cp=step(lm.cp, direction = "backward", k = log(nrow(Hitters.train)), trace = FALSE, nvmax=8)
+regfit.bic=regsubsets(Salary~.,data=Hitters.train ,nvmax=5)
+regfit.adjr2=regsubsets(Salary~.,data=Hitters.train ,nvmax=10)
+
+summary(lm.backward.cp)
+lm.cp=lm(Salary~Walks+CAtBat+CHits+CHmRun+League+Division+PutOuts+Assists, data=Hitters.train)
+summary(lm.cp)
+#cac he so thuc su !=0
+
+summary(regfit.bic)
+lm.bic=lm(Salary~Division+CAtBat+CHits+Walks+CHmRun, data=Hitters.train)
+summary(lm.bic)
+#Các hệ số thực sự khác 0
+
+summary(regfit.adjr2)
+lm.adjr2=lm(Salary~AtBat+HmRun+Walks+CAtBat+CHits+CHmRun+League+Division+PutOuts+Assists, data=Hitters.train)
+summary(lm.adjr2)
+#Hệ số của AtBat, HmRun,và League bằng 0
+```
+
+```{r}
+#H0: phan du =0
+#H1: phan du !=0
+
+r=lm.cp$residuals
+t.test(r)
+#p-value = 1
+# phần dư khác 0
+Hitters.train
+
+
+reg.summary
+```
+
+```{r}
+reg.summary$rsq
+reg.summary$cp
+reg.summary$bic
+```
+```{r}
+
+```
 

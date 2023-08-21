@@ -8,48 +8,70 @@ date: "2023-04-11"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+Logistic regression: Bài toán phân lớp nhị phân (0 1)
 ```{r}
 library(ISLR)
+Smarket
 View(Smarket)
 summary(Smarket)
 pairs(Smarket)
+```
 
+corvarian: Hệ số tương quan: Sự phụ thuộc của biến này vào biến khác. (Trong khoảng -1 đến 1) 
+```{r}
 cor(Smarket[ , -9])
 plot(Smarket$Volume)
 
-glm.fit = glm( Direction ~ Lag1+Lag2+Lag3+Lag4+Lag5+Volume , data = Smarket , family = binomial )
+```
 
-summary(glm.fit)
+```{r}
+
+glm.fit = glm( Direction ~ Lag1 + Lag2 + Lag3 + Lag4 + Lag5 + Volume , data = Smarket , family = binomial )
 
 glm.prob = predict(glm.fit , type = "response")
-glm.prob[1:20]
+glm.prob
 plot(glm.prob)
 
+```
+
+```{r}
 glm.pred = rep("Down" , 1250)
 glm.pred[glm.prob > 0.5] = "Up"
-
+glm.pred
 # glm.pred : du doan ve tang giam trong 1250 ngay
 # Direction : du doan ve tang giam trong 1250 ngay
 
-table( glm.pred , Smarket$Direction)
+```
+
+```{r}
+confusionMatrix(Smarket)
+table(glm.pred , Smarket$Direction)
 # BANG TAN SO GIUA THUC TE VA DU DOAN
 #glm.pred Down  Up
 #    Down  145 141
 #    Up    457 507
 
 (145+507)/1250
+```
 
-mean( glm.pred == Smarket$Direction)
+```{r}
+mean(glm.pred == Smarket$Direction)
 
 
 train = Smarket$Year < 2005
 Smarket.2005 = Smarket[Smarket$Year == 2005 , ]
+Smarket.2005
 dim(Smarket.2005)
+```
+
+```{r}
 
 glm.train = glm( Direction ~ Lag1+Lag2+Lag3+Lag4+Lag5+Volume , data = Smarket , subset = train , family = binomial)
-
 glm.test.prob = predict(glm.train , Smarket.2005,  type = "response")
+glm.test.prob
+```
+
+```{r}
 length(glm.test.prob)
 glm.test.pred = rep("Down" , 252)
 glm.test.pred[glm.test.prob > 0.5] = "Up"
@@ -58,20 +80,4 @@ length(glm.test.pred)
 table( glm.test.pred , Smarket.2005$Direction )
 ```
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

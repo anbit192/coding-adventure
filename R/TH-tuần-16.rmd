@@ -1,0 +1,152 @@
+---
+title: "TH tuần 16"
+author: "21000405_Nguyễn Ngọc Anh"
+date: "2023-05-23"
+output: html_document
+---
+
+```{r}
+library(tree)
+library(MASS)
+set.seed(1)
+Boston
+```
+
+Tạo mô hình tree
+```{r}
+train = sample(1:nrow(Boston), nrow(Boston)/2)
+tree.boston = tree(medv ~ ., Boston, subset = train)
+summary(tree.boston)
+```
+
+```{r}
+#7 Lá là các lá ở cuối cùng
+plot(tree.boston)
+text(tree.boston, pretty = 0, cex = 0.6)
+
+```
+
+tối ưu cây
+```{r}
+cv.boston = cv.tree(tree.boston)
+cv.boston
+plot(cv.boston$size, cv.boston$dev, type = "b")
+#Có thể thấy 6 vs 7 lá cũng tương tự nhau nên có thể rút xuống 6 lá
+#Nếu thấy trước 6 lá ví dụ lá 4 5 mà có giá trị bé hơn lá 6 rồi lá 3 lại tăng lên thì có thể lấy 4 lá
+```
+
+
+prune tree
+```{r}
+prune.boston = prune.tree(tree.boston, best = 6) 
+#Xác định cây con bằng cách đệ quy cắt bỏ những phần ít quan trọng nhất
+
+plot(prune.boston)
+text(prune.boston, pretty = 0)
+summary(prune.boston)
+
+```
+
+
+Đồ thị tương quan
+```{r}
+yhat = predict(tree.boston, newdata = Boston[-train, ])
+boston.test = Boston[-train, "medv"]
+plot(yhat, boston.test)
+abline(0,1)
+mean((yhat - boston.test)^2)
+
+```
+
+```{r}
+library(ISLR)
+OJ
+
+#(a)
+set.seed(1)
+train = sample(nrow(OJ), 800)
+test = -train
+train_OJ = OJ[train,]
+test_OJ = OJ[test,]
+```
+
+```{r}
+#(b)
+tree_oj = tree(Purchase ~., data = train_OJ)
+summary(tree_oj)
+
+#9 nodes, error rate = 0.1588
+```
+
+```{r}
+#(c + d)
+tree_oj
+
+plot(tree_oj)
+text(tree_oj, pretty = 0, cex = 0.6)
+
+#4) LoyalCH < 0.280875 177  140.50 MM ( 0.13559 0.86441 )  
+#điều kiện của node: LoyalCH < 0.280875
+#có 117 quan sát
+#độ lệch 140.50
+#dự đoán tổng thể là MM (13,5% là CH, 86,5% là MM)
+```
+
+```{r}
+#(e)
+library(caret)
+tree_pred = predict(tree_oj, test_OJ, type = "class") #classification
+tree_pred
+test_outcome = test_OJ$Purchase
+table(tree_pred, test_outcome)
+confusionMatrix(tree_pred, test_outcome)
+
+# test error rate = 1 - accuracy
+mean(tree_pred != test_outcome) #test error rate = 0.1703704
+```
+
+```{r}
+#(f)
+
+set.seed(2)
+cv_tree_oj = cv.tree(tree_oj,FUN = prune.misclass)
+cv_tree_oj
+```
+
+```{r}
+#(g)
+
+
+plot(cv_tree_oj$size, cv_tree_oj$dev, type = "b", xlab = "Tree Size", ylab = "Deviance")
+```
+```{r}
+#i
+
+pruned_tree = prune.tree(tree_oj, best = 8)
+plot(pruned_tree)
+text(pruned_tree, pretty = 0, cex = 0.6)
+
+```
+```{r}
+#j
+
+summary(pruned_tree)
+
+```
+
+=> test error rate pruned: 0.1625
+                  unpruned: 0.1588
+
+
+
+
+```{r}
+#k
+
+tree_pred1 = predict(pruned_tree, test_OJ, type = "class")
+confusionMatrix(tree_pred1, test_outcome)
+
+```
+
+=> 1 - Acc = 0.163
+=> Unpruned cao hon

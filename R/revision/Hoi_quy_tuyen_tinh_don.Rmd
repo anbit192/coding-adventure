@@ -1,0 +1,114 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+1. Cho bộ dữ liệu Australian Institute of Sport (file excel đính kèm). Sử dụng phần mềm
+thống kê R/Rstudio, hãy:
+a. Viết phương trình đường thẳng hồi quy tuyến tính của BMI theo Wt.
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+c. Tìm khoảng tin cậy 90% cho các hệ số hồi quy.
+d. Các hệ số hồi quy có thực sự khác 0 không? Nếu tồn tại hệ số hồi quy bằng 0,
+   xác định lại ước lượng của các hệ số trong mô hình hồi quy tuyến tính mới.
+
+```{r}
+data = read.csv("C:\\Users\\Admin\\Desktop\\study\\coding-adventure\\R\\revision\\Australian Institute of Sport.csv")
+```
+
+a. Viết phương trình đường thẳng hồi quy tuyến tính của BMI theo Wt.
+```{r}
+lm1 = lm(BMI ~ Wt, data =data)
+lm1
+```
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+
+  - Kiểm tra phân bố chuẩn phần dư 
+```{r}
+e = residuals(lm1)
+shapiro.test(e)
+
+```
+ => p-value = 0.02 < 0.05 => Bác bỏ H0: phần dư ko theo pp chuẩn
+ 
+  - Giá trị trung bình có bằng 0?
+```{r}
+wilcox.test(e)
+```
+  => p-value = 0.6119 => Chấp thuận H0
+
+
+c. Tìm khoảng tin cậy 90% cho các hệ số hồi quy.
+```{r}
+confint(lm1, level = 0.9)
+```
+
+                  5 %       95 %
+(Intercept) 8.9284788 10.8836001
+Wt          0.1611643  0.1867939
+
+
+d. Các hệ số hồi quy có thực sự khác 0 không? Nếu tồn tại hệ số hồi quy bằng 0,
+   xác định lại ước lượng của các hệ số trong mô hình hồi quy tuyến tính mới.
+   
+   - Hệ số hồi quy khác 0 hay không?
+```{r}
+summary(lm1)
+```
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 9.906039   0.591562   16.75   <2e-16 ***
+Wt          0.173979   0.007755   22.43   <2e-16 ***
+
+
+=> p-value < 0.05 => Bác bỏ H0
+
+
+2. Sinh ngẫu nhiên 1000 giá trị của biến X từ phân phối chuẩn N(158; 25) và 1000 giá trị
+của biến Y từ phân phối chuẩn N(59; 9).
+a. Viết phương trình đường thẳng hồi quy tuyến tính của X theo Y.
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+c. Với Y = 57.5, đưa ra dự đoán về giá trị của X và khoảng tin cậy 95% cho giá trị trung
+bình của X.
+
+
+
+```{r}
+set.seed(1)
+X = rnorm(1000, 158, sqrt(25))
+Y = rnorm(1000, 59, sqrt(9))
+df = data.frame(X, Y)
+```
+
+
+a. Viết phương trình đường thẳng hồi quy tuyến tính của X theo Y.
+```{r}
+lm2 = lm(X ~ Y)
+lm2
+```
+
+X = 157.31589 + 0.01062 * Y
+
+b. Phần dư có phân bố chuẩn với giá trị trung bình bằng 0 không?
+```{r}
+res = residuals(lm2)
+shapiro.test(res)
+```
+  - p-value = 0.7213 => Chấp nhận H0: phần dư có phân phối chuẩn
+
+```{r}
+t.test(res)
+```
+
+  - p-value = 1 => chấp thuận H0: Phần dư có GTTB = 0
+  
+c. Với Y = 57.5, đưa ra dự đoán về giá trị của X và khoảng tin cậy 95% cho giá trị trung
+bình của X.
+```{r}
+predict(lm2, data.frame(Y = 57.5), interval = "confidence")
+```
+      fit     lwr      upr
+1 157.9264 157.572 158.2807
+
+
+

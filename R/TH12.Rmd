@@ -16,4 +16,3 @@ dim(Hitters)
 grid()
 
 ```
-
