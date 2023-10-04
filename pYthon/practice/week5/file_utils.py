@@ -32,7 +32,7 @@ def search_file(str, path):
 def sort_by_name(results):
     for i in range(len(results)):
         for j in range(len(results) - 1):
-            if (results[j][0] < results[j + 1][0]):
+            if (results[j][0] > results[j + 1][0]):
                 temp = results[j]
                 results[j] = results[j + 1]
                 results[j + 1] = temp
