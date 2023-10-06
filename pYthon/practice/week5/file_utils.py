@@ -7,7 +7,7 @@ def search_file(str, path):
 
     new_path = path
     for file_dir in file_list:
-        new_path += file_dir
+        new_path +=  file_dir
         file = open(new_path, "r")
         temp = []
 
