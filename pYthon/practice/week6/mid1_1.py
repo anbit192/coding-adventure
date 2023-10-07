@@ -1,3 +1,5 @@
+import math
+
 
 def getTopWord(filename, n):
     '''
@@ -26,7 +28,7 @@ def getTopWord(filename, n):
     Chú ý, file văn bản có nhiều dòng và không có ký tự unicode
     Nếu n > số từ thì kết quả là toàn bộ danh sách các từ.
     '''
-    
+
     file = open(filename, "r")
     list = []
     for line in file:
@@ -34,6 +36,15 @@ def getTopWord(filename, n):
         for i in items:
             list.append(i)
     dict = {}
+    for i in list:
+        dict[i] = dict.get(i, 0) + 1
+
+    sorted_dict = sorted(dict.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    if (n >= len(sorted_dict)):
+        n = len(sorted_dict)
+    list_keys = [sorted_dict[i][0] for i in range(n)]
+
+    return sorted(list_keys, key=lambda x: x, reverse=True)
 
 
 def getVector(filename, topword):
@@ -53,7 +64,21 @@ def getVector(filename, topword):
         kết quả là: [4, 4, 4, 3, 10]
         
     '''
-    pass
+    file = open(filename, "r")
+    list = []
+    for line in file:
+        items = line.split()
+        for i in items:
+            list.append(i)
+
+    dict = {}
+    for i in list:
+        dict[i] = dict.get(i, 0) + 1
+
+    count_chars = [dict[item] for item in topword]
+
+    return count_chars
+
 
 def getCosineSim(u, v):
     '''
@@ -63,7 +88,25 @@ def getCosineSim(u, v):
         
         ví dụ với u = [1,2,3,4], v = [1,2,1,1], kết quả làm tròn đến 5 chữ số là: 0.82808
     '''
-    pass
+    cosine = dot_product(u, v) / (magnitude(u) * magnitude(v))
+
+    return round(cosine, 5)
+
+
+def dot_product(u, v):
+    sum = 0
+    for i in range(len(u)):
+        sum += (u[i] * v[i])
+
+    return sum
+
+
+def magnitude(u):
+    sum = 0
+    for i in range(len(u)):
+        sum += (u[i] ** 2)
+
+    return math.sqrt(sum)
 
 
 def sinhTaylor(x, e):
@@ -76,7 +119,20 @@ def sinhTaylor(x, e):
           nhưng với e = 0.5     kết quả làm tròn đến 5 chữ số là: 122.34289
      
     '''
-    pass
+    sum = 0
+    i = 1
+    temp = 1
+    temp2 = 0
+    while (True):
+        temp *= x / i
+        if (i % 2 != 0):
+            sum += temp
+            if (abs(temp2 - temp) <= e):
+                break
+        temp2 = temp
+        i += 1
+
+    return sum
 
 
 '''
@@ -85,15 +141,17 @@ def sinhTaylor(x, e):
      
 '''
 
+
 def testDemo():
     print(getTopWord('text.txt', 5))
     print(getVector('text.txt', getTopWord('text.txt', 5)))
-    
-    print(round(getCosineSim([1,2,3,4], [1,2,1,1]), 5))
-    
-    print(round(sinhTaylor(5.5, 0.5),5))
+
+    print(round(getCosineSim([1, 2, 3, 4], [1, 2, 1, 1]), 5))
+
+    print(round(sinhTaylor(5.5, 0.5), 5))
+
 
 '''
 Bỏ comment lệnh testDemo() dưới đây để test chương trình, và comment lại lệnh đó khi nộp bài
 '''
-#testDemo()
+# testDemo()
