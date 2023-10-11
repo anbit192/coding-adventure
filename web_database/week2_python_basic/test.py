@@ -1,6 +1,6 @@
 def main():
-    a = [1,2,3]
-    b = [1,1,1,1,1]
-
+    a = "abc"
+    b = a[:-2]
+    print(b)
     
 main()
