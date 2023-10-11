@@ -13,3 +13,6 @@ def recursive(n):
 
 print(recursive(6))
 print(len(str(recursive(1000))))
+
+
+    
