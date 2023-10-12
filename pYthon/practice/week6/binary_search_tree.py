@@ -6,37 +6,37 @@ class BinarySearchTree:
     def getRoot(self):
         return self.root
 
-    def addNode(self,.val):
-        self.root = self.__add_recursive(self.root,.val)
+    def addNode(self, val):
+        self.root = self.__add_recursive(self.root, val)
 
-    def __add_recursive(self, node: "Node",.val):
+    def __add_recursive(self, node: "Node", val):
         if (node == None):
-            node = Node.val)
+            node = Node(val)
             return node
-        if .val < node.val):
-            node.left = self.__add_recursive(node.left,.val)
+        if (val < node.val):
+            node.left = self.__add_recursive(node.left, val)
 
         else:
-            node.right = self.__add_recursive(node.right,.val)
+            node.right = self.__add_recursive(node.right, val)
         return node
 
     def buildTreeFromList(self, datas: list):
         for i in datas:
             self.addNode(i)
 
-    def search(self,.val):
-        return self.__search_recursive(self.root,.val) != None
+    def search(self, val):
+        return self.__search_recursive(self.root, val) != None
 
-    def __search_recursive(self, node: "Node",.val) -> "Node":
+    def __search_recursive(self, node: "Node", val) -> "Node":
         if (node == None):
             return None
 
-        if (node.val ==.val):
+        if (node.val == val):
             return node
-        if .val < node.val):
-            return self.__search_recursive(node.left,.val)
-        elif .val > node.val):
-            return self.__search_recursive(node.right,.val)
+        if (val < node.val):
+            return self.__search_recursive(node.left, val)
+        elif (val > node.val):
+            return self.__search_recursive(node.right, val)
 
     def preOrder(self):
         list = []
@@ -112,8 +112,8 @@ class BinarySearchTree:
 
 
 class Node:
-    def __init__(self,.val=0, left: "Node" = None, right: "Node" = None):
-        self.val =.val
+    def __init__(self, val=0, left: "Node" = None, right: "Node" = None):
+        self.val = val
         self.left = left
         self.right = right
 
