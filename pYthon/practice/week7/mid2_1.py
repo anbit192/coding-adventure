@@ -148,16 +148,16 @@ def coshTaylor(x, e):
         if (i % 2 == 0):
             cosh += temp
 
-        if (abs(temp2 - temp) <= e):
-            break
-        temp2 = temp
+            if (abs(temp2 - temp) <= e):
+                break
+            temp2 = temp
         i += 1
 
     return round(cosh, 5)
 
 
-# r = coshTaylor(5.5, 0.00001)
-# print(r)
+r = coshTaylor(6, 0.5)
+print(r)
 
 
 '''
