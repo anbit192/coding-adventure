@@ -156,8 +156,8 @@ def coshTaylor(x, e):
     return round(cosh, 5)
 
 
-r = coshTaylor(6, 0.5)
-print(r)
+# r = coshTaylor(6, 0.5)
+# print(r)
 
 
 '''
