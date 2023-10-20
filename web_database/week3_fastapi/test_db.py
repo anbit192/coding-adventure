@@ -64,3 +64,16 @@ def get_fields(table_name):
     list = [row[0] for row in res]
 
     return list
+
+
+@app.post("/db/tables/insert/{table_name}")
+def insert_into(table_name, field:list, value:list):
+
+    for i in range(len(field)):
+
+        q = f"""
+            INSERT INTO {table_name} {field[i]})
+            VALUES {value[i]}
+        """
+
+    cursor_obj.execute(q)
