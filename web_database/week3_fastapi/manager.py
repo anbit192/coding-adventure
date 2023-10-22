@@ -90,6 +90,10 @@ async def create_chuyenbay(item: "ChuyenBay"):
 async def update_chuyenbay(id, item: "ChuyenBay"):
     return ChuyenBay.put_data(id, item)
 
+@app.delete("/chuyenbay/delete")
+async def del_chuyenbay(id):
+    return ChuyenBay.del_data(id)
+
 
 if __name__ == "__main__":
     import uvicorn

@@ -23,14 +23,15 @@ class ChuyenBay(BaseModel):
 
     def get_data(flight_id):
         try:
-            if (flight_id == ""):
-                q = "SELECT * FROM chuyenbay"
+            if (flight_id == "*"):
+                cursor_obj.execute("SELECT * FROM chuyenbay")
             else:
-                q = f"""
+                q = """
                     SELECT * FROM chuyenbay
-                    WHERE macb = {flight_id}
+                    WHERE macb = %s
                 """
-            cursor_obj.execute(q)
+                
+                cursor_obj.execute(q, flight_id)
             result = cursor_obj.fetchall()
             return result
         except:
@@ -49,10 +50,10 @@ class ChuyenBay(BaseModel):
         #     );
         # """
 
-        q = '''
+        q = """
             INSERT INTO chuyenbay 
             VALUES (%s, %s, %s, %s, %s, %s, %s);
-        '''
+        """
 
         values = (item.ma_cb, item.ga_di, item.ga_den, item.do_dai,
                   item.gio_di, item.gio_den, item.chi_phi)
@@ -64,26 +65,20 @@ class ChuyenBay(BaseModel):
         return {"MESSAGE": "CREATED!"}
 
     def put_data(flight_id, item: "ChuyenBay"):
-        try:
-            q = f"""
-                UPDATE chuyenbay
-                SET (
-                    gadi = {item.ga_di},
-                    gaden = {item.ga_den},
-                    dodai = {item.do_dai},
-                    giodi = {item.gio_di},
-                    gioden = {item.gio_den},
-                    chiphi = {item.chi_phi}
-                )
-                WHERE macb = {flight_id}
-            """
+        
+        q = """
+            UPDATE chuyenbay
+            SET (gadi, gaden, dodai, giodi, gioden, chiphi) = (%s, %s, %s, %s, %s, %s)
+            WHERE macb = (%s);
+        """
+        values = (item.ga_di, item.ga_den, item.do_dai,
+        item.gio_di, item.gio_den, item.chi_phi, flight_id)
 
-            cursor_obj.execute(q)
-            db_connect.commit()
+        cursor_obj.execute(q, values)
+        db_connect.commit()
 
-            return {"MESSAGE": "UPDATED!"}
-        except:
-            print(f"{flight_id} not exist")
+        return {"MESSAGE": "UPDATED!"}
+        
 
     def del_data(flight_id):
         try:
