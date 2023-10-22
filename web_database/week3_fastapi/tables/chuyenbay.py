@@ -37,26 +37,31 @@ class ChuyenBay(BaseModel):
             print(f"{flight_id} not exist")
 
     def create_data(item: "ChuyenBay"):
-        try: 
-            q = f"""
-                INSERT INTO chuyenbay VALUES (
-                    {item.ma_cb},
-                    {item.ga_di},
-                    {item.ga_den},
-                    {item.do_dai},
-                    {item.gio_di},
-                    {item.gio_den},
-                    {item.chi_phi}
-                );
-            """
+        # q = f"""
+        #     INSERT INTO chuyenbay VALUES (
+        #         {item.ma_cb},
+        #         {item.ga_di},
+        #         {item.ga_den},
+        #         {item.do_dai},
+        #         {item.gio_di},
+        #         {item.gio_den},
+        #         {item.chi_phi}
+        #     );
+        # """
 
-            cursor_obj.execute(q)
-            db_connect.commit()
+        q = '''
+            INSERT INTO chuyenbay 
+            VALUES (%s, %s, %s, %s, %s, %s, %s);
+        '''
 
-            return {"MESSAGE": "CREATED!"}
-        except psycopg2.Error as e:
-            print(e)
-            return "ERROR"
+        values = (item.ma_cb, item.ga_di, item.ga_den, item.do_dai,
+                  item.gio_di, item.gio_den, item.chi_phi)
+
+        # cursor_obj.execute(q)
+        cursor_obj.execute(q, values)
+        db_connect.commit()
+
+        return {"MESSAGE": "CREATED!"}
 
     def put_data(flight_id, item: "ChuyenBay"):
         try:
