@@ -3,41 +3,47 @@ from pydantic import BaseModel
 
 class MayBay(BaseModel):
 
-    def __init__(self, ma_mb, loai, tam_bay):
-        self.ma_mb = ma_mb
-        self.loai = loai
-        self.tam_bay = tam_bay
+    ma_mb: int
+    loai: str
+    tam_bay: int
+
+    # def __init__(self, ma_mb, loai, tam_bay):
+    #     self.ma_mb = ma_mb
+    #     self.loai = loai
+    #     self.tam_bay = tam_bay
 
 
     
     def get_data(id):
 
         try: 
-            if (id == ""):
+            if (id == "*"):
                 q = "SELECT * FROM maybay"
+                cursor_obj.execute(q)
+
             else:
-                q = f"""
+                q = """
                     SELECT * FROM maybay
-                    WHERE mamb = {id}
+                    WHERE mamb = (%s)
                 """
-            cursor_obj.execute(q)
+            cursor_obj.execute(q, id)
             result = cursor_obj.fetchall()
 
             return result
         except:
             print(f"{id} not exist")
+            return "ERROR"
     
 
     def create_data(item: "MayBay"):
-        q = f"""
-            INSERT INTO maybay VALUES (
-                mamb = {item.ma_mb},
-                loai = {item.loai},
-                tambay = {item.tam_bay}
-            )
+        q = """
+            INSERT INTO maybay 
+            VALUES (%s, %s, %s);
         """
 
-        cursor_obj.execute(q)
+        values = (item.ma_mb, item.loai, item.tam_bay)
+
+        cursor_obj.execute(q, values)
         db_connect.commit()
 
         return {"MESSAGE" : "CREATED!"}
@@ -45,15 +51,13 @@ class MayBay(BaseModel):
 
     def put_data(id, item: "MayBay"):
         try:
-            q = f"""
+            q = """
                 UPDATE maybay
-                SET (
-                    loai = {item.loai},
-                    tambay = {item.tam_bay}
-                )
-                WHERE mamb = {id}
+                SET (loai, tambay) = (%s, %s)
+                WHERE mamb = (%s)
             """
-            cursor_obj.execute(q)
+            values = (item.loai, item.tam_bay, id)
+            cursor_obj.execute(q, values)
             db_connect.commit()
 
             return {"MESSAGE" : "UPDATED!"}
@@ -73,3 +77,4 @@ class MayBay(BaseModel):
             return {"MESSAGE" : "DELETED!"}
         except:
             print(f"{id} not exist")
+            return "ERROR"

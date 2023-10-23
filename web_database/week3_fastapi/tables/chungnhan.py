@@ -3,22 +3,26 @@ from pydantic import BaseModel
 
 class ChungNhan(BaseModel):
 
-    def __init__(self, ma_nv, ma_mb):
-        self.ma_nv: str = ma_nv
-        self.ma_mb: int = ma_mb
+    ma_nv: int
+    ma_mb: int
+
+    # def __init__(self, ma_nv, ma_mb):
+    #     self.ma_nv: int = ma_nv
+    #     self.ma_mb: int = ma_mb
 
 
     def get_data(id):
 
         try: 
-            if (id == ""):
+            if (id == "*"):
                 q = "SELECT * FROM chungnhan"
+                cursor_obj.execute(q)
             else:
-                q = f"""
+                q = """
                     SELECT * FROM chungnhan
-                    WHERE manv = {id}
+                    WHERE manv = %s
                 """
-            cursor_obj.execute(q)
+                cursor_obj.execute(q, id)
             result = cursor_obj.fetchall()
 
             return result
@@ -27,15 +31,11 @@ class ChungNhan(BaseModel):
     
 
     def create_data(item: "ChungNhan"):
-        q = f"""
-            INSERT INTO chungnhan VALUES (
-                manv = {item.ma_nv},
-                mamb = {item.ma_mb},
-                
-            )
+        q = """
+            INSERT INTO chungnhan VALUES (%s, %s);
         """
-
-        cursor_obj.execute(q)
+        values = (item.ma_nv, item.ma_mb)
+        cursor_obj.execute(q, values)
         db_connect.commit()
 
         return {"MESSAGE" : "CREATED!"}
@@ -43,15 +43,13 @@ class ChungNhan(BaseModel):
 
     def put_data(id, item: "ChungNhan"):
         try:
-            q = f"""
+            q = """
                 UPDATE chungnhan
-                SET (
-                    mamb = {item.ma_mb}
-                    
-                )
-                WHERE manv = {id}
+                SET mamb = (%s)
+                WHERE manv = (%s);
             """
-            cursor_obj.execute(q)
+            values = (item.ma_mb, id)
+            cursor_obj.execute(q, values)
             db_connect.commit()
 
             return {"MESSAGE" : "UPDATED!"}

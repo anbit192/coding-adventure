@@ -1,0 +1,341 @@
+{
+	"info": {
+		"_postman_id": "dc3f15ac-7e1d-49a7-becc-47c14617fc35",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30672030"
+	},
+	"item": [
+		{
+			"name": "chuyenbay",
+			"item": [
+				{
+					"name": "get_chuyenbay",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/chuyenbay/*"
+					},
+					"response": [
+						{
+							"name": "get_chuyenbay",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000/chuyenbay/*"
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						},
+						{
+							"name": "get_chuyenbay",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": "http://127.0.0.1:8000/chuyenbay/*"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "date",
+									"value": "Mon, 23 Oct 2023 07:48:04 GMT"
+								},
+								{
+									"key": "server",
+									"value": "uvicorn"
+								},
+								{
+									"key": "content-length",
+									"value": "382"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    [\n        4,\n        \"HaNoi\",\n        \"HCM\",\n        100,\n        \"2021-12-01T14:30:15\",\n        \"2021-12-01T19:30:15\",\n        100\n    ],\n    [\n        1,\n        \"VinhPhuc\",\n        \"DaNang\",\n        200,\n        \"2021-12-01T14:20:15\",\n        \"2021-12-06T19:30:15\",\n        100\n    ],\n    [\n        2,\n        \"VinhPhuc\",\n        \"VungTau\",\n        200,\n        \"2021-12-01T14:20:15\",\n        \"2021-12-06T19:30:15\",\n        100\n    ],\n    [\n        3,\n        \"HaNoi\",\n        \"VungTau\",\n        200,\n        \"2021-12-01T14:20:15\",\n        \"2021-12-06T19:30:15\",\n        100\n    ],\n    [\n        5,\n        \"HaNoi\",\n        \"DaNang\",\n        9999,\n        \"2021-12-02T14:20:15\",\n        \"2021-12-06T19:30:15\",\n        100\n    ]\n]"
+						}
+					]
+				},
+				{
+					"name": "post_chuyenbay",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ma_cb\": \"3\",\n    \"ga_di\": \"HaNoi\",\n    \"ga_den\": \"VungTau\",\n    \"do_dai\": 200,\n    \"gio_di\": \"2021-12-01 14:20:15\",\n    \"gio_den\": \"2021-12-06 19:30:15\",\n    \"chi_phi\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/chuyenbay/post"
+					},
+					"response": [
+						{
+							"name": "post_chuyenbay",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ma_cb\": \"3\",\n    \"ga_di\": \"HaNoi\",\n    \"ga_den\": \"VungTau\",\n    \"do_dai\": 200,\n    \"gio_di\": \"2021-12-01 14:20:15\",\n    \"gio_den\": \"2021-12-06 19:30:15\",\n    \"chi_phi\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://127.0.0.1:8000/chuyenbay/post"
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "put_chuyenbay",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/chuyenbay/put"
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://127.0.0.1:8000/chuyenbay/put"
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "del_chuyenbay",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/chuyenbay/delete"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "maybay",
+			"item": [
+				{
+					"name": "post_maybay",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ma_mb\": 1,\n  \"loai\": \"Cargo\",\n  \"tam_bay\": 1200\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/maybay/post"
+					},
+					"response": []
+				},
+				{
+					"name": "get_maybay",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "put_maybay",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ma_mb\": 4,\n  \"loai\": \"anbish\",\n  \"tam_bay\": 99999\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/maybay/put/4"
+					},
+					"response": []
+				},
+				{
+					"name": "del_maybay",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:8000/maybay/delete/6"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "nhanvien",
+			"item": [
+				{
+					"name": "get_nhanvien",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/nhanvien/*"
+					},
+					"response": []
+				},
+				{
+					"name": "post_nhanvien",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ma_nv\": 1,\n  \"ten\": \"John Doe\",\n  \"luong\": 50000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/nhanvien/post/"
+					},
+					"response": []
+				},
+				{
+					"name": "put_nhanvien",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"ma_nv\": 6,\n  \"ten\": \"Chiaki Nanami\",\n  \"luong\": 90000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/nhanvien/put/6"
+					},
+					"response": []
+				},
+				{
+					"name": "del_nhanvien",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:8000/nhanvien/delete/5"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chungnhan",
+			"item": [
+				{
+					"name": "get_chungnhan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:8000/chungnhan/*"
+					},
+					"response": []
+				},
+				{
+					"name": "post_chungnhan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ma_nv\": 1,\n    \"ma_mb\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/chungnhan/post"
+					},
+					"response": []
+				},
+				{
+					"name": "put_chungnhan",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"ma_nv\": 3,\n    \"ma_mb\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:8000/chungnhan/put/1"
+					},
+					"response": []
+				},
+				{
+					"name": "del_chungnhan",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

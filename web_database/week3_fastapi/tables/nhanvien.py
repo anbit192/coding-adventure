@@ -2,24 +2,28 @@ from db import *
 from pydantic import BaseModel
 
 class NhanVien(BaseModel):
+    ma_nv: int
+    ten: str
+    luong: int
 
-    def __init__(self, ma_nv, ten, luong):
-        self.ma_nv = ma_nv
-        self.ten = ten
-        self.luong = luong
+    # def __init__(self, ma_nv, ten, luong):
+    #     self.ma_nv = ma_nv
+    #     self.ten = ten
+    #     self.luong = luong
 
 
     def get_data(id):
 
         try: 
-            if (id == ""):
+            if (id == "*"):
                 q = "SELECT * FROM nhanvien"
+                cursor_obj.execute(q)
             else:
-                q = f"""
+                q = """
                     SELECT * FROM nhanvien
-                    WHERE manv = {id}
+                    WHERE manv = (%s)
                 """
-            cursor_obj.execute(q)
+                cursor_obj.execute(q, id)
             result = cursor_obj.fetchall()
 
             return result
@@ -28,15 +32,11 @@ class NhanVien(BaseModel):
     
 
     def create_data(item: "NhanVien"):
-        q = f"""
-            INSERT INTO maybay VALUES (
-                manv = {item.ma_nv},
-                ten = {item.ten},
-                luong = {item.luong}
-            )
+        q = """
+            INSERT INTO nhanvien VALUES (%s, %s, %s);
         """
-
-        cursor_obj.execute(q)
+        values = (item.ma_nv, item.ten, item.luong)
+        cursor_obj.execute(q, values)
         db_connect.commit()
 
         return {"MESSAGE" : "CREATED!"}
@@ -44,15 +44,13 @@ class NhanVien(BaseModel):
 
     def put_data(id, item: "NhanVien"):
         try:
-            q = f"""
+            q = """
                 UPDATE nhanvien
-                SET (
-                    ten = {item.ten},
-                    luong = {item.luong}
-                )
-                WHERE manv = {id}
+                SET (ten, luong) = (%s, %s)
+                WHERE manv = (%s)
             """
-            cursor_obj.execute(q)
+            values = (item.ten, item.luong, id)
+            cursor_obj.execute(q, values)
             db_connect.commit()
 
             return {"MESSAGE" : "UPDATED!"}

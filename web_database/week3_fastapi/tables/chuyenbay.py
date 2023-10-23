@@ -65,19 +65,23 @@ class ChuyenBay(BaseModel):
         return {"MESSAGE": "CREATED!"}
 
     def put_data(flight_id, item: "ChuyenBay"):
+
+        try:
         
-        q = """
-            UPDATE chuyenbay
-            SET (gadi, gaden, dodai, giodi, gioden, chiphi) = (%s, %s, %s, %s, %s, %s)
-            WHERE macb = (%s);
-        """
-        values = (item.ga_di, item.ga_den, item.do_dai,
-        item.gio_di, item.gio_den, item.chi_phi, flight_id)
+            q = """
+                UPDATE chuyenbay
+                SET (gadi, gaden, dodai, giodi, gioden, chiphi) = (%s, %s, %s, %s, %s, %s)
+                WHERE macb = (%s);
+            """
+            values = (item.ga_di, item.ga_den, item.do_dai,
+            item.gio_di, item.gio_den, item.chi_phi, flight_id)
 
-        cursor_obj.execute(q, values)
-        db_connect.commit()
+            cursor_obj.execute(q, values)
+            db_connect.commit()
 
-        return {"MESSAGE": "UPDATED!"}
+            return {"MESSAGE": "UPDATED!"}
+        except:
+            return "ERROR"
         
 
     def del_data(flight_id):
@@ -93,3 +97,4 @@ class ChuyenBay(BaseModel):
             return {"MESSAGE": "DELETED!"}
         except:
             print(f"{flight_id} not exist")
+            
