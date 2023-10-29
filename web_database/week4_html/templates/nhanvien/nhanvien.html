@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhan Vien</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Ho Nhan Vien</th>
+            <th>Ten Lot</th>
+            <th>Ten Nhan Vien</th>
+            <th>Ma Nhan Vien</th>
+            <th>Ngay Sinh</th>
+            <th>Dia Chi</th>
+            <th>Gioi Tinh</th>
+            <th>Luong</th>
+            <th>Ma NQL</th>
+            <th>Phong</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <th>{{ row[0] }}</th>
+            <th>{{ row[1] }}</th>
+            <th>{{ row[2] }}</th>
+            <th>{{ row[3] }}</th>
+            <th>{{ row[4] }}</th>
+            <th>{{ row[5] }}</th>
+            <th>{{ row[6] }}</th>
+            <th>{{ row[7] }}</th>
+            <th>{{ row[8] }}</th>
+            <th>{{ row[9] }}</th>
+        </tr>
+        {% endfor %}
+    </table>
+    
+</body>
+</html>
