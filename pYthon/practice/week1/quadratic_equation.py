@@ -27,7 +27,7 @@ def solver(a, b ,c):
             if (delta > 0):
                 x1 = (-b + math.sqrt(delta))/2*a
                 x2 = (-b - math.sqrt(delta))/2*a
-                print(x2, " " , x1)
+                print(x1, " " , x2)
 
 
             elif (delta == 0):
@@ -37,8 +37,6 @@ def solver(a, b ,c):
             else:
                 print("VN")
 
-
-            
 
 list_input = input().split(" ")
 

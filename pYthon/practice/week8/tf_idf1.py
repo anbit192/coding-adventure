@@ -71,8 +71,8 @@ class TFIDF:
         '''
         file_names = os.listdir(corpusPath)
         for name in file_names:
-            # path_name = corpusPath + "/" + name
-            path_name = corpusPath + "\\" + name
+            path_name = corpusPath + "/" + name
+            # path_name = corpusPath + "\\" + name
 
             doc = Doc(path_name)
 
@@ -141,40 +141,35 @@ class TFIDF:
         (có nghĩa là trong danh sách kết quả, k từ đôi một khác nhau)
         '''
 
-        docs = [self.data[key] for key in self.data.keys()]
-        word_list = []
-        tfidfs = []
-        for doc in docs:
-            words = doc.wordCount.keys()
-
-            for word in words:
-                word_list.append(word)
-                tfidfs.append(self.tfidf(word, doc))
-
-        new_dict = {}
-        for i in range(len(word_list)):
-            new_dict[word_list[i]] = tfidfs[i]
-
-        sorted_tuples = sorted(new_dict.items(), key = lambda x: x[1], reverse=True)
-        result = [item[0] for item in sorted_tuples]
+        tfidf_dict = dict()
+        for d in self.data:
+            doc = self.data[d]
+            for w in doc.wordCount:
+                tfidf_w = self.tfidf(w, doc)
+                tfidf_dict[w] = max(tfidf_dict.get(w,0), tfidf_w)
+                
+        tfidf_list = [(v, k ) for k,v in tfidf_dict.items()]
+        tfidf_list.sort(reverse=True)
         
+        result = tfidf_list[:k]
+        result = [t[1] for t in result]
+        result.sort()
         
-        return result[:k]
+        return result
 
 
 
 
 
 
+# def main():
+#     dir = "C:\\Users\\Admin\\Desktop\\study\\coding-adventure\\pYthon\\practice\\week8\\txt_folder"
+#     obj = TFIDF(dir)
 
-def main():
-    dir = "C:\\Users\\Admin\\Desktop\\study\\coding-adventure\\pYthon\\practice\\week8\\txt_folder"
-    obj = TFIDF(dir)
-
-    test_doc = obj.data["text0.txt"]
-    print(obj.tf("an", test_doc))
-    print(obj.idf("an"))
-    print(obj.tfidf("an", test_doc))
+#     test_doc = obj.data["text0.txt"]
+#     print(obj.tf("an", test_doc))
+#     print(obj.idf("an"))
+#     print(obj.tfidf("an", test_doc))
 
 
-main()
+# main()

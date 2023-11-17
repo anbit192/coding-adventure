@@ -1,11 +1,29 @@
+*
+!*/
+!*.*
+
 # Default ignored files
 /shelf/
 /workspace.xml
-C:\Users\ADMIN\Desktop\study\javA\out
-C:\Users\ADMIN\Desktop\study\javA\.idea\
-C:\Users\ADMIN\Desktop\study\javA\study.iml
-/out/
-javA/.idea/
+.idea/
+./RData
+./Rhistory
+/javA/out/
+/javA/study.iml
+node_modules/
+/RevisionJava/out/
+*.iml
+.vscode/
+.ipynb_checkpoints/
+/test_parallel/JPG_IMG/
+/test_parallel/dicoms/coronal_imgs/output/
+/test_parallel/dicoms/sagital_imgs_output/
+/test_parallel/python_parallel/imgs/
+
+
+
+
+
 
 # Compiled class file
 *.class
