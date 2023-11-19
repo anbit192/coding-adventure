@@ -37,10 +37,18 @@
 
 }
 
-form {
+form.add-user {
     width: 500px;
     margin: 0 auto;
     padding: 20px;
+    float: left;
+}
+
+form.edit-user {
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    float: left;
 }
 
 button.confirm-button {
@@ -55,4 +63,33 @@ label {
 
 .hidden {
     display: none;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: tan;
+    color: initial;
+}
+
+div.container-form {
+    width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* form.del-user {
+    padding: 5px;
+} */
+
+button#yes {
+    float:left;
+    margin:5px;
+}
+
+button#no {
+    float:left;
+    margin:5px;
 }

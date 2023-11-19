@@ -54,28 +54,31 @@
             <th>Actions</th>
         </tr>
 
-        <%=JSON.stringify(users)%>
+        <!-- <%=JSON.stringify(users)%> -->
 
-        <%for (let i=0; i < users.length; i++) { %>
-            <tr>
-                <td>
-                    <%=users[i].id%>
-                </td>
-                <td>
-                    <%=users[i].email%>
-                </td>
-                <td>
-                    <%=users[i].name%>
-                </td>
-                <td>
-                    <%=users[i].city%>
-                </td>
-                <td>
-                    <a href="/update/<%=users[i].id%>">Edit</a>
-                    <button>Delete</button>
-                </td>
-            </tr>
-            <% } %>
+            <%for (let i=0; i < users.length; i++) { %>
+                <tr>
+                    <td>
+                        <%=users[i].id%>
+                    </td>
+                    <td>
+                        <%=users[i].email%>
+                    </td>
+                    <td>
+                        <%=users[i].name%>
+                    </td>
+                    <td>
+                        <%=users[i].city%>
+                    </td>
+                    <td>
+                        <a href="/update/<%=users[i].id%>">Edit</a>
+                        <form action="/delete/<%=users[i].id%>" method="GET">
+                            <button>Delete</button>
+
+                        </form>
+                    </td>
+                </tr>
+                <% } %>
     </table>
 
 </body>
