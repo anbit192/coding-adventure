@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UPDATE</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <a href="/">Home</a>
+        <a href="/create_user">Create User</a>
+    </div>
+
+    <%=JSON.stringify(user)%>
+    <%=user.email%>
+
+    <form class="edit-user" action="/update/<%=user.id%>" method="POST">
+        <fieldset>
+            <legend>EDIT USER :</legend>
+            <input type="text" name="id" class="hidden" value="<%=user.id%>">
+            <label for="email">Email:</label>
+            <input class="input-group" type="email" name="email" value="<%=user.email%>"><br><br>
+            <label for="lname">Name:</label>
+            <input class="input-group" type="text" name="user_name" value="<%=user.name%>"><br><br>
+            <label for="email">City:</label>
+            <input class="input-group" type="text" name="city" value="<%=user.city%>"><br><br>
+
+            <div>
+                <button class="confirm-button">UPDATE</button>
+            </div>
+        </fieldset>
+    </form>
+</body>
+
+</html>

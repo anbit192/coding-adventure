@@ -37,7 +37,7 @@
 
 }
 
-form.add-user {
+form {
     width: 500px;
     margin: 0 auto;
     padding: 20px;
@@ -51,4 +51,8 @@ button.confirm-button {
 
 label {
     margin-left: 20px
+}
+
+.hidden {
+    display: none;
 }
