@@ -4,7 +4,24 @@ class TestComponent extends React.Component {
 
     state = {
         fname: "",
-        lname: ""
+        lname: "",
+        arrayJobs: [
+            {
+                id: "job1",
+                title: "dev",
+                salary: "9999$"
+            },
+            {
+                id: "job2",
+                title: "tester",
+                salary: "6969$"
+            },
+            {
+                id: "job3",
+                title: "manager",
+                salary: "99999$"
+            }
+        ]
     }
 
     handleChangeFirstName = (event) => {
@@ -16,6 +33,12 @@ class TestComponent extends React.Component {
     handleChangeLastName = (event) => {
         this.setState({
             lname: event.target.value
+        })
+    }
+
+    handleChangeAge = (event) => {
+        this.setState({
+            age: event.target.value
         })
     }
 
@@ -41,13 +64,18 @@ class TestComponent extends React.Component {
                         <input type="text" value={this.state.lname}
                             onChange={(event) => { this.handleChangeLastName(event) }} />
                         <br />
+                        <label for="lname">Age: </label>
+                        <input type="text" value={this.state.age}
+                            onChange={(event) => { this.handleChangeAge(event) }} />
+                        <br />
                         <input type="submit" value="SUBMIT"
                             onClick={(event) => { this.handleSubmit(event) }} />
                     </form>
 
                 </div>
 
-                <ChildComponent name={"Nguyen Minh An"} age={20} />
+                <ChildComponent name={this.state.fname} age={this.state.age}
+                    address={"Ha Noi"} jobs={this.state.arrayJobs} />
 
             </>
 

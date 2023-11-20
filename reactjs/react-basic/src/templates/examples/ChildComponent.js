@@ -2,44 +2,73 @@ import React from "react";
 class ChildComponent extends React.Component {
 
     state = {
-        fname: "",
-        lname: ""
+        showJobs: false
     }
 
-    handleChangeFirstName = (event) => {
+    showJobsHandler = () => {
         this.setState({
-            fname: event.target.value
+            showJobs: !this.state.showJobs
         })
-    }
-
-    handleChangeLastName = (event) => {
-        this.setState({
-            lname: event.target.value
-        })
-    }
-
-    handleSubmit = (event) => {
-        event.preventDefault()
-        alert("Clicked!")
-        console.log(this.state)
     }
 
     render() {
-
-        console.log(">> check props: ", this.props)
-        let name = this.props.name
-        let age = this.props.age
-
+        let { name, age, address, jobs } = this.props;
+        let showJobs = this.state.showJobs;
         return (
-            <>
-                <div>
-                    name: {name} <br />
-                    age: {age}
-                </div>
-            </>
+            <div>
+                {
+                    // if (showJobs == False) => (render show) else (render hide)
+                    (showJobs === false) ?
+                        <>
+                            <button onClick={() => { this.showJobsHandler() }}>SHOW</button>
+                        </>
+                        :
+                        <>
+                            <div>
+                                {
+                                    jobs.map((job, index) => {
+                                        return (
+                                            <>
+                                                <div key={job.id}>
+                                                    {job.title} - {job.salary}
+                                                </div>
+                                            </>
+                                        )
+                                    })
+                                }
 
-        );
+                            </div>
+                            <button onClick={() => { this.showJobsHandler() }}>HIDE</button>
+                        </>
+
+                }
+
+            </div>
+        )
     }
 }
+
+
+// function component
+
+// const ChildComponent = (props) => {
+//     console.log("Check child props: ", props)
+
+//     let { name, age, address, jobs } = props;
+//     return (
+//         <div>
+//             This is a function component
+//             {
+//                 jobs.map((job, index) => {
+//                     return (
+//                         <div key={job.id}>
+//                             {job.title} - {job.salary}
+//                         </div>
+//                     )
+//                 })
+//             }
+//         </div>
+//     )
+// }
 
 export default ChildComponent;
