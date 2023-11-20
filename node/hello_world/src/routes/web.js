@@ -4,18 +4,25 @@ const { getHomepage, getUser, getTestViewEngine, postCreateUser, getCreateUser, 
 
 
 // declare a route
-router.get('/', getHomepage);
-router.get('/anbish/:id', getUser);
-router.get("/test_template_engine", getTestViewEngine);
 
-router.get("/create_user", getCreateUser)
-router.post("/create_user", postCreateUser);
+const initWebRoutes = (app) => {
+    router.get('/', getHomepage);
+    router.get('/anbish/:id', getUser);
+    router.get("/test_template_engine", getTestViewEngine);
 
-router.get("/update/:id", getUpdateUser);
-router.post("/update/:id", postUpdateUser);
+    router.get("/create_user", getCreateUser)
+    router.post("/create_user", postCreateUser);
 
-router.get("/delete/:id", getDeleteUser);
-router.post("/delete/:id", postDeleteUser);
+    router.get("/update/:id", getUpdateUser);
+    router.post("/update/:id", postUpdateUser);
 
-module.exports = router;
+    router.get("/delete/:id", getDeleteUser);
+    router.post("/delete/:id", postDeleteUser);
+
+    return app.use("/", router);
+
+}
+
+
+module.exports = initWebRoutes;
 
