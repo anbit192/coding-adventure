@@ -1,0 +1,39 @@
+- Start zookeeper and kafka:
+
+    sudo systemctl start zookeeper 
+    sudo systemctl start kafka 
+
+    + Verify both of the services status:
+
+        sudo systemctl status zookeeper 
+        sudo systemctl status kafka 
+
+
+- Create topic:
+
+    cd /usr/local/kafka 
+    bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic "topicname" 
+
+    + Use --create option to create a new topic
+    + The --replication-factor describes how many copies of data will be created. As we are running with a single instance keep this value 1.
+    + Set the --partitions options as the number of brokers you want your data to be split between. As we are running with a single broker keep this value 1.
+    + The --topic define the name of the topic
+
+
+- Show created topics:
+
+    bin/kafka-topics.sh --list --bootstrap-server localhost:9092 
+
+
+- Send and receive msg:
+    
+
+    + Run the producer: bin/kafka-console-producer.sh --broker-list localhost:9092 --topic "topicname"
+
+    => You can exit this command or keep this terminal running for further testing. Now open a new terminal to the Kafka consumer process on the next step.
+
+    + Run the consumer: bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic "topicname" --from-beginning 
+    
+
+
+
