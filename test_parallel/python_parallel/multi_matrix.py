@@ -2,14 +2,14 @@ import multiprocessing
 import time
 import numpy as np
 from numba import njit, prange
-
+np.random.seed(192)
 m, n, c = 1000, 1500, 1200
-A = np.random.randint(1, 50, size = (m, n))
-B = np.random.randint(1, 50, size = (n, c))
-
+A = np.random.randint(1, 50, size=(m, n))
+B = np.random.randint(1, 50, size=(n, c))
 
 
 start = time.perf_counter()
+
 
 @njit(parallel=True)
 def mult_mat(matrixA, matrixB):
@@ -23,6 +23,7 @@ def mult_mat(matrixA, matrixB):
 
     return result
 
+
 res = mult_mat(A, B)
 
 # res = A @ B
@@ -31,7 +32,3 @@ end = time.perf_counter()
 
 print(res)
 print(f"total: {end-start}")
-
-
-
-
