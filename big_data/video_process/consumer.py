@@ -1,47 +1,32 @@
 import cv2
 from kafka import KafkaProducer, KafkaConsumer
 import numpy as np
+import multiprocessing
 import threading
+import queue
 
-
-# consume data sent from topic A and display the video
-def consume_video_from_kafka1(consumer, topic):
+def consume_video_from_kafka(consumer, topic, frame_queue):
     for msg in consumer:
         frame_data = np.frombuffer(msg.value, dtype=np.uint8)
         frame = cv2.imdecode(frame_data, cv2.IMREAD_COLOR)
+        frame_queue.put((topic, frame))
 
-        cv2.imshow(topic, frame)
-        if (cv2.waitKey(1) & 0xFF == ord("q")):
-            break
-
-
-# consume data sent from topic B and display the video
-def consume_video_from_kafka2(consumer, topic):
-    last_gray = None
-
-    for msg in consumer:
-        frame_data = np.frombuffer(msg.value, dtype=np.uint8)
-        frame = cv2.imdecode(frame_data, cv2.IMREAD_COLOR)
-        gray_frame = cv2.GaussianBlur(frame, (5, 5), 0)
-
-        if (last_gray is None):
-            last_gray = gray_frame
-            continue
-
-        diff = cv2.absdiff(gray_frame, last_gray)
-
-        _, difference = cv2.threshold(diff, 25, 255, cv2.THRESH_BINARY)
-
-        last_gray = gray_frame
-
-        cv2.imshow(topic, difference)
-        if (cv2.waitKey(1) & 0xFF == ord("q")):
-            break
-
+def update_gui(frame_queue):
+    while True:
+        try:
+            topic, frame = frame_queue.get(timeout=1)
+            cv2.namedWindow(topic, cv2.WINDOW_NORMAL)
+            cv2.imshow(topic, frame)
+            if cv2.waitKey(1) & 0xFF == ord("q"):
+                break
+        except queue.Empty:
+            pass
 
 def main():
     topic1 = "topicA"
     topic2 = "topicB"
+
+    frame_queue = multiprocessing.Queue()
 
     # create consumer for topic 1
     consumer1 = KafkaConsumer(
@@ -54,19 +39,24 @@ def main():
     consumer2 = KafkaConsumer(
         topic2,
         bootstrap_servers=["localhost:9092"],
-        api_version=(0,10)
+        api_version=(0, 10)
     )
 
-    consumer_t1 = threading.Thread(target=consume_video_from_kafka1,
-                                   args=(consumer1, topic1))
+    consumer_t1 = multiprocessing.Process(target=consume_video_from_kafka,
+                                          args=(consumer1, topic1, frame_queue))
     
-    consumer_t2 = threading.Thread(target=consume_video_from_kafka2,
-                                   args=(consumer2, topic2))
-    
+    consumer_t2 = multiprocessing.Process(target=consume_video_from_kafka,
+                                          args=(consumer2, topic2, frame_queue))
+
+    gui_thread = threading.Thread(target=update_gui, args=(frame_queue,))
+
     consumer_t1.start()
     consumer_t2.start()
+    gui_thread.start()
+
     consumer_t1.join()
     consumer_t2.join()
+    gui_thread.join()
 
 if __name__ == "__main__":
     main()

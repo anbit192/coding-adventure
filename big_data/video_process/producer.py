@@ -4,6 +4,7 @@ import threading
 
 
 def publish_video_to_kafka(producer, topic, video_path):
+
     cap = cv2.VideoCapture(video_path)
     while (cap.isOpened()):
         ret, frame = cap.read()
@@ -31,13 +32,14 @@ def main():
     video_path1 = "video_process/roads.mp4"
     prod_thread1 = threading.Thread(target=publish_video_to_kafka,
                                     args=(producer, topic1, video_path1))
-    prod_thread1.start()
 
     # Create and run producer for topic 2 in a separate thread
     topic2 = "topicB"
     video_path2 = "video_process/roads.mp4"
     prod_thread2 = threading.Thread(target=publish_video_to_kafka,
                                     args=(producer, topic2, video_path2))
+    
+    prod_thread1.start()
     prod_thread2.start()
 
     prod_thread1.join()
