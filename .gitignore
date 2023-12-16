@@ -22,7 +22,8 @@ node_modules/
 
 
 
-
+__pycache__/
+*.pyc
 
 
 # Compiled class file
