@@ -1,0 +1,58 @@
+---
+title: "density_function"
+output: html_document
+date: "2024-03-12"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+- Dinh nghia ham mat do xac suat f(x) = x/2
+a. Tinh EX
+b. Sinh ra 1000 gia tri co phan phoi f(x) va tinh EX tu 1000 gtri do
+c. Ve bieu do histogram
+```{r}
+f = function(x) {
+  return (x/2)
+}
+
+```
+a. Tinh EX
+```{r}
+
+EX = integrate(
+  function(x) {
+    x * f(x)
+  },
+  lower=0,
+  upper=2
+)
+EX$value
+
+```
+b. Sinh ra 1000 gia tri theo phan phoi f(x)
+```{r}
+# set.seed(192)
+
+f2 = function(x) {
+  return (f(x) - runif(1))
+}
+
+random_values = vector()
+
+for (i in 1:1000) {
+  random_values[i] = uniroot(f2, interval = c(0,2))$root
+}
+
+random_values
+
+```
+
+
+```{r}
+mean(random_values)
+```
+```{r}
+hist(random_values)
+```
+

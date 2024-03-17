@@ -1,0 +1,96 @@
+6.1:
+Compute a Monte Carlo estimate of
+integrate(sin(t)dt, l=0, u=pi/3)
+
+and compare your estimate with the exact value of the integral
+
+```{r}
+f = function(x) {
+  return (sin(x))
+}
+
+I = integrate(f, lower=0, upper=pi/3)
+
+I$value
+```
+
+```{r}
+m = 100000
+a = 0
+b = pi/3
+
+X = runif(m, a, b)
+
+gx_hat = mean(f(X))
+
+theta_hat = (b - a) * gx_hat
+
+theta_hat
+
+```
+
+theta_hat = 0.5011098
+exact_value = 0.5
+
+--------------------------------------------------------------------------------
+6.3
+Compute a Monte Carlo estimate ˆθ of
+theta = integral(e^-x, l=0, u=0.5)
+
+by sampling from Uniform(0, 0.5), and estimate the variance of ˆθ. Find
+another Monte Carlo estimator θ∗ by sampling from the exponential
+distribution. Which of the variances (of ˆθ and ˆθ∗) is smaller, and why?
+
+
+```{r}
+f = function(x) {
+  return (exp(-x))
+}
+m = 1000
+a = 0
+b = 0.5
+X = runif(m, a, b)
+
+gx_hat = mean(f(X))
+theta_hat = (b-a)*gx_hat
+theta_hat
+```
+```{r}
+estimate = replicate(m, expr = {
+  X = runif(m, a, b)
+  (b-a)*mean(-X)
+})
+
+mean(estimate)
+var(estimate)
+```
+
+
+```{r}
+theta_star = function(m) {
+  X = rexp(m, 1)
+  g = (f(-X) * (X>0) * (X<.5))/exp(-X)
+  a = mean(g)
+  b = var(g)
+  
+  return (c(a, b))
+}
+
+theta_star(m)
+```      
+
+
+6.4
+```{r}
+samples = 
+```
+
+
+
+
+
+
+
+
+
+
