@@ -1,0 +1,48 @@
+---
+title: "test-anbish-R"
+output: html_document
+date: "2024-04-16"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[**Câu 1.**]{.underline} Giả sử thời gian đi từ nhà đến trường của một học sinh có phân phối chuẩn với trung bình là 20 phút và độ lệch chuẩn là 4 phút. Mỗi tuần có 5 ngày học, mỗi ngày cô rời nhà 30 phút trước giờ học. Đối với mỗi bài toán sau, hãy viết một hàm mô phỏng Monte Carlo ngắn để tính xác suất hoặc kỳ vọng của đại lượng mà ta quan tâm.[**Câu 1.**]{.underline} Giả sử thời gian đi từ nhà đến trường của một học sinh có phân phối chuẩn với trung bình là 20 phút và độ lệch chuẩn là 4 phút. Mỗi tuần có 5 ngày học, mỗi ngày cô rời nhà 30 phút trước giờ học. Đối với mỗi bài toán sau, hãy viết một hàm mô phỏng Monte Carlo ngắn để tính xác suất hoặc kỳ vọng của đại lượng mà ta quan tâm.
+
+```{r}
+n_days = 5
+n_sim = 10000
+mean_travel_time = 20
+sd_travel_time = 4
+late_condition = 30
+```
+
+1.  Tìm tổng thời gian di chuyển dự kiến của học sinh đó đến trường trong 5 ngày của một tuần. Sau đó tìm ước lượng mô phỏng và đưa ra sai số của ước lượng.
+
+![]()
+
+```{r}
+sum_travel_times = replicate(n_sim, expr={
+    return(sum(rnorm(n_days, mean=mean_travel_time, sd=sd_travel_time)))
+})
+
+estimate = mean(sum_travel_times)
+error = estimate / sqrt(n_sim)
+
+estimate
+error
+
+```
+
+2.  Tìm ước lượng xác suất để học sinh đó trễ ít nhất một tiết học trong tuần có 5 ngày. Sau đó đưa ra sai số của ước lượng tương ứng.
+
+```{r}
+late_check = function() {
+    sum(ifelse(rnorm(n_days, mean_travel_time, sd_travel_time) > 30, 1, 0))
+}
+# ifelse(rnorm(n_days, mean_travel_time, sd_travel_time) > 30, 1, 0)
+
+res = replicate(n_sim, late_check())
+mean(res)
+```

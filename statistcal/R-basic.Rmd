@@ -1,0 +1,72 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+concatenate: c(1,2,"a","b",TRUE,...)
+```{r}
+c(1,2,3,"12",TRUE)
+```
+
+mod: 25%%3
+```{r}
+25%%11
+```
+integer division: 25%/%11
+```{r}
+25%/%11
+```
+sequence a -> b: seq(a,b,step)
+```{r}
+seq(1, 10, 2)
+```
+sequence operator: a:b
+```{r}
+1:10
+```
+floor, ceiling: floor(), ceiling()
+```{r}
+floor(5)
+ceiling(6)
+```
+
+
+vectors: numeric(n), integer(n), rep(0, n)
+```{r}
+print(numeric(5))
+print(integer(5))
+print(rep(5, 10))
+```
+
+function:
+```{r}
+func1 = function(n) {
+    return(sample(1:5, size=n, replace=TRUE))
+    
+}
+
+func1(10)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

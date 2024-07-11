@@ -7,7 +7,7 @@ date: "2024-03-12"
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-- Dinh nghia ham mat do xac suat f(x) = x/2
+- Dinh nghia ham mat do xac suat (pdf) f(x) = x/2
 a. Tinh EX
 b. Sinh ra 1000 gia tri co phan phoi f(x) va tinh EX tu 1000 gtri do
 c. Ve bieu do histogram
@@ -32,26 +32,25 @@ EX$value
 ```
 b. Sinh ra 1000 gia tri theo phan phoi f(x)
 ```{r}
-# set.seed(192)
-
-f2 = function(x) {
-  return (f(x) - runif(1))
+# Define the inverse of the cumulative distribution function (CDF) for the given PDF
+F_inv <- function(u) {
+  return(2 * sqrt(u))
 }
 
-random_values = vector()
+# Generate 1000 random samples
+random_values <- F_inv(runif(1000))
 
-for (i in 1:1000) {
-  random_values[i] = uniroot(f2, interval = c(0,2))$root
-}
+# Calculate the expected value (mean) from the generated samples
+expected_value <- mean(random_values)
 
-random_values
+# Print the generated random samples and the calculated expected value
+# print(random_values)
+print(expected_value)
+
+
 
 ```
 
-
-```{r}
-mean(random_values)
-```
 ```{r}
 hist(random_values)
 ```
