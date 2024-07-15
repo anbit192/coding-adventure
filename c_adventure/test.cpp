@@ -112,7 +112,9 @@ int main()
     int* p_a = &a;
 
     *(p_a)+=1;
-    ++*(p_a);
+    ++a;
+    ++a;
+
 
     cout << a;
 
