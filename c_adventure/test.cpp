@@ -5,6 +5,7 @@
 #include <vector>
 #include <map>
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 
@@ -108,15 +109,10 @@ int main()
     //     // return 0;
     // }
 
-    static int a = 1;
-    int* p_a = &a;
+    vector<int> v {-2, 0, 0, 1, 3, 4, 6};
+    auto low = lower_bound(v.begin(), v.end(), 3);
+    auto up = upper_bound(v.begin(), v.end(), 1);
 
-    *(p_a)+=1;
-    ++a;
-    ++a;
-
-
-    cout << a;
-
+    cout << low - v.begin() << " " << up - v.begin() << endl;
     return 0;
 }
