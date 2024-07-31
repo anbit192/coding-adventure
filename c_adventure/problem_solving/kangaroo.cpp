@@ -1,8 +1,9 @@
 
-#include <iostream>
 #include <algorithm>
-#include <vector>
+#include <iostream>
 #include <string>
+#include <vector>
+
 using namespace std;
 
 // string ltrim(const string &);
@@ -21,24 +22,18 @@ using namespace std;
  */
 
 string kangaroo(int x1, int v1, int x2, int v2) {
-	
-	if ((v1 != v2) && abs(x1-x2) % abs(v1-v2) == 0) 
-    {
-        if (x1 < x2 && v1 <= v2) 
-        {
+
+    if ((v1 != v2) && abs(x1 - x2) % abs(v1 - v2) == 0) {
+        if (x1 < x2 && v1 <= v2) {
             return "NO";
-        } else if (x2 < x1 && v2 <= v1) 
-        {
+        } else if (x2 < x1 && v2 <= v1) {
             return "NO";
         } else {
             return "YES";
         }
-    }
-	else 
-    {
+    } else {
         return "NO";
     }
-	
 }
 
 // int main()
@@ -48,7 +43,8 @@ string kangaroo(int x1, int v1, int x2, int v2) {
 // 	string first_multiple_input_temp;
 // 	getline(cin, first_multiple_input_temp);
 
-// 	vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
+// 	vector<string> first_multiple_input =
+// split(rtrim(first_multiple_input_temp));
 
 // 	int x1 = stoi(first_multiple_input[0]);
 

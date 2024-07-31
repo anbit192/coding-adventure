@@ -1,8 +1,9 @@
 // #include <bits/stdc++.h>
-#include <iostream>
 #include <algorithm>
-#include <vector>
+#include <iostream>
 #include <string>
+#include <vector>
+
 
 using namespace std;
 
@@ -22,27 +23,28 @@ using namespace std;
  *  6. INTEGER_ARRAY oranges
  */
 
-void countApplesAndOranges(int s, int t, int a, int b, vector<int> apples, vector<int> oranges) {
-	int orange_dist = (a + b) - (t - a);
-	
-	int count_appl = 0;
-	int count_orange = 0;
-	
-	for (int apple : apples) {
-		int dist = apple + a;
-		if ( dist >= s && dist <= t) {
-			++count_appl;
-		}
-	}
-	
-	for (int orange: oranges) {
-		int dist = orange + b;
-		if (dist <= t && dist >= s) {
-			++count_orange;
-		}
-	}
-	
-	cout << count_appl << "\n" << count_orange <<endl;
+void countApplesAndOranges(int s, int t, int a, int b, vector<int> apples,
+                           vector<int> oranges) {
+    int orange_dist = (a + b) - (t - a);
+
+    int count_appl = 0;
+    int count_orange = 0;
+
+    for (int apple : apples) {
+        int dist = apple + a;
+        if (dist >= s && dist <= t) {
+            ++count_appl;
+        }
+    }
+
+    for (int orange : oranges) {
+        int dist = orange + b;
+        if (dist <= t && dist >= s) {
+            ++count_orange;
+        }
+    }
+
+    cout << count_appl << "\n" << count_orange << endl;
 }
 
 // int main()
@@ -50,7 +52,8 @@ void countApplesAndOranges(int s, int t, int a, int b, vector<int> apples, vecto
 // 	string first_multiple_input_temp;
 // 	getline(cin, first_multiple_input_temp);
 
-// 	vector<string> first_multiple_input = split(rtrim(first_multiple_input_temp));
+// 	vector<string> first_multiple_input =
+// split(rtrim(first_multiple_input_temp));
 
 // 	int s = stoi(first_multiple_input[0]);
 
@@ -59,7 +62,8 @@ void countApplesAndOranges(int s, int t, int a, int b, vector<int> apples, vecto
 // 	string second_multiple_input_temp;
 // 	getline(cin, second_multiple_input_temp);
 
-// 	vector<string> second_multiple_input = split(rtrim(second_multiple_input_temp));
+// 	vector<string> second_multiple_input =
+// split(rtrim(second_multiple_input_temp));
 
 // 	int a = stoi(second_multiple_input[0]);
 
@@ -68,7 +72,8 @@ void countApplesAndOranges(int s, int t, int a, int b, vector<int> apples, vecto
 // 	string third_multiple_input_temp;
 // 	getline(cin, third_multiple_input_temp);
 
-// 	vector<string> third_multiple_input = split(rtrim(third_multiple_input_temp));
+// 	vector<string> third_multiple_input =
+// split(rtrim(third_multiple_input_temp));
 
 // 	int m = stoi(third_multiple_input[0]);
 
