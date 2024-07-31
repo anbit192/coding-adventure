@@ -58,17 +58,16 @@ int lcm_arr(vector<int> v)
 int getTotalX(vector<int> a, vector<int> b) {
     
     int lcm_res = lcm_arr(a);
+    int gcd_res = gcd_arr(b);
     int temp = 0;
     int count = 0;
     
     
-    while (temp < gcd_arr(b)) {
+    while (temp < gcd_res) {
         temp += lcm_res;
         
-        for (int item : b) {
-            if (item % temp == 0) {
-                ++count;
-            }
+        if (gcd_res % temp == 0) {
+            ++count;
         }
     }
 
