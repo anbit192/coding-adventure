@@ -1,0 +1,104 @@
+
+```{r}
+library(TSA)
+data(rwalk)
+data(tempdub)
+```
+Xu hướng ngẫu nhiên - xu hướng tăng
+```{r}
+plot(rwalk, type="o", ylab = "Buoc nhay ngau nhien", xlab = "time")
+```
+Xu hướng tất định - Xu hướng chu kì/mùa
+
+```{r}
+plot(tempdub, xlab="Time", ylab="Temp", type="o")
+```
+
+Bước nhảy ngẫu nhiên với xu hướng tg tuyến tính
+```{r}
+model1 = lm(rwalk~time(rwalk))
+summary(model1)
+```
+```{r}
+a0 = model1$coefficients[1]
+a1 = model1$coefficients[2]
+
+plot.ts(rwalk, type="o")
+abline(model1, col="red")
+
+```
+```{r}
+month = season(tempdub)
+model2 = lm(tempdub~month - 1)
+summary(model2)
+```
+```{r}
+plot.ts(tempdub, type="o")
+# abline(model2)
+
+```
+Xu hướng dạng hình cosine
+
+ut = B0 + B1*cos(2pi*f*t) + B2*sin(2pi*f*t)
+cos, sin đc coi như x1, x2 như linear reg
+
+B0 được hiểu như hàm cosine có f = 0
+
+```{r}
+har = harmonic(tempdub, 1)
+model4 = lm(tempdub~har)
+summary(model4)
+```
+```{r}
+plot(ts(fitted(model4), freq=12, start=c(1964, 1)), ylab="Temp", xlab = "Time", type="l", ylim=range(c(fitted(model4), tempdub)))
+points(tempdub)
+```
+
+Bài tập
+1.6: (roberto)
+
+3.5: (Cryerto)
+
+```{r}
+data(wages)
+plot(wages, type="o")
+
+model1 = lm(wages ~ time(wages))
+summary(model1)
+
+# plot(ts(fitted(model1)), freq=12, start=c(1981, 7), ylim=range(c(fitted(model1), wages)), col="red")
+plot(ts(fitted(model1), freq=12, start=c(1981, 7)), ylab="Temp", xlab = "Time", type="l", ylim=range(c(fitted(model1), wages)))
+points(wages)
+
+```
+3.6
+```{r}
+data("beersales")
+beersales
+
+model2 = lm(beersales ~ season(beersales))
+summary(model2)
+re = model2$residuals
+
+plot(time(beersales), re, type="l")
+
+```
+
+
+
+3.7
+
+```{r}
+data(winnebago)
+model3 = lm(winnebago ~ time(winnebago))
+summary(model3)
+
+
+```
+
+
+
+
+
+
+
