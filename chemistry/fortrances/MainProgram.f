@@ -1,0 +1,115 @@
+	PROGRAM PROTEIN
+	IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+	CHARACTER*8 PRFN,SUBFN
+	COMMON /INPUT/ PRFN,SUBFN
+	LOGICAL STEP1,STEP2,STEP3
+	COMMON /PRSTEP/ STEP1,STEP2,STEP3
+	COMMON /POCKET/ NPK,PKX(1000),PKY(1000),PKZ(1000),PVL(1000)
+	COMMON /GARUN/ MSTATUS,NSTATUS
+	COMMON /GAFUN/ NFV,BFUNC(100)
+	CHARACTER*20 DINP,DOUT
+	COMMON /DIRGA/ DINP,DOUT,LCINP,LCOUT
+
+	print *,'              PROGRAME STARTING ...'
+	write(*,*)
+	CALL INPUT_PROGRAME
+	read(*,*)
+
+	write(*,*) '              PROTEIN INPUT AND ANALIST ...'
+	CALL INPUT_PROTEIN
+	CALL PROTEIN_ANALYSE
+	read(*,*)
+
+
+	write(*,*) '       ####-STEP 1: DEFINE POCKETS      -####'
+	write(*,*)
+	IF (STEP1) THEN
+	 CALL POCKET_ANALYST
+	ELSE
+	 CALL POCNOT_ANALYST
+	ENDIF
+	CALL POCKET_PDB
+	read(*,*)
+ 
+	write(*,*) '       ####-STEP 2: CHOICE A POCKET     -####'
+	write(*,*)
+	IF (STEP2) THEN
+	 DINP='GAGM/'
+	 DOUT='GAGM/GAOUT/'
+	 LCINP=5
+	 LCOUT=11
+	 MSTATUS=1
+	 NFV=0
+    	 DO I=1,NPK
+	  NSTATUS=I
+	  NFV=NFV+1
+	  CALL GADNA
+	 read(*,*)
+	 END DO
+ 
+	 DO I=1,NFV
+	  write(*,*) I,BFUNC(I)
+	 END DO
+	ELSE
+	 DO I=1,NPK
+	  write(*,'(I5,4F14.4)') I,PKX(I),PKY(I),PKZ(I),PVL(I)
+	 END DO	 
+	ENDIF
+	read(*,*)
+
+	write(*,*) '       ####-STEP 3: CALCULATION DOCKING -####'
+	write(*,*)
+
+	CALL PROTEIN_ADDH
+	CALL PROTEIN_PDB
+	write(*,*) '              Add Hidro for Protein completed...'
+	write(*,*)
+
+	IF (SUBFN.EQ.'        ') THEN
+	 WRITE(*,*) '              Programe cannot run this step...'
+	 GOTO 10 
+	ENDIF
+	IF (.NOT.STEP3) THEN
+	 WRITE(*,*) '              Programe not run this step...'
+	 GOTO 10 
+	ENDIF
+ 
+	CALL MM_COEFFICIENT
+	DINP='GAMM/'
+	DOUT='GAMM/GAOUT/'
+	LCINP=5
+	LCOUT=11
+	MSTATUS=2
+	write(*,*) ' READ POCKET YOU CHOICE :'
+	read(*,*) NSTATUS
+	CALL GADNA
+10	read(*,*)
+
+	END PROGRAM PROTEIN
+
+	SUBROUTINE INPUT_PROGRAME
+	IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+	CHARACTER*8 PRFN,SUBFN
+	COMMON /INPUT/ PRFN,SUBFN
+	LOGICAL STEP1,STEP2,STEP3
+	COMMON /PRSTEP/ STEP1,STEP2,STEP3
+	NAMELIST /INPPROGRAME/ PRFN,SUBFN,STEP1,STEP2,STEP3
+
+	OPEN(UNIT=10, FILE='Programe.inp', STATUS='UNKNOWN')
+      READ (10, NML=INPPROGRAME)
+	CLOSE(10)
+
+	write(*,*)	'File Names'
+	write(*,'(A20)') PRFN
+	IF (SUBFN.NE.'[NONE]') THEN 
+	 write(*,'(A20)') SUBFN
+	ELSE
+	 SUBFN='        '
+	 write(*,'(A20)') ' [NONE] '
+	ENDIF
+	write(*,*) '   STEP 1: ',STEP1
+	write(*,*) '   STEP 2: ',STEP2
+	write(*,*) '   STEP 3: ',STEP3
+
+	RETURN
+	END

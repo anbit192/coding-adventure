@@ -1,0 +1,92 @@
+---
+title: "buoi6"
+output: html_document
+date: "2024-10-22"
+---
+
+```{r}
+library("TSA")
+data(oil.price)
+plot(oil.price, type="l")
+```
+
+```{r}
+x_log_diff = diff(log(oil.price))
+plot(x_log_diff, type="l")
+```
+
+------------------------------------------------------------------------
+
+kiểm định tính dừng của chuỗi tgian (Chỉ xem xét tính dừng của chuỗi tgian khi chuỗi đó có tính dừng) H0: Chuỗi tgian không là chuỗi dừng H1: Chuỗi tgian là chuỗi dừng
+
+```{r}
+library(tseries)
+adf.test(oil.price)
+# gvhgvhgv
+```
+
+-> Do p-value = 0.99 > 0.5 nên ko có cơ sở để bác bỏ H0 -> Ko có cơ sở để nói chuỗi oil.price là chuỗi dừng
+
+=> Biến đổi chuỗi tgian. Đơn giản nhất, xem xét chuỗi yt = xt - xt-1
+
+---
+Bài toán kiểm định: 
+H0: Chuỗi diff(oil.price) ko có tính dừng
+H1: Chuỗi diff(oil.price) có tính dừng
+
+```{r}
+plot(diff(oil.price))
+adf.test(diff(oil.price))
+```
+
+Do p-value = 0.01 < 0.05 nên bác bỏ H0 
+=> Có cơ sở để nói rằng diff(oil.price) là chuỗi dừng
+
+```{r}
+library(astsa)
+acf2(diff(oil.price))
+```
+
+```{r}
+qqnorm(oil.price); qqline(oil.price)
+shapiro.test(oil.price)
+
+qqnorm(diff(oil.price)); qqline(diff(oil.price))
+shapiro.test(diff(oil.price))
+```
+
+Do p-value của cả 2 hàm trên <0.05 -> Bác bỏ H0: Tuân theo pp chuẩn => Ko tuân theo pp chuẩn
+
+```{r}
+library(TSA)
+eacf(diff(oil.price))
+```
+Dựa vào kq lệnh trên có thể dự đoán chuỗi diff(oil.price) là quá trình ARMA(0, 1)/MA(1) hoặc ARMA(1, 2); .....
+
+```{r}
+library(forecast)
+auto.arima(diff(oil.price))
+```
+Dựa vào kq lệnh trên, có thể dự đoán chuỗi diff(oil.price) là một quá trình ARIMA(1, 0, 2)/ARMA(1, 2)
+Hay chuỗi oil.price là một qtrinh ARIMA(1, 1, 2)
+Có 4 dự đoán về qtrinh phù hợp với bộ dữ liệu
+So sánh các qtrinh đó và đưa ra các dự đoán về gtri bộ dữ liệu trong tương lai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

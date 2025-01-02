@@ -1,0 +1,123 @@
+%chk=D:\input\26.Silibinin A.chk
+# opt b3lyp/6-31g* geom=connectivity
+
+NULL
+
+0 1
+ O(PDBName=O,ResName=UNK,ResNum=0)                     1.85000000   -0.05800000    0.37100000
+ O(PDBName=O,ResName=UNK,ResNum=0)                     2.40900000   -2.87800000    0.49900000
+ O(PDBName=O,ResName=UNK,ResNum=0)                    -3.26600000   -0.24600000    0.82500000
+ O(PDBName=O,ResName=UNK,ResNum=0)                    -2.67300000   -0.97800000   -2.73500000
+ O(PDBName=O,ResName=UNK,ResNum=0)                     4.97300000   -3.72300000    0.04600000
+ O(PDBName=O,ResName=UNK,ResNum=0)                    -4.98300000    0.42200000   -2.84200000
+ O(PDBName=O,ResName=UNK,ResNum=0)                    -7.05700000    1.47300000   -1.68300000
+ O(PDBName=O,ResName=UNK,ResNum=0)                     5.85600000    2.27100000   -1.93800000
+ O(PDBName=O,ResName=UNK,ResNum=0)                    -7.00200000    1.62400000    3.06000000
+ O(PDBName=O,ResName=UNK,ResNum=0)                     7.00000000    3.45800000    0.30000000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     3.07500000   -0.57900000    0.91700000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     3.43300000   -1.90500000    0.22700000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -2.88300000   -1.01200000   -0.32800000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -1.46300000   -1.49300000   -0.09600000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -2.99900000   -0.18400000   -1.60800000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     0.87900000   -1.01400000    0.24300000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     1.14900000   -2.38000000    0.31500000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     4.12300000    0.49900000    0.74900000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -0.42500000   -0.56900000    0.02200000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     4.74100000   -2.50600000    0.73300000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -1.19800000   -2.85900000    0.00400000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -4.43100000    0.28200000   -1.75700000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     0.10800000   -3.30400000    0.21200000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -5.13200000    0.60300000   -0.49800000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -4.50200000    0.33500000    0.71900000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     4.51500000    0.89700000   -0.52900000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     4.69700000    1.09500000    1.87200000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -6.39800000    1.19300000   -0.52400000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -5.12700000    0.69200000    1.91500000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     5.48200000    1.89000000   -0.68400000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     5.66400000    2.08800000    1.71700000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -6.38900000    1.28500000    1.89300000
+ C(PDBName=C,ResName=UNK,ResNum=0)                    -7.02600000    1.53100000    0.67600000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     6.05600000    2.48600000    0.43900000
+ C(PDBName=C,ResName=UNK,ResNum=0)                     6.94600000    1.56700000   -2.53000000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     2.89700000   -0.75600000    1.98800000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     3.47800000   -1.79700000   -0.86600000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -3.54300000   -1.89100000   -0.38800000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -2.36200000    0.70800000   -1.59600000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -0.62200000    0.49800000   -0.03500000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     4.67800000   -2.74000000    1.80000000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     5.59900000   -1.84900000    0.56600000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -1.99700000   -3.59000000   -0.08200000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     0.30800000   -4.37000000    0.28000000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     4.06800000    0.44600000   -1.41200000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     4.40200000    0.79500000    2.87400000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -4.63000000    0.49700000    2.86300000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -2.68500000   -0.39800000   -3.51600000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     6.10300000    2.54400000    2.60000000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -8.01000000    1.99400000    0.67400000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     5.06400000   -3.51500000   -0.89900000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -7.91500000    1.88200000   -1.47800000
+ H(PDBName=H,ResName=UNK,ResNum=0)                    -6.42200000    1.38300000    3.80300000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     7.28300000    3.75300000    1.18200000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     7.12700000    1.98800000   -3.52300000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     6.70200000    0.50500000   -2.64000000
+ H(PDBName=H,ResName=UNK,ResNum=0)                     7.85300000    1.68400000   -1.93000000
+
+ 1 11 1.0 16 1.0
+ 2 12 1.0 17 1.0
+ 3 13 1.0 25 1.0
+ 4 15 1.0 48 1.0
+ 5 20 1.0 51 1.0
+ 6 22 2.0
+ 7 28 1.0 52 1.0
+ 8 30 1.0 35 1.0
+ 9 32 1.0 53 1.0
+ 10 34 1.0 54 1.0
+ 11 12 1.0 18 1.0 36 1.0
+ 12 20 1.0 37 1.0
+ 13 14 1.0 15 1.0 38 1.0
+ 14 19 1.5 21 1.5
+ 15 22 1.0 39 1.0
+ 16 17 1.5 19 1.5
+ 17 23 1.5
+ 18 26 1.5 27 1.5
+ 19 40 1.0
+ 20 41 1.0 42 1.0
+ 21 23 1.5 43 1.0
+ 22 24 1.0
+ 23 44 1.0
+ 24 25 1.5 28 1.5
+ 25 29 1.5
+ 26 30 1.5 45 1.0
+ 27 31 1.5 46 1.0
+ 28 33 1.5
+ 29 32 1.5 47 1.0
+ 30 34 1.5
+ 31 34 1.5 49 1.0
+ 32 33 1.5
+ 33 50 1.0
+ 34
+ 35 55 1.0 56 1.0 57 1.0
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+
+
