@@ -1,0 +1,47 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+1.
+
+a. 
+Biến đầu ra và nhân tố:
+
+- Biến đầu ra (response variable): sale
+
+- Nhân tố (factor): weekday
+
+Kích thước dữ liệu được xác định từ tổng số bậc tự do: Tổng bậc tự do = 1 + 98 = 99, tức là số quan sát n = 100. Nhân tố weekday có bậc tự do là 1, do đó số mức của nó là 2.
+
+b. Kiểm định ảnh hưởng của nhân tố với mức ý nghĩa 2%
+Giá trị p-value là <2e-16, nhỏ hơn mức ý nghĩa 0.02. Như vậy có đủ bằng chứng để bác bỏ giả thuyết không (không có sự khác biệt) và kết luận rằng nhân tố weekday có ảnh hưởng đáng kể đến biến sale.
+
+2.
+a. Hoàn thành bảng ANOVA
+df_y = 3
+df_res = 68
+
+Mean_sq_y = 50.06
+Mean_sq_res = 3.33
+
+F_value_y = 1.3e-7
+
+b. 
+Với mức ý nghĩa 1% (0.01), vì p-value của nhân tố y (1.3e-07) rất nhỏ hơn 0.01 nên có đủ bằng chứng bác bỏ giả thuyết không. Do đó, có thể nói nhân tố y có ảnh hưởng đáng kể đến biến x.
+
+c.
+Shapiro-Wilk: p-value = 0.8406, lớn hơn 0.05, nên không bác bỏ giả thuyết phân phối chuẩn.
+Levene Test: p-value = 0.6811, lớn hơn 0.05, nên không bác bỏ giả thuyết phương sai đồng nhất.
+Durbin-Watson Test: p-value = 0.88, cho thấy không có tự tương quan giữa các phần dư.
+
+Vậy, tại mức ý nghĩa 5%, các giả thiết của mô hình ANOVA đều được thỏa mãn.
+
+d.
+Nhóm A: 5.855387
+Nhóm B: 9.221641
+Nhóm C: 7.318584
+Nhóm D: 5.467364
+
+Nhóm có trung bình cao nhất là nhóm B
+

@@ -1,0 +1,157 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Bai 1:
+
+```{r}
+library(DAAG)
+possum
+```
+
+```{r}
+possum_m = subset(possum, sex == "m")
+data = possum_m[, c("Pop", "hdlngth", "skullw", "totlngth", "taill")]
+data$Pop = factor(data$Pop)
+```
+
+## 1.
+
+```{r}
+data
+```
+
+```{r}
+boxplot(data[, -1], main = "Boxplot các biến đầu vào", col = "lightblue")
+```
+
+```{r}
+library(ggplot2)
+library(reshape2)
+
+data_melt <- melt(data, id.vars = "Pop")
+ggplot(data_melt, aes(x = Pop, y = value, fill = Pop)) +
+  geom_boxplot() +
+  facet_wrap(~ variable, scales = "free") +
+  theme_minimal()
+```
+
+## 2.
+
+```{r}
+# Mô hình 1: với hdlngth
+model1 <- glm(Pop ~ hdlngth + skullw + totlngth + taill, data = data, family = binomial)
+
+# Mô hình 2: không có hdlngth
+model2 <- glm(Pop ~ skullw + totlngth + taill, data = data, family = binomial)
+
+anova(model2, model1, test = "Chisq")
+```
+
+p-value \> 0.05 =\> Viec them hdlngth ko cai thien dang ke
+
+## 3.
+
+```{r}
+AIC(model1)
+
+# Tự tính AIC với penalty = 3
+logLik1 <- logLik(model1)
+k <- length(coef(model1))  # số lượng tham số
+AIC3 <- -2 * as.numeric(logLik1) + 3 * k
+AIC3
+```
+
+y = 1/(1+exp(-(linear model)))
+
+## 4.
+
+```{r}
+coef(model1)
+```
+
+anh huong duong: hdlngth, skullw, taill
+
+## 5.
+
+```{r}
+new_data <- data.frame(hdlngth = mean(data$hdlngth, na.rm = TRUE),  # giả sử dùng trung bình
+                       skullw = 63,
+                       totlngth = 83,
+                       taill = 37)
+
+# Dự đoán xác suất đến từ Victoria
+prob <- predict(model1, newdata = new_data, type = "response")
+prob
+```
+
+## 6.
+
+```{r}
+predicted_probs <- predict(model1, type = "response")
+predicted_class <- ifelse(predicted_probs > 0.5, "Victoria", "other")  # đổi tên theo thực tế dữ liệu Pop
+
+# So sánh với thực tế
+table(predicted_class, data$Pop)
+
+# Accuracy
+accuracy <- mean(predicted_class == data$Pop)
+accuracy
+
+# Tỷ lệ sai của dự đoán ở câu 5
+predicted_label <- ifelse(prob > 0.5, "Victoria", "other")
+# giả sử nhãn thực tế là Victoria thì:
+error_rate <- 1 - prob
+error_rate
+```
+
+# Bai 2:
+
+```{r}
+df = read.csv("rocket.txt")
+df
+```
+
+```{r}
+df$Failure <- ifelse(df$SoBiHong > 0, 1, 0)
+```
+
+```{r}
+df
+```
+
+```{r}
+model_lg = glm(Failure ~ NhietDo, data=df, family = binomial(link="logit") )
+summary(model_lg)
+```
+
+DO p-value cua nhiet do \< 0.05 =\> Co anh huong va anh huong am
+
+```{r}
+temp_seq <- data.frame(NhietDo = seq(40, 90, by = 1))
+
+# Dự đoán xác suất hỏng cho các nhiệt độ này
+temp_seq$pred_prob <- predict(model_lg, newdata = temp_seq, type = "response")
+
+head(temp_seq)
+```
+
+```{r}
+
+data_plot <- data.frame(
+  NhietDo   = df$NhietDo,
+  ratio     = df$ratio,
+  predicted = predict(model_lg, type="response")
+)
+
+ggplot(data_plot, aes(x = NhietDo, y = ratio)) +
+  geom_point(color = "blue", size=2) +
+  # Thêm đường hồi quy logistic (dùng bảng temp_seq)
+  geom_line(data = temp_seq, aes(x = NhietDo, y = pred_prob),
+            color = "red", size=1) +
+  ylim(0,1) +
+  xlim(40,90) +
+  labs(title = "Tương quan nhiệt độ và tỷ lệ hỏng O-ring",
+       x = "Nhiệt độ (°F)", y = "Tỷ lệ hỏng")
+```

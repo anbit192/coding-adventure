@@ -1,0 +1,250 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Câu 1:
+
+### Đọc dữ liệu
+
+```{r}
+df1 = read.csv("co2.csv")
+df1
+
+x = df1[[2]]
+y = df1[[3]]
+
+n = nrow(df1)
+```
+
+-   y = B0 + B1 \* xi + e
+
+-   sum(xi) = 4854 sum(yi) = 1875
+
+-   sum(xi \* yi) = 760359
+
+-   sum(xi\^2) = 1964356
+
+a.  Chúng ta thường đặt giả thiết nào cho e:
+
+-   Ở trong hồi quy tuyến tính có 3 giả thiết cơ bản:
+-   Biến x và y có mối quan hệ độc lập tuyến tính với nhau
+-   Phương sai ko đổi
+-   Phần dư tuân theo phân phối chuẩn
+
+------------------------------------------------------------------------
+
+b.  Tim ước lượng bình phương tối thiểu cho B0 và B1
+
+```{r}
+y_mean = mean(y)
+x_mean = mean(x)
+B1 = cov(x, y) / var(x)
+B0 = y_mean - B1 * x_mean
+
+print(B1)
+print(B0)
+```
+
+Kiểm chứng
+
+```{r}
+model = lm(y ~ x, data=df1)
+model
+```
+
+------------------------------------------------------------------------
+
+c.  Với ước lượng trên:
+
+-   tổng bình phương toàn phần (SST) = 7576,3
+-   tổng bình phương phần dư (SSE) = 3532,3
+
+Tính hệ số R\^2
+
+```{r}
+SST = 7576.3
+SSE = 3532.3
+R_sq = 1 - (SSE / SST)
+print(R_sq)
+```
+
+Kiểm chứng
+
+```{r}
+summary(model)
+```
+
+d.  Tính toán bảng phân tích phương sai (ANOVA)
+
+<!-- -->
+
+1.  Tính toán các thành phần cần thiết (SSR, SST, SSE)
+
+-   SST, SSE đã biết, nhưng vẫn tính lại cho quen
+
+```{r}
+y_pred = predict(model)
+SST = sum((y - y_mean)^2)
+SSE = sum((y - y_pred)^2)
+SSR = sum((y_pred - y_mean)^2) # Hoặc SST = SSR + SSE
+
+```
+
+2.  Xác định các bậc tự do:
+
+-   df_SSR = 1 (Vì mô hình chỉ có 1 biến)
+-   df_SSE = n - 2
+-   df_SST = n - 1
+
+```{r}
+df_SSR = 1
+df_SSE = n - 2
+df_SST = n - 1
+```
+
+3.  Xác định trung bình bình phương (MS - Mean Squared) của SSE, SSR
+
+    MS(SSR) = SSR / df_SSR
+
+    MS(SSE) = SSE / df_SSE
+
+```{r}
+MSR = SSR / df_SSR
+MSE = SSE / df_SSE
+```
+
+4.  Lập bảng ANOVA theo dạng:
+
+| Nguồn biến thiên | SS (Tổng bình phương) | df (Bậc tự do) | MS (Trung bình bình phương) | F-value (Kiểm định) |
+|----|----|----|----|----|
+| Hồi quy (Regression) | SSR | k - 1 | MSR = SSR / df_SSR | F = MSR / MSE |
+| Phần dư (Sai số) | SSE | n - k | MSE = SSE / df_SSE | — |
+| Tổng cộng (Tổng SST) | SST = SSR + SSE | n - 1 | — | — |
+
+=\> F-value = MSR / MSE
+
+```{r}
+f_val = MSR / MSE
+print(f_val)
+```
+
+Cách code R:
+
+```{r}
+anova(model)
+```
+
+e\. Tính uớc lượng phương sai cho sai số (cùng công thức với MSE)
+
+```{r}
+sigma_sq = SSE / df_SSE
+print(sigma_sq)
+```
+
+Kiểm chứng:
+
+```{r}
+summary(model)$sigma^2
+```
+
+f\. Cho bảng phân phối Fisher tại p = 0.05, các giả thiết nào có thể kiểm định qua bảng ANOVA vừa lập.
+
+\### 📊 Bảng giá trị phân phối Fisher (F-distribution) tại mức ý nghĩa $p = 0.05$
+
+| df.1 (SSR) | df.2 (SSE) | Giá trị F tới hạn |
+|------------|------------|-------------------|
+| 1          | 10         | 4.965             |
+| 1          | 11         | 4.844             |
+| 2          | 11         | 3.982             |
+| 2          | 12         | 3.885             |
+| 10         | 1          | 241.882           |
+
+H0: B1 = 0 (Ko có mối quan hệ tuyến tính giữa x và y)
+
+H1: B1 != 0 (Có mối quan hệ tuyến tính giữa x và y)
+
+Nếu F-value \> F(0.05) =\> Bác bỏ H0 và ngược lại
+
+=\> Do F-value = 11.44 \> F(0.05) =\> Bác bỏ H0
+
+g\. Kiểm định giả thiết đặt ra ở khoảng tin cậy 95%
+
+```{r}
+anova(model)
+```
+
+Do p value = 0.006 \< 0.05 =\> Bác bỏ H0
+
+h\. Dự đoán giá trị y tại năm 2023 biết x tại năm 2023 là 419.
+
+```{r}
+x_0 = 419
+y_0 = B0 + B1 * x_0
+print(y_0)
+```
+
+Kiểm chứng
+
+```{r}
+
+y_0 = predict(model, data.frame(x = x_0))
+
+print(y_0)
+```
+
+i, j. TÌm khoảng tin cậy và dự đoán 95% cho y tại năm 2023:
+
+```{r}
+y_0 = predict(model, data.frame(x = x_0), interval="confidence")
+y_0
+```
+
+```{r}
+y_0 = predict(model, data.frame(x = x_0), interval="prediction")
+y_0
+```
+
+l\. Đồ thị phần dư
+
+```{r}
+resid = summary(model)$residual
+qqnorm(resid)
+qqline(resid)
+```
+
+# Câu 2
+
+Tính phần dư được chuẩn hóa.
+
+-   Phần dư chuẩn hóa là phần dư (residual) đã được chia cho ước lượng độ lệch chuẩn của nó. Nó giúp so sánh mức độ “bất thường” (outlier) giữa các quan sát vì đã loại bỏ tác động của phương sai thay đổi.
+
+```{r}
+di = rstandard(model) #
+print(di)
+```
+
+Tính độ leverage (hatvalues).
+
+-   Leverage cho biết mức độ “khác biệt” của một quan sát so với các quan sát khác trong không gian biến độc lập. Trong mô hình hồi quy đơn, một quan sát có leverage cao thường nằm xa trung tâm của các giá trị x
+
+```{r}
+vi = hatvalues(model)
+print(vi)
+```
+
+Khoảng cách cook.
+
+-   Cook’s distance đo lường mức độ ảnh hưởng của một quan sát đến ước lượng các hệ số của mô hình.
+
+```{r}
+Di = cooks.distance(model)
+Di
+```
+
+```{r}
+i = 1:n
+plot(i, vi)
+```
+
+-   Mục đích là trực quan hoá leverage của các quan sát, để xem quan sát nào có leverage cao bất thường và có thể là ứng cử viên cho “điểm ảnh hưởng” (potentially influential point).

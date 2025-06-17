@@ -1,0 +1,229 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# 1. Phân tích ANOVA cho price theo 1 trong 3 dữ liệu định tính (cut,color,clarity) (dữ liệu: diamonds gói ggplot2)
+
+```{r}
+library(ggplot2)
+
+
+```
+
+```{r}
+diamonds
+data = diamonds[,c("price", "cut", "color", "clarity")]
+data
+```
+
+```{r}
+anv_model1 = aov(price ~ cut, data = data)
+summary(anv_model1)
+```
+
+```{r}
+anv_model2 = aov(price ~ color, data = data)
+summary(anv_model2)
+```
+
+```{r}
+anv_model3 = aov(price ~ cut * color, data = data)
+summary(anv_model3)
+```
+
+------------------------------------------------------------------------
+
+```{r}
+data1 = read.csv("ferti.csv", header=TRUE)
+data1
+```
+
+# 2. Drug
+
+```{r}
+anova2 = aov(mood.gain ~ drug * therapy, data=data1)
+# anova2 = aov(mood.gain ~ drug + therapy + drug:therapy, data=data1)
+summary(anova2)
+```
+
+-   p-value của drug và therapy \< 0.05 =\> Bác bỏ H0 =\> 2 trường này có ảnh hưởng đến mood.drug
+
+-   p-value của drug:therapy \> 0.05 =\> Chấp nhận H0 =\> tương tác của 2 trường này ko ảnh hưởng đến mood.drug
+
+Kiểm tra phân phối chuẩn của phần dư
+
+```{r}
+shapiro.test(anova2$residuals)
+```
+
+H0: tuân theo pp chuẩn , H1: ko tuân theo pp chuẩn
+
+p-value \> 0.05 =\> Chấp nhận H0 =\> Tuân theo pp chuẩn
+
+Kiểm tra phương sai đồng nhất
+
+```{r}
+library(car)
+leveneTest(anova2)
+```
+
+H0: Phương sai đồng nhất \| H1: Phương sai ko đồng nhất
+
+p-value \> 0.05 =\> Phương sai có đồng nhất
+
+```{r}
+durbinWatsonTest(anova2)
+```
+
+H0: Phần dư có độc lập \| H1: Phần dư ko độc lập
+
+p-value \> 0.05 =\> Phần dư có độc lập
+
+# 3. Phân bón
+
+Kiểm định với mức ý nghĩa 1% (p-value \< 0.01)
+
+```{r}
+yield = c(28, 21, 20, 18, 23,
+          35, 42, 32, 25, 27,
+          33, 38, 31, 42, 29)
+
+
+fertilizer = c(rep("A", 5), rep("B", 5), rep("C", 5))
+
+data2 = data.frame(fertilizer, yield)
+data2
+
+```
+
+```{r}
+anova3 = aov(yield ~ fertilizer)
+summary(anova3)
+```
+
+H0: Phân bón ko có khác biệt \| H1: Phân bón có khác biệt
+
+p-value = 0.00742 \< 0.01 =\> Bác bỏ H0 =\> Phân bón có khác biệt
+
+# 4. Survival time
+
+```{r}
+time_point = c(rep("8h", 10), rep("16h", 9), rep("20h", 9), rep("24h", 10))
+survival_time = c(3.33, 3.40, 3.43, 3.49, 3.63, 3.76, 3.85, 3.97, 4.40, 4.24,
+                  3.29, 3.36, 3.40, 3.43, 3.68, 3.82, 3.87, 4.20, 4.49,
+                  3.33, 3.36, 3.46, 3.52, 3.61, 3.71, 3.87, 4.09, 4.18,
+                  3.37, 3.53, 3.76, 4.10, 4.13, 4.22, 4.28, 4.55, 4.69, 5)
+
+data3 = data.frame(time_point, survival_time)
+data3
+```
+
+```{r}
+anova4 = aov(survival_time ~ time_point)
+summary(anova4)
+```
+
+H0: Ko có liên quan \| H1: Có liên quan
+
+p-value \< 0.05 =\> Bác bỏ H0 =\> Có liên quan
+
+Kiểm tra anova
+
+```{r}
+library(agricolae)
+res = LSD.test(anova4, "time_point")
+print(res)
+```
+
+# 5. Tooth
+
+```{r}
+data4 = read.csv("tooth.csv")
+data4
+```
+
+```{r}
+lm1 = lm(y~x, data=data4)
+summary(lm1)
+```
+
+B0 = 5.1515
+
+B1 = -0.9413
+
+y = B0 + B1 \* x
+
+H0: B1 = 0 \| H1: B1 != 0
+
+p-value \<0.05 =\> bác bỏ H0 =\> B1 !=0
+
+# 6. 21/3
+
+```{r}
+data5 = read.csv("lmdata1.txt")
+data5 = data5[c(2, 3)]
+data5
+```
+
+```{r}
+anova5 = aov(y~x, data=data5)
+summary(anova5)
+```
+
+```{r}
+SSR = 53.89
+SSE =  0.62
+SST =  SSR + SSE
+
+R_sq = SSR/SST
+R_sq
+```
+
+```{r}
+lm2 = lm(y~x, data=data5)
+summary(lm2)
+```
+
+y = 0.49630\*x + 4.01499
+
+Tổng bình phương tp: SST
+
+Tổng bình phương phần dư: SSE
+
+phương sai phần dư: MSE = 0.03
+
+Lấy ra x_0 là trung vị hoặc phân vị Q3 và đưa ra dự đoán với khoảng tin cậy 95%
+
+```{r}
+
+x_median = median(data5$x)
+x_q3 = quantile(data5$x, 0.75)
+```
+
+```{r}
+predict(lm2, newdata=data.frame(x = x_median), interval="confidence",level=0.95)
+```
+
+```{r}
+predict(lm2, newdata=data.frame(x = x_q3), interval="confidence",level=0.95)
+```
+
+```{r}
+shapiro.test(lm2$residuals)
+```
+
+```{r}
+plot(data5$x, data5$y)
+abline(lm2, col="red")
+```
+
+```{r}
+plot(data5$x, lm2$residuals)
+abline(h = 0, col = "red")
+```
+
+```{r}
+plot(data5$y, lm2$residuals)
+abline(h = 0, col = "red")
+```
